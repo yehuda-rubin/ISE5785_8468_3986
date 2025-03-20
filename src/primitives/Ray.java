@@ -22,16 +22,13 @@ public class Ray {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Ray ray = (Ray) obj;
-        return head.equals(ray.head) && direction.equals(ray.direction);
+        return obj instanceof Ray other
+                && head.equals(other.head)
+                && direction.equals(other.direction);
     }
 
     @Override
     public String toString() {
-        return "Ray{" +
-                "head=" + head +
-                ", direction=" + direction +
-                '}';
+        return "" + head + direction;
     }
 }
