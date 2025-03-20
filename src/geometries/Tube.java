@@ -11,6 +11,7 @@ import primitives.Vector;
  *  radius - the radius of the tube
  * @author Yehuda rubin and arye hacohen
  */
+
 public class Tube extends RadialGeometry{
     protected Ray axis;
 
@@ -19,6 +20,7 @@ public class Tube extends RadialGeometry{
      * @param axis - the axis of the tube
      * @param radius - the radius of the tube
      */
+
     public Tube(Ray axis, double radius) {
         super(radius);
         this.axis = axis;

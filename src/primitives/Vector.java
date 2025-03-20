@@ -56,7 +56,7 @@ public class Vector extends Point {
 
     /**
      * make multiplying between two vectors
-     * @param vector is the vector that we multiplying with the current vector
+     * @param vector is the vector that multiplying with the current vector
      * @return number of the product of the product
      */
 
