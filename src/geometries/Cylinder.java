@@ -5,7 +5,7 @@ import primitives.Vector;
 import primitives.Ray;
 
 /**
- * The Cylinder class extends the
+ * The Cylinder class extends the Tube class and represents a cylinder in 3D space.
  * @author Yehuda Rubin and Arye Hacohen
  */
 
