@@ -22,9 +22,6 @@ public class Cylinder extends Tube{
         this.height = height;
     }
 
-    /**
-     * @return the normal of the cylinder
-     */
     @Override
     public Vector getNormal(Point point) {
         return null;

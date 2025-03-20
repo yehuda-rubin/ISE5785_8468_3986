@@ -21,11 +21,6 @@ public class Ray {
         this.direction = direction.normalize();
     }
 
-    /**
-     * Compares the resulting object to the object on which the function is invoked.
-     * @return true or false
-     */
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -33,10 +28,6 @@ public class Ray {
                 && head.equals(other.head)
                 && direction.equals(other.direction);
     }
-
-    /**
-     * print
-     */
 
     @Override
     public String toString() {

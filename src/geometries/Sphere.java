@@ -20,9 +20,7 @@ public class Sphere extends RadialGeometry{
         this.center = center;
     }
 
-    /**
-     * @return the normal of the sphere
-     */
+
     @Override
     public Vector getNormal(Point point) {
         return null;

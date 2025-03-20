@@ -32,9 +32,6 @@ public class Plane extends Geometry{
         normal = null;
     }
 
-    /**
-     * @return the normal of the plane
-     */
     @Override
     public Vector getNormal(Point point) {
         return normal;
