@@ -15,11 +15,11 @@ public class Sphere extends RadialGeometry{
      * @param radius will be the radius of the new sphere
      * @param center will be the center of the new sphere
      */
+
     public Sphere(double radius, Point center) {
         super(radius);
         this.center = center;
     }
-
 
     @Override
     public Vector getNormal(Point point) {

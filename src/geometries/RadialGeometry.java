@@ -10,6 +10,7 @@ package geometries;
  * @see Cylinder
  * @author Yehuda Rubin and Arye Hacohen
  */
+
 public abstract class RadialGeometry extends Geometry{
     protected double radius;
 
@@ -17,8 +18,8 @@ public abstract class RadialGeometry extends Geometry{
      * constructor
      * @param r will be the radius of the new radial geometry object
      */
+
     public RadialGeometry(double r) {
         radius = r;
     }
-
 }
