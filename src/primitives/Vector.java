@@ -62,6 +62,10 @@ public class Vector extends Point {
         return Math.sqrt(lengthSquared());
     }
 
+    /**
+     * normalize the vector
+     * @return the result of the normalize
+     */
     public Vector normalize() {
         return scale(1/length());
     }

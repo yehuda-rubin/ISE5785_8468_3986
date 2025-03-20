@@ -50,8 +50,8 @@ public class Point {
      * @param p is the point that we distanceSquared from the current point
      * @return the result of the distanceSquared
      */
-    public Point distanceSquared(Point p) {
-        return new Point((xyz.d1() - p.xyz.d1()) * (xyz.d1() - p.xyz.d1()) +
+    public double distanceSquared(Point p) {
+        return ((xyz.d1() - p.xyz.d1()) * (xyz.d1() - p.xyz.d1()) +
                 (xyz.d2() - p.xyz.d2()) * (xyz.d2() - p.xyz.d2()) +
                 (xyz.d3() - p.xyz.d3()) * (xyz.d3() - p.xyz.d3()));
     }
@@ -61,8 +61,8 @@ public class Point {
      * @param p is the point that we distance from the current point
      * @return the result of the distance
      */
-    public Point distance(Point p) {
-        return new Point(Math.sqrt(distanceSquared(p)));
+    public double distance(Point p) {
+        return Math.sqrt(distanceSquared(p));
     }
 
 
