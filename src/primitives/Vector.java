@@ -102,4 +102,23 @@ public class Vector extends Point {
     public Vector normalize() {
         return scale(1 / length());
     }
+
+    /**
+     * Compares the resulting object to the object on which the function is invoked.
+     * @return true or false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        return obj instanceof Vector other && super.equals(other);
+    }
+
+    /**
+     * print
+     */
+    @Override
+    public String toString() {
+        return "->" + super.toString();
+    }
+
 }

@@ -76,6 +76,24 @@ public class Point {
     public double distance(Point p) {
         return Math.sqrt(distanceSquared(p));
     }
+
+    /**
+     * Compares the resulting object to the object on which the function is invoked.
+     * @return true or false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        return obj instanceof Point other && xyz.equals(other.xyz);
+    }
+
+    /**
+     * print
+     */
+    @Override
+    public String toString() {
+        return "" + xyz;
+    }
 }
 
 
