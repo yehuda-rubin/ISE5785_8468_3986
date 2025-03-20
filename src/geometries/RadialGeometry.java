@@ -6,4 +6,5 @@ public abstract class RadialGeometry extends Geometry{
     public RadialGeometry(double r) {
         radius = r;
     }
+
 }

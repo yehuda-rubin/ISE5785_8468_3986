@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
@@ -26,7 +27,9 @@ public class Tube extends RadialGeometry{
     /**
      * @return normal to the tube
      */
-    public Vector getNormal(Vector point) {
+
+    @Override
+    public Vector getNormal(Point point) {
         return null;
     }
 }
