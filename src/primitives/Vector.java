@@ -40,29 +40,53 @@ public class Vector extends Point {
      * @param vector is the vector that we add from the current vector
      * @return the result of the add
      */
-
     public Vector add(Vector vector) {
         return new Vector(xyz.d1() + vector.xyz.d1(), xyz.d2() + vector.xyz.d2(), xyz.d3() + vector.xyz.d3());
     }
 
+    /**
+     * make subtraction between two vectors
+     * @param vector is the vector that we subtract from the current vector
+     * @return the result of the subtraction
+     */
     public Vector scale(double scalar) {
         return new Vector(xyz.d1() * scalar, xyz.d2() * scalar, xyz.d3() * scalar);
     }
 
+    /**
+     * make dot product between two vectors
+     * @param v is the vector that we dot product with the current vector
+     * @return the result of the dot product
+     */
     public Vector dotProduct(Vector v) {
         return new Vector(xyz.d1() * v.xyz.d1(), xyz.d2() * v.xyz.d2(), xyz.d3() * v.xyz.d3());
     }
 
+    /**
+     * make cross product between two vectors
+     * @param v is the vector that we cross product with the current vector
+     * @return the result of the cross product
+     */
     public Vector crossProduct(Vector v) {
         return new Vector(xyz.d2() * v.xyz.d3() - xyz.d3() * v.xyz.d2(),
                 xyz.d3() * v.xyz.d1() - xyz.d1() * v.xyz.d3(),
                 xyz.d1() * v.xyz.d2() - xyz.d2() * v.xyz.d1());
     }
 
+    /**
+     * make distanceSquared between two vectors
+     * @param v is the vector that we distanceSquared from the current vector
+     * @return the result of the distanceSquared
+     */
     public double lengthSquared() {
         return (xyz.d1() * xyz.d1() + xyz.d2() * xyz.d2() + xyz.d3() * xyz.d3());
     }
 
+    /**
+     * make distance between two vectors
+     * @param v is the vector that we distance from the current vector
+     * @return the result of the distance
+     */
     public double length() {
         return Math.sqrt(lengthSquared());
     }
@@ -71,7 +95,6 @@ public class Vector extends Point {
      * normalize the vector
      * @return the result of the normalize
      */
-
     public Vector normalize() {
         return scale(1 / length());
     }
