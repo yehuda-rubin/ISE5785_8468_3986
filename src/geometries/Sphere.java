@@ -8,7 +8,7 @@ import primitives.Vector;
  * @author Yehuda Rubin and Arye Hacohen
  */
 public class Sphere extends RadialGeometry{
-    public Point center;
+    private Point center;
 
     /**
      * constructor
