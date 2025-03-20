@@ -12,6 +12,11 @@ public class Point {
         this.xyz = xyz;
     }
 
+    public Point subtract(Point p) {
+        return new Vector(xyz.d1 - p.xyz.d1, xyz.d2 - p.xyz.d2, xyz.d3 - p.xyz.d3);
+    }
+
+
 
 }
 

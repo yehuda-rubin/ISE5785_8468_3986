@@ -16,7 +16,30 @@ public class Vector extends Point {
         }
     }
 
-    public add(Vector v) {
+    public Vector add(Vector v) {
         return new Vector(xyz.d1 + v.xyz.d1, xyz.d2 + v.xyz.d2, xyz.d3 + v.xyz.d3);
     }
+
+    public Vector scale(double scalar) {
+        return new Vector(xyz.d1 * scalar, xyz.d2 * scalar, xyz.d3 * scalar);
+    }
+
+    public Vector dotProduct(Vector v) {
+        return new Vector(xyz.d1 * v.xyz.d1, xyz.d2 * v.xyz.d2, xyz.d3 * v.xyz.d3);
+    }
+
+    public Vector crossProduct(Vector v) {
+        return new Vector(xyz.d2 * v.xyz.d3 - xyz.d3 * v.xyz.d2,
+                xyz.d3 * v.xyz.d1 - xyz.d1 * v.xyz.d3,
+                xyz.d1 * v.xyz.d2 - xyz.d2 * v.xyz.d1);
+    }
+
+    public Vector lengthSquared() {
+        return new Vector(xyz.d1 * xyz.d1 + xyz.d2 * xyz.d2 + xyz.d3 * xyz.d3);
+    }
+
+    public Vector length() {
+        return new Vector(Math.sqrt(lengthSquared()));
+    }
+
 }
