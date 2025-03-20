@@ -60,8 +60,8 @@ public class Vector extends Point {
      * @return number of the product of the product
      */
 
-    public Vector dotProduct(Vector vector) {
-        return new Vector(xyz.d1() * vector.xyz.d1(), xyz.d2() * vector.xyz.d2(), xyz.d3() * vector.xyz.d3());
+    public double dotProduct(Vector vector) {
+        return xyz.d1() * vector.xyz.d1() + xyz.d2() * vector.xyz.d2() + xyz.d3() * vector.xyz.d3();
     }
 
     /**
