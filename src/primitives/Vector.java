@@ -10,7 +10,6 @@ public class Vector extends Point {
 
     /**
      * constructor
-     *
      * @param x will be d1 value
      * @param y will be d2 value
      * @param z will be d3 value
@@ -40,61 +39,66 @@ public class Vector extends Point {
      * @param vector is the vector that we add from the current vector
      * @return the result of the add
      */
+
     public Vector add(Vector vector) {
         return new Vector(xyz.d1() + vector.xyz.d1(), xyz.d2() + vector.xyz.d2(), xyz.d3() + vector.xyz.d3());
     }
 
     /**
-     * make subtraction between two vectors
-     * @param vector is the vector that we subtract from the current vector
-     * @return the result of the subtraction
+     * make multiplying a vector by a scalar
+     * @param scalar is the number that will be multiplied by the vector.
+     * @return the result of the multiplying
      */
+
     public Vector scale(double scalar) {
         return new Vector(xyz.d1() * scalar, xyz.d2() * scalar, xyz.d3() * scalar);
     }
 
     /**
-     * make dot product between two vectors
-     * @param v is the vector that we dot product with the current vector
-     * @return the result of the dot product
+     * make multiplying between two vectors
+     * @param vector is the vector that we multiplying with the current vector
+     * @return number of the product of the product
      */
-    public Vector dotProduct(Vector v) {
-        return new Vector(xyz.d1() * v.xyz.d1(), xyz.d2() * v.xyz.d2(), xyz.d3() * v.xyz.d3());
+
+    public Vector dotProduct(Vector vector) {
+        return new Vector(xyz.d1() * vector.xyz.d1(), xyz.d2() * vector.xyz.d2(), xyz.d3() * vector.xyz.d3());
     }
 
     /**
      * make cross product between two vectors
-     * @param v is the vector that we cross product with the current vector
-     * @return the result of the cross product
+     * @param vector is the vector that we cross product with the current vector
+     * @return new vector that is the result of the multiplication
      */
-    public Vector crossProduct(Vector v) {
-        return new Vector(xyz.d2() * v.xyz.d3() - xyz.d3() * v.xyz.d2(),
-                xyz.d3() * v.xyz.d1() - xyz.d1() * v.xyz.d3(),
-                xyz.d1() * v.xyz.d2() - xyz.d2() * v.xyz.d1());
+
+    public Vector crossProduct(Vector vector) {
+        return new Vector(xyz.d2() * vector.xyz.d3() - xyz.d3() * vector.xyz.d2(),
+                xyz.d3() * vector.xyz.d1() - xyz.d1() * vector.xyz.d3(),
+                xyz.d1() * vector.xyz.d2() - xyz.d2() * vector.xyz.d1());
     }
 
     /**
-     * make distanceSquared between two vectors
-     * @param v is the vector that we distanceSquared from the current vector
-     * @return the result of the distanceSquared
+     * Calculates the length of the vector squared.
+     * @return the length of the vector squared.
      */
+
     public double lengthSquared() {
         return (xyz.d1() * xyz.d1() + xyz.d2() * xyz.d2() + xyz.d3() * xyz.d3());
     }
 
     /**
-     * make distance between two vectors
-     * @param v is the vector that we distance from the current vector
-     * @return the result of the distance
+     * Calculates the length of the vector
+     * @return the length of the vector
      */
+
     public double length() {
         return Math.sqrt(lengthSquared());
     }
 
     /**
-     * normalize the vector
-     * @return the result of the normalize
+     * Calculates the length of the vector
+     * @return the length of the vector
      */
+
     public Vector normalize() {
         return scale(1 / length());
     }
