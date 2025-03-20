@@ -13,7 +13,21 @@ public class Point {
     }
 
     public Point subtract(Point p) {
-        return new Vector(xyz.d1 - p.xyz.d1, xyz.d2 - p.xyz.d2, xyz.d3 - p.xyz.d3);
+        return new Point(xyz.d1 - p.xyz.d1, xyz.d2 - p.xyz.d2, xyz.d3 - p.xyz.d3);
+    }
+
+    public Point add(Vector v) {
+        return new Point(xyz.d1 + v.xyz.d1, xyz.d2 + v.xyz.d2, xyz.d3 + v.xyz.d3);
+    }
+
+    public Point distanceSquared(Point p) {
+        return new Point((xyz.d1 - p.xyz.d1) * (xyz.d1 - p.xyz.d1) +
+                (xyz.d2 - p.xyz.d2) * (xyz.d2 - p.xyz.d2) +
+                (xyz.d3 - p.xyz.d3) * (xyz.d3 - p.xyz.d3));
+    }
+
+    public Point distance(Point p) {
+        return new Point(Math.sqrt(distanceSquared(p)));
     }
 
 

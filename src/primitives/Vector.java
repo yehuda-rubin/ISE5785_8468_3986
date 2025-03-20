@@ -34,12 +34,15 @@ public class Vector extends Point {
                 xyz.d1 * v.xyz.d2 - xyz.d2 * v.xyz.d1);
     }
 
-    public Vector lengthSquared() {
-        return new Vector(xyz.d1 * xyz.d1 + xyz.d2 * xyz.d2 + xyz.d3 * xyz.d3);
+    public double lengthSquared() {
+        return (xyz.d1 * xyz.d1 + xyz.d2 * xyz.d2 + xyz.d3 * xyz.d3);
     }
 
-    public Vector length() {
-        return new Vector(Math.sqrt(lengthSquared()));
+    public double length() {
+        return Math.sqrt(lengthSquared());
     }
 
+    public Vector normalize() {
+        return scale(1/length());
+    }
 }
