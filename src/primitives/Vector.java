@@ -1,21 +1,24 @@
 package primitives;
 
 /**
- * This class make vector in 3D space
- *  xyz is a vector
- * @author    Yehuda rubin and arye hacohen
+ * The Vector class extends the Point class to represent a vector in 3D space.
+ * Unlike a Point, a Vector has the operations and properties associated with vector mathematics.
+ * Vectors cannot represent the zero vector (0, 0, 0).
  */
+
 public class Vector extends Point {
 
     /**
      * constructor
+     *
      * @param x will be d1 value
      * @param y will be d2 value
      * @param z will be d3 value
      */
-    public  Vector(double x, double y, double z) {
+
+    public Vector(double x, double y, double z) {
         super(x, y, z);
-        if(x==0 && y==0 && z==0) {
+        if (x == 0 && y == 0 && z == 0) {
             throw new IllegalArgumentException("Vector cannot be (0,0,0)");
         }
     }
@@ -24,20 +27,22 @@ public class Vector extends Point {
      * constructor
      * @param xyz will be the vector
      */
+
     public Vector(Double3 xyz) {
         super(xyz);
-        if(xyz.d1()==0 && xyz.d2()==0 && xyz.d3()==0) {
+        if (xyz.d1() == 0 && xyz.d2() == 0 && xyz.d3() == 0) {
             throw new IllegalArgumentException("Vector cannot be (0,0,0)");
         }
     }
 
     /**
      * make add between two vectors
-     * @param v is the vector that we add from the current vector
+     * @param vector is the vector that we add from the current vector
      * @return the result of the add
      */
-    public Vector add(Vector v) {
-        return new Vector(xyz.d1() + v.xyz.d1(), xyz.d2() + v.xyz.d2(), xyz.d3() + v.xyz.d3());
+
+    public Vector add(Vector vector) {
+        return new Vector(xyz.d1() + vector.xyz.d1(), xyz.d2() + vector.xyz.d2(), xyz.d3() + vector.xyz.d3());
     }
 
     public Vector scale(double scalar) {
@@ -66,7 +71,8 @@ public class Vector extends Point {
      * normalize the vector
      * @return the result of the normalize
      */
+
     public Vector normalize() {
-        return scale(1/length());
+        return scale(1 / length());
     }
 }
