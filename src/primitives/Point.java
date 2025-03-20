@@ -38,10 +38,10 @@ public class Point {
      *
      * @param p is the point that we subtract from the current point
      * @return the result of the subtraction
-     */
+     */S
 
-    public Point subtract(Point p) {
-        return new Point(xyz.d1() - p.xyz.d1(), xyz.d2() - p.xyz.d2(), xyz.d3() - p.xyz.d3());
+    public Vector subtract(Point p) {
+        return new Vector(xyz.d1() - p.xyz.d1(), xyz.d2() - p.xyz.d2(), xyz.d3() - p.xyz.d3());
     }
 
     /**
