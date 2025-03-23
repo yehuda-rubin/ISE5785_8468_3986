@@ -8,17 +8,17 @@ import primitives.Vector;
  * @author Yehuda Rubin and Arye Hacohen
  */
 public class Sphere extends RadialGeometry{
-    private Point center;
+    private final Point center;
 
     /**
      * constructor
      * @param radius will be the radius of the new sphere
-     * @param center will be the center of the new sphere
+     * @param center_of_sphere will be the center of the new sphere
      */
 
-    public Sphere(double radius, Point center) {
+    public Sphere(double radius, Point center_of_sphere) {
         super(radius);
-        this.center = center;
+        this.center = center_of_sphere;
     }
 
     @Override
