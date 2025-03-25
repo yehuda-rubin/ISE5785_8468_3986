@@ -9,6 +9,22 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Yehuda Rubin and Arye Hacohen.
  */
 class PointTest {
+    private final double DELTA = 0.00001;
+    private final Vector v1 = new Vector(1, 2, 3);
+    private final Point p1 = new Point(1, 2, 3);
+
+    /**
+     * test for the constructor {@link primitives.Point#Point(double, double, double)} and {@link primitives.Point#Point(Double3)}
+     */
+    @Test
+    void testConstructor() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Correct point
+        assertDoesNotThrow(() -> p1, "Failed constructing a correct point");
+
+        // TC02: Correct point
+        assertDoesNotThrow(() -> new Point(new Double3(1, 2, 3)), "Failed constructing a correct point");
+    }
 
     /**
      * test for the subtract function {@link primitives.Point#subtract(primitives.Point)}
