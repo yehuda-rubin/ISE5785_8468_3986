@@ -10,6 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class VectorTest {
 
+    @Test
+    void subtract() {
+    }
     /**
      * test for the add function {@link primitives.Vector#add(primitives.Vector)}
      * @author Yehuda Rubin and Arye Hacohen
