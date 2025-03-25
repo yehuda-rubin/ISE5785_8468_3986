@@ -32,6 +32,13 @@ class PointTest {
      */
     @Test
     void subtract() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Subtract two points
+        assertEquals(new Vector(1, 2, 3), new Point(2, 4, 6).subtract(new Point(1, 2, 3)), "Subtract two points does not work correctly");
+
+        // ============ Boundary Values Tests ==================
+        // TC02: Subtract equal points
+        assertThrows(IllegalArgumentException.class, () -> new Point(1, 2, 3).subtract(new Point(1, 2, 3)), "Subtract equal points does not work correctly");
     }
 
     /**
@@ -40,6 +47,9 @@ class PointTest {
      */
     @Test
     void add() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Add a point and a vector
+        assertEquals(new Point(2, 4, 6), new Point(1, 2, 3).add(new Vector(1, 2, 3)), "Add a point and a vector does not work correctly");
     }
 
     /**
@@ -48,6 +58,13 @@ class PointTest {
      */
     @Test
     void distanceSquared() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Distance squared between two points
+        assertEquals(14, new Point(1, 2, 3).distanceSquared(new Point(2, 4, 6)), DELTA, "Distance squared between two points does not work correctly");
+
+        // ============ Boundary Values Tests ==================
+        // TC02: Distance squared between two equal points
+        assertEquals(0, new Point(1, 2, 3).distanceSquared(new Point(1, 2, 3)), DELTA, "Distance squared between two equal points does not work correctly");
     }
 
     /**
