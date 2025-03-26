@@ -1,6 +1,8 @@
 package geometries;
 
 import org.junit.jupiter.api.Test;
+import primitives.Point;
+import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,10 +13,28 @@ import static org.junit.jupiter.api.Assertions.*;
 class SphereTest {
 
     /**
+     * test for the constructor {@link geometries.Sphere#Sphere(double, primitives.Point)}.
+     * @throws Exception if the test fails
+     * @see geometries.Sphere#Sphere(double, primitives.Point)
+     * @author Yehuda Rubin and Arye Hacohen
+     */
+    @Test
+    void testConstructor() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Correct sphere
+        assertDoesNotThrow(() -> new Sphere(1, new Point(0, 0, 0)), "Failed constructing a correct sphere");
+    }
+
+    /**
      * test for the getNormal function {@link geometries.Sphere#getNormal(geometries.Sphere)}
      * @author Yehuda Rubin and Arye Hacohen
      */
     @Test
     void getNormal() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Normal to a sphere
+        Sphere s = new Sphere(1, new Point(0, 0, 0));
+        assertEquals(new Vector(1, 0, 0), s.getNormal(new Point(1, 0, 0)), "Normal to a sphere does not work correctly");
+
     }
 }
