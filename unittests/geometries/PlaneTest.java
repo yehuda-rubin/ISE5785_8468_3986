@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlaneTest {
 
     /**
-     * test for the constructor {@link geometries.Plane#Plane(primitives.Point, primitives.Vector)}.
+     * test for the constructor {@link geometries.Plane#Plane(Point, Point, Point)}.
      * @throws Exception if the test fails
      * @see geometries.Plane#Plane(primitives.Point, primitives.Vector)
      * @author Yehuda Rubin and Arye Hacohen
@@ -21,21 +21,25 @@ class PlaneTest {
     @Test
     void testConstructor() {
         // ============ Equivalence Partitions Tests ==============
-        // TC01: Correct plane
-        assertDoesNotThrow(() -> new Plane(new Point(0, 0, 0), new Vector(0, 0, 1)), "Failed constructing a correct plane");
+        // TC01: Test for a proper result
+        assertDoesNotThrow(() -> new Plane(new Point(1, 0, 0), new Point(0, 1, 0), new Point(0, 0, 1)), "Failed to create a proper plane");
 
-        // ============ Boundary Values Tests ==================
-        // TC02: Correct plane
-        assertDoesNotThrow(() -> new Plane(new Point(1, 1, 1), new Vector(1, 1, 1)), "Failed constructing a correct plane");
+        // =============== Boundary Values Tests =================
+        // TC02: Test for a plane that the points are on the same line
+        assertThrows(IllegalArgumentException.class, () -> new Plane(new Point(1, 0, 0), new Point(2, 0, 0), new Point(3, 0, 0)), "Failed to throw an exception when creating a plane with points on the same line");
 
-        // TC03: Correct plane
-        assertDoesNotThrow(() -> new Plane(new Point(1, 1, 1), new Vector(-1, -1, -1)), "Failed constructing a correct plane");
+        // TC03: Test for a plane that the points are converge
+        assertThrows(IllegalArgumentException.class, () -> new Plane(new Point(0, 0 ,0), new Point(1, 1, 1), new Point(1, 1, 1)), "Failed to throw an exception when creating a plane with points that converge");
 
-        // TC04: Correct plane
-        assertDoesNotThrow(() -> new Plane(new Point(1, 1, 1), new Vector(0, 0, 1)), "Failed constructing a correct plane");
+        // TC04: Test for a plane that the points are converge
+        assertThrows(IllegalArgumentException.class, () -> new Plane(new Point(0, 0, 0), new Point(1, 1, 1), new Point(0, 0, 0)), "Failed to throw an exception when creating a plane with points on the same plane");
 
-        // TC05: Correct plane
-        assertDoesNotThrow(() -> new Plane(new Point(1, 1, 1), new Vector(1, 0, 0)), "Failed constructing a correct plane");
+        // TC05: Test for a plane that the points are converge
+        assertThrows(IllegalArgumentException.class, () -> new Plane(new Point(0, 0, 0), new Point(0, 0, 0), new Point(4, 2, 1)), "Failed to throw an exception when creating a plane with points on the same line");
+
+        // TC06: Test for a plane that the points are converge
+        assertThrows(IllegalArgumentException.class, () -> new Plane(new Point(0, 0, 0), new Point(0, 0, 0), new Point(0, 0, 0)), "Failed to throw an exception when creating a plane with points on the same point");
+
     }
 
     /**

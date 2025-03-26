@@ -21,6 +21,6 @@ class TubeTest {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Normal to a tube
         Tube t = new Tube(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1);
-        assertEquals(new Vector(0, 0, 1), t.getNormal(new Point(0, 0, 1)), "Normal to a tube does not work correctly");
+        assertEquals(new Vector(1, 0, 0), t.getNormal(new Point(1, 0, 1)), "Normal to a tube does not work correctly");
     }
 }

@@ -22,6 +22,6 @@ class CylinderTest {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Normal to a cylinder
         Cylinder c = new Cylinder(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)),1,  1);
-        assertEquals(new Vector(0, 0, 1), c.getNormal(new Point(0, 0, 1)), "Normal to a cylinder does not work correctly");
+        assertEquals(new Vector(1, 0, 0), c.getNormal(new Point(1, 0, 1)), "Normal to a cylinder does not work correctly");
     }
 }
