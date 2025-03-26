@@ -28,6 +28,7 @@ class PointTest {
 
     /**
      * test for the subtract function {@link primitives.Point#subtract(primitives.Point)}
+     *
      * @author Yehuda Rubin and Arye Hacohen
      */
     @Test
@@ -43,6 +44,7 @@ class PointTest {
 
     /**
      * test for the add function {@link primitives.Point#add(primitives.Vector)}
+     *
      * @author Yehuda Rubin and Arye Hacohen
      */
     @Test
@@ -53,6 +55,33 @@ class PointTest {
 
         // ============ Boundary Values Tests ==================
         // TC02: Add a vector to a point
-        assertEquals(Point.ZERO, p1.add(new Vector(-1, -2, -3)), "Add a vector to a point does not work correctly");    }
+        assertEquals(Point.ZERO, p1.add(new Vector(-1, -2, -3)), "Add a vector to a point does not work correctly");
+    }
 
+    /**
+     * test for the distance function {@link primitives.Point#distance(primitives.Point)}
+     */
+    @Test
+    void distance() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Distance between two points
+        assertEquals(7.810249675906654, new Point(1, 2, 3).distance(new Point(4, 6, 9)), DELTA, "Distance between two points does not work correctly");
+
+        // ============ Boundary Values Tests ==================
+        // TC02: Distance between two points
+        assertEquals(0, p1.distance(p1), DELTA, "Distance between two points does not work correctly");
+    }
+
+    /**
+     * test for the equals function {@link primitives.Point#equals(Object)}
+     */
+    @Test
+    void testEquals() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Compare two points
+        assertTrue(p1.equals(new Point(1, 2, 3)), "Compare two points does not work correctly");
+
+        // TC02: Compare two points
+        assertFalse(p1.equals(new Point(2, 4, 6)), "Compare two points does not work correctly");
+    }
 }
