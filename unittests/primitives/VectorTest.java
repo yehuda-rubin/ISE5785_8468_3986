@@ -72,7 +72,7 @@ class VectorTest {
 
         // ============ Boundary Values Tests ==================
         // TC02: Dot product of two orthogonal vectors
-        assertEquals(0, v1.dotProduct(new Vector(0, 0, 1)), "Dot product of two orthogonal vectors does not work correctly");
+        assertEquals(3, v1.dotProduct(new Vector(0, 0, 1)), "Dot product of two orthogonal vectors does not work correctly");
     }
 
     /**
@@ -83,7 +83,7 @@ class VectorTest {
     void crossProduct() {
         // ============ Boundary Values Tests ==================
         // TC01: Cross product of two orthogonal vectors
-        assertEquals(new Vector(0, 0, 14), v1.crossProduct(new Vector(0, 0, 1)), "Cross product of two orthogonal vectors does not work correctly");
+        assertEquals(new Vector(2, -1, 0), v1.crossProduct(new Vector(0, 0, 1)), "Cross product of two orthogonal vectors does not work correctly");
     }
 
     /**

@@ -71,9 +71,9 @@ public class Vector extends Point {
      */
 
     public Vector crossProduct(Vector vector) {
-        return new Vector(xyz.d2() * vector.xyz.d3() - xyz.d3() * vector.xyz.d2(),
-                xyz.d3() * vector.xyz.d1() - xyz.d1() * vector.xyz.d3(),
-                xyz.d1() * vector.xyz.d2() - xyz.d2() * vector.xyz.d1());
+        return new Vector(this.xyz.d2() * vector.xyz.d3() - this.xyz.d3() * vector.xyz.d2(),
+                this.xyz.d3() * vector.xyz.d1() - this.xyz.d1() * vector.xyz.d3(),
+                this.xyz.d1() * vector.xyz.d2() - this.xyz.d2() * vector.xyz.d1());
     }
 
     /**
