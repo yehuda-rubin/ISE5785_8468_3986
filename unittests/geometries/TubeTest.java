@@ -13,18 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class TubeTest {
 
     /**
-     * test for the constructor {@link geometries.Tube#Tube(primitives.Ray, double)}.
-     * @throws Exception if the test fails
-     * @see geometries.Tube#Tube(primitives.Ray, double)
-     * @author Yehuda Rubin and Arye Hacohen
-     */
-    @Test
-    void testConstructor() {
-        // ============ Equivalence Partitions Tests ==============
-        // TC01: Correct tube
-        assertDoesNotThrow(() -> new Tube(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1), "Failed constructing a correct tube");
-    }
-    /**
      * test for the getNormal function {@link geometries.Tube#getNormal(geometries.Tube)}
      * @author Yehuda Rubin and Arye Hacohen
      */

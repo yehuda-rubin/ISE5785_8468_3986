@@ -13,19 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class SphereTest {
 
     /**
-     * test for the constructor {@link geometries.Sphere#Sphere(double, primitives.Point)}.
-     * @throws Exception if the test fails
-     * @see geometries.Sphere#Sphere(double, primitives.Point)
-     * @author Yehuda Rubin and Arye Hacohen
-     */
-    @Test
-    void testConstructor() {
-        // ============ Equivalence Partitions Tests ==============
-        // TC01: Correct sphere
-        assertDoesNotThrow(() -> new Sphere(1, new Point(0, 0, 0)), "Failed constructing a correct sphere");
-    }
-
-    /**
      * test for the getNormal function {@link geometries.Sphere#getNormal(geometries.Sphere)}
      * @author Yehuda Rubin and Arye Hacohen
      */

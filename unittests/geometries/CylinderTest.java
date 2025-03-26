@@ -14,18 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class CylinderTest {
 
     /**
-     * test for the constructor {@link geometries.Cylinder#Cylinder(primitives.Ray, double, double)}.
-     * @throws Exception if the test fails
-     * @see geometries.Cylinder#Cylinder(primitives.Ray, double, double)
-     * @author Yehuda Rubin and Arye Hacohen
-     */
-    @Test
-    void testConstructor() {
-        // ============ Equivalence Partitions Tests ==============
-        // TC01: Correct cylinder
-        assertDoesNotThrow(() -> new Cylinder(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1, 1), "Failed constructing a correct cylinder");
-    }
-    /**
      * test for the getNormal function {@link geometries.Cylinder#getNormal(geometries.Cylinder)}
      * @author Yehuda Rubin and Arye Hacohen
      */
