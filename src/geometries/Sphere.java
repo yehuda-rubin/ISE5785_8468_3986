@@ -21,8 +21,12 @@ public class Sphere extends RadialGeometry{
         this.center = center_of_sphere;
     }
 
+    /**
+     * getter for the center of the sphere
+     * @return the center of the sphere
+     */
     @Override
     public Vector getNormal(Point point) {
-        return null;
+        return point.subtract(center).normalize();
     }
 }

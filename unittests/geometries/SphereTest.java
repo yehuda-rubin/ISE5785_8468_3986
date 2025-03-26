@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SphereTest {
 
     /**
-     * test for the getNormal function {@link geometries.Sphere#getNormal(geometries.Sphere)}
+     * test for the getNormal function {@link geometries.Sphere#getNormal(Point)}
      * @author Yehuda Rubin and Arye Hacohen
      */
     @Test

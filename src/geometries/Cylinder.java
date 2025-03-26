@@ -25,6 +25,20 @@ public class Cylinder extends Tube{
 
     @Override
     public Vector getNormal(Point point) {
+        Point p0 = axis.getHead();
+        Vector v = axis.getDirection();
+        Vector p0_p = point.subtract(p0);
+        double t = v.dotProduct(p0_p);
+        Point o = p0.add(v.scale(t));
+        if (point.subtract(o).length() == radius) {
+            return point.subtract(o).normalize();
+        }
+        if (point.subtract(p0).length() == radius) {
+            return p0.subtract(point).normalize();
+        }
+        if (point.subtract(p0.add(v.scale(height))).length() == radius) {
+            return point.subtract(p0.add(v.scale(height))).normalize();
+        }
         return null;
     }
 }

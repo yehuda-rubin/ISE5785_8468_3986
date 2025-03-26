@@ -23,10 +23,23 @@ class PlaneTest {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Correct plane
         assertDoesNotThrow(() -> new Plane(new Point(0, 0, 0), new Vector(0, 0, 1)), "Failed constructing a correct plane");
+
+        // ============ Boundary Values Tests ==================
+        // TC02: Correct plane
+        assertDoesNotThrow(() -> new Plane(new Point(1, 1, 1), new Vector(1, 1, 1)), "Failed constructing a correct plane");
+
+        // TC03: Correct plane
+        assertDoesNotThrow(() -> new Plane(new Point(1, 1, 1), new Vector(-1, -1, -1)), "Failed constructing a correct plane");
+
+        // TC04: Correct plane
+        assertDoesNotThrow(() -> new Plane(new Point(1, 1, 1), new Vector(0, 0, 1)), "Failed constructing a correct plane");
+
+        // TC05: Correct plane
+        assertDoesNotThrow(() -> new Plane(new Point(1, 1, 1), new Vector(1, 0, 0)), "Failed constructing a correct plane");
     }
 
     /**
-     * test for the getNormal function {@link geometries.Plane#getNormal(geometries.Plane)}
+     * test for the getNormal function {@link geometries.Plane#getNormal(Point)}
      * @author Yehuda Rubin and Arye Hacohen
      */
     @Test

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TubeTest {
 
     /**
-     * test for the getNormal function {@link geometries.Tube#getNormal(geometries.Tube)}
+     * test for the getNormal function {@link geometries.Tube#getNormal(Point)}
      * @author Yehuda Rubin and Arye Hacohen
      */
     @Test
