@@ -28,6 +28,7 @@ class TubeTest {
     /**
      * test for the getNormal function {@link geometries.Tube#getNormal(Point)}
      */
+
     @Test
     void getNormal() {
         // ============ Equivalence Partitions Tests ==============
