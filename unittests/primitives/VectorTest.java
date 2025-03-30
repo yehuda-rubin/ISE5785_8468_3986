@@ -23,6 +23,10 @@ class VectorTest {
 
         // TC02: Correct vector
         assertDoesNotThrow(() -> new Vector(new Double3(1,2,3)), "Failed constructing a correct vector");
+
+        // ============ Boundary Values Tests ==================
+        // TC03: Zero vector
+        assertThrows(IllegalArgumentException.class, () -> new Vector(0, 0, 0), "Failed constructing a zero vector");
     }
     /**
      * test for the subtract function {@link primitives.Point#subtract(primitives.Point)}

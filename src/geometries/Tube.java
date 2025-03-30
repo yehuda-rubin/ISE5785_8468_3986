@@ -27,6 +27,9 @@ public class Tube extends RadialGeometry{
     public Tube(Ray axis, double radius) {
         super(radius);
         this.axis = axis;
+        if (radius <= 0) {
+            throw new IllegalArgumentException("Radius must be positive");
+        }
     }
 
     @Override
