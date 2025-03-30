@@ -14,7 +14,6 @@ class SphereTest {
 
     /**
      * test for the constructor {@link geometries.Sphere#Sphere(double, Point)}
-     * @author Yehuda Rubin and Arye Hacohen
      */
     @Test
     void testConstructor() {
@@ -29,7 +28,6 @@ class SphereTest {
 
     /**
      * test for the getNormal function {@link geometries.Sphere#getNormal(Point)}
-     * @author Yehuda Rubin and Arye Hacohen
      */
     @Test
     void getNormal() {

@@ -7,23 +7,31 @@ import static org.junit.jupiter.api.Assertions.*;
  * uint tests for primitives.Vector class
  * @author Yehuda Rubin and Arye Hacohen.
  */
+
 class VectorTest {
+
     /**
      * delta for double comparison
      */
+
     private final double DELTA = 0.00001;
+
     /**
      * Vector to test
      */
+
     final Vector v1 = new Vector(1, 2, 3);
+
     /**
      * Vector to test
      */
+
     final Vector v2 = new Vector(-2, -4, -6);
 
     /**
      * test for the constructor {@link primitives.Vector#Vector(double, double, double)} and {@link primitives.Vector#Vector(Double3)}.
      */
+
     @Test
     void testConstructor() {
         // ============ Equivalence Partitions Tests ==============
@@ -37,10 +45,11 @@ class VectorTest {
         // TC03: Zero vector
         assertThrows(IllegalArgumentException.class, () -> new Vector(0, 0, 0), "Failed constructing a zero vector");
     }
+
     /**
      * test for the subtract function {@link primitives.Point#subtract(primitives.Point)}
-     * @author Yehuda Rubin and Arye Hacohen
      */
+
     @Test
     void subtract() {
         // ============ Equivalence Partitions Tests ==============
@@ -51,10 +60,11 @@ class VectorTest {
         // TC02: Subtract equal vectors
         assertThrows(IllegalArgumentException.class, () -> v1.subtract(v1), "Subtract equal vectors does not work correctly");
     }
+
     /**
      * test for the add function {@link primitives.Vector#add(primitives.Vector)}
-     * @author Yehuda Rubin and Arye Hacohen
      */
+
     @Test
     void add() {
         // ============ Equivalence Partitions Tests ==============
@@ -64,8 +74,8 @@ class VectorTest {
 
     /**
      * test for the scale function {@link primitives.Vector#scale(double)}.
-     * @author Yehuda Rubin and Arye Hacohen
      */
+
     @Test
     void scale() {
         // ============ Equivalence Partitions Tests ==============
@@ -75,8 +85,8 @@ class VectorTest {
 
     /**
      * test for the dotProduct function {@link primitives.Vector#dotProduct(primitives.Vector)}.
-     * @author Yehuda Rubin and Arye Hacohen
      */
+
     @Test
     void dotProduct() {
         // ============ Equivalence Partitions Tests ==============
@@ -90,8 +100,8 @@ class VectorTest {
 
     /**
      * test for the crossProduct function {@link primitives.Vector#crossProduct(primitives.Vector)}.
-     * @author Yehuda Rubin and Arye Hacohen
      */
+
     @Test
     void crossProduct() {
         // ============ Boundary Values Tests ==================
@@ -101,8 +111,8 @@ class VectorTest {
 
     /**
      * test for the lengthSquared function {@link primitives.Vector#lengthSquared()}.
-     * @author Yehuda Rubin and Arye Hacohen
      */
+
     @Test
     void lengthSquared() {
         // ============ Equivalence Partitions Tests ==============
@@ -117,8 +127,8 @@ class VectorTest {
 
     /**
      * test for the length function {@link primitives.Vector#length()}
-     * @author Yehuda Rubin and Arye Hacohen
      */
+
     @Test
     void length() {
         // ============ Equivalence Partitions Tests ==============
@@ -133,8 +143,8 @@ class VectorTest {
 
     /**
      * test for the normalize function {@link primitives.Vector#normalize()}.
-     * @author Yehuda Rubin and Arye Hacohen
      */
+
     @Test
     void normalize() {
         // ============ Equivalence Partitions Tests ==============

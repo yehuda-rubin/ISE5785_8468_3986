@@ -8,23 +8,29 @@ import static org.junit.jupiter.api.Assertions.*;
  * unit tests for primitives.Point class
  * @author Yehuda Rubin and Arye Hacohen.
  */
+
 class PointTest {
     /**
      * delta for double comparison
      */
+
     private final double DELTA = 0.00001;
     /**
      * Vector to test
      */
+
     private final Vector v1 = new Vector(1, 2, 3);
+
     /**
      * Point to test
      */
+
     private final Point p1 = new Point(1, 2, 3);
 
     /**
      * test for the constructor {@link primitives.Point#Point(double, double, double)} and {@link primitives.Point#Point(Double3)}
      */
+
     @Test
     void testConstructor() {
         // ============ Equivalence Partitions Tests ==============
@@ -37,9 +43,8 @@ class PointTest {
 
     /**
      * test for the subtract function {@link primitives.Point#subtract(primitives.Point)}
-     *
-     * @author Yehuda Rubin and Arye Hacohen
      */
+
     @Test
     void subtract() {
         // ============ Equivalence Partitions Tests ==============
@@ -53,9 +58,8 @@ class PointTest {
 
     /**
      * test for the add function {@link primitives.Point#add(primitives.Vector)}
-     *
-     * @author Yehuda Rubin and Arye Hacohen
      */
+
     @Test
     void add() {
         /// ============ Equivalence Partitions Tests ==============
@@ -70,6 +74,7 @@ class PointTest {
     /**
      * test for the distance function {@link primitives.Point#distance(primitives.Point)}
      */
+
     @Test
     void distance() {
         // ============ Equivalence Partitions Tests ==============
@@ -84,6 +89,7 @@ class PointTest {
     /**
      * test for the equals function {@link primitives.Point#equals(Object)}
      */
+
     @Test
     void testEquals() {
         // ============ Equivalence Partitions Tests ==============

@@ -14,7 +14,6 @@ class TubeTest {
 
     /**
      * test for the constructor {@link geometries.Tube#Tube(Ray, double)}
-     * @author Yehuda Rubin and Arye Hacohen
      */
     @Test
     void testConstructor() {
@@ -28,7 +27,6 @@ class TubeTest {
     }
     /**
      * test for the getNormal function {@link geometries.Tube#getNormal(Point)}
-     * @author Yehuda Rubin and Arye Hacohen
      */
     @Test
     void getNormal() {
