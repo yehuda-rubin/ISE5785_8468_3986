@@ -36,5 +36,19 @@ class TubeTest {
         // TC01: Normal to a tube
         Tube t = new Tube(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1);
         assertEquals(new Vector(1, 0, 0), t.getNormal(new Point(1, 0, 1)), "Normal to a tube does not work correctly");
+
+        // ============ Boundary Values Tests ==================
+        // TC02: Normal to a tube
+        // The normal to the top base of the tube
+        assertEquals(new Vector(1, 0, 0), t.getNormal(new Point(1, 0, 2)), "Normal to the top base of the tube does not work correctly");
+
+        // TC03: Normal to a tube
+        // The normal to the bottom base of the tube
+        assertEquals(new Vector(1, 0, 0), t.getNormal(new Point(1, 0, -1)), "Normal to the bottom base of the tube does not work correctly");
+
+        // TC04: Normal to a tube
+        // The normal to the bottom base of the tube
+        assertEquals(new Vector(1, 0, 0), t.getNormal(new Point(1, 0, -2)), "Normal to the bottom base of the tube does not work correctly");
+
     }
 }
