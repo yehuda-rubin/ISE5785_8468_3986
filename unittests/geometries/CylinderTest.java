@@ -48,5 +48,6 @@ class CylinderTest {
         // TC02: Normal to a cylinder
         // The normal to the top base of the cylinder
         assertEquals(new Vector(1, 0, 0), c.getNormal(new Point(1, 0, 2)), "Normal to the top base of the cylinder does not work correctly");
+
     }
 }
