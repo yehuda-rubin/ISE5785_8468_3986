@@ -9,8 +9,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Yehuda Rubin and Arye Hacohen.
  */
 class PointTest {
+    /**
+     * delta for double comparison
+     */
     private final double DELTA = 0.00001;
+    /**
+     * Vector to test
+     */
     private final Vector v1 = new Vector(1, 2, 3);
+    /**
+     * Point to test
+     */
     private final Point p1 = new Point(1, 2, 3);
 
     /**

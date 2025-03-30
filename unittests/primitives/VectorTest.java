@@ -8,8 +8,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Yehuda Rubin and Arye Hacohen.
  */
 class VectorTest {
+    /**
+     * delta for double comparison
+     */
     private final double DELTA = 0.00001;
+    /**
+     * Vector to test
+     */
     final Vector v1 = new Vector(1, 2, 3);
+    /**
+     * Vector to test
+     */
     final Vector v2 = new Vector(-2, -4, -6);
 
     /**
