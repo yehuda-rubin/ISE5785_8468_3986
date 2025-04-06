@@ -11,7 +11,7 @@ package geometries;
  * @author Yehuda Rubin and Arye Hacohen
  */
 
-public abstract class RadialGeometry extends Geometry{
+public abstract class   RadialGeometry extends Geometry{
     /**
      * radius - the radius of the radial geometry object
      */
