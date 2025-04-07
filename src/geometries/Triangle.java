@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.Point;
 import primitives.Ray;
+import primitives.Vector;
+
 import static primitives.Util.isZero;
 import java.util.List;
 

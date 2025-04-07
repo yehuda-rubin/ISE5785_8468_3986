@@ -2,8 +2,10 @@ package geometries;
 
 import primitives.Point;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +40,29 @@ public class Sphere extends RadialGeometry{
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-        return null;
+        Point p0 = ray.getHead(0);
+        Vector v = ray.getDirection();
+        // Direction from ray origin to the sphere center
+        Vector L = center.subtract(p0);
+        double t_ca = v.dotProduct(L);
+        double d2 = L.dotProduct(L) - t_ca * t_ca;
+        double r2 = radius * radius;
+        // no intersections if distance from center to ray > radius
+        if (d2 > r2)
+            return null;
+        double t_hc = Math.sqrt(r2 - d2);
+        double t1 = t_ca - t_hc;
+        double t2 = t_ca + t_hc;
+
+        List<Point> intersections = new ArrayList<>();
+        // Only consider intersections in front of the ray (t > 0)
+        if (Util.isZero(t1) || t1 > 0)
+            intersections.add(p0.add(v.scale(t1)));
+        if (!Util.isZero(t2) && t2 > 0) {
+            // If t1 and t2 are nearly equal (tangent) return one point only
+            if (intersections.isEmpty() || !Util.isZero(t2 - t1))
+                intersections.add(p0.add(v.scale(t2)));
+        }
+        return intersections.isEmpty() ? null : intersections;
     }
 }

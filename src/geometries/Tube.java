@@ -44,7 +44,10 @@ public class Tube extends RadialGeometry{
         return point.subtract(o).normalize();
     }
 
-
+    /**
+     * @param ray the ray to check for intersections with the tube
+     * @return a list of intersection points or null if there are no intersections
+     */
     @Override
     public List<Point> findIntersections(Ray ray) {
         Vector v = axis.getDirection();
@@ -64,7 +67,6 @@ public class Tube extends RadialGeometry{
             return null; // no intersection
         }
         double t1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-        double t2 = (-b - Math.sqrt(discriminant)) / (2 * a);
-        return List.of(ray.getHead(t1), ray.getHead(t2));
+        return List.of(ray.getHead(t1));
     }
 }
