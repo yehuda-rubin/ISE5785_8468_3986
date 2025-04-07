@@ -50,6 +50,11 @@ class CylinderTest {
         // The normal to the top base of the cylinder
         assertEquals(new Vector(1, 0, 0), c.getNormal(new Point(1, 0, 2)), "Normal to the top base of the cylinder does not work correctly");
     }
+
+    /**
+     * test for the findIntersections function {@link geometries.Cylinder#findIntersections(Ray)}
+     * @author Yehuda Rubin and Arye Hacohen
+     */
     @Test
     public void testFindIntersections() {
         Cylinder cylinder = new Cylinder(

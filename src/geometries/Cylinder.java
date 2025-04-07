@@ -3,6 +3,7 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 import primitives.Ray;
+import java.util.List;
 
 /**
  * The Cylinder class extends the Tube class and represents a cylinder in 3D space.
@@ -42,6 +43,15 @@ public class Cylinder extends Tube{
         if (point.subtract(p0.add(v.scale(height))).length() == radius) {
             return point.subtract(p0.add(v.scale(height))).normalize();
         }
+        return null;
+    }
+
+    /**
+     * @param ray the ray to check for intersections with the cylinder
+     * @return null since the method is not implemented
+     */
+    @Override
+    public List<Point> findIntersections(Ray ray) {
         return null;
     }
 }
