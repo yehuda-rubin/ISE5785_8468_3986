@@ -59,10 +59,6 @@ public class Plane extends Geometry{
         }
 
         Point intersectionPoint = p0.add(direction.scale(t));
-        if (isZero(intersectionPoint.distance(q0))) {
-            return null; // the ray is on the plane
-        }
-
         return List.of(intersectionPoint); // the ray intersects the plane
     }
 }
