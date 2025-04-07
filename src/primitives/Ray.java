@@ -1,5 +1,7 @@
 package primitives;
 
+import static primitives.Util.isZero;
+
 /**
  * This class make ray in 3D space
  * head point and direction vector
@@ -25,8 +27,10 @@ public class Ray {
      * getter for the head of the ray
      * @return the head of the ray
      */
-    public Point getHead() {
-        return head;
+    public Point getHead(double distance) {
+        if (isZero(distance))
+            return head;
+        return head.add(direction.scale(distance));
     }
 
     /**

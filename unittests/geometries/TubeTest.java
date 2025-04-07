@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -51,5 +54,39 @@ class TubeTest {
         // The normal to the bottom base of the tube
         assertEquals(new Vector(1, 0, 0), t.getNormal(new Point(1, 0, -2)), "Normal to the bottom base of the tube does not work correctly");
 
+    }
+
+    /**
+     * test for the findIntersections function {@link geometries.Tube#findIntersections(Ray)}
+     */
+    @Test
+    void findIntersections() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Ray intersects inside the tube
+        Tube tube = new Tube(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1);
+        Ray ray1 = new Ray(new Point(0, 0, 2), new Vector(1, 0, -1));
+        assertEquals(List.of(new Point(1, 0, 1)), tube.findIntersections(ray1), "Ray intersects inside the tube - should return 1 point");
+
+        // TC02: Ray intersects outside against edge
+        Ray ray2 = new Ray(new Point(2, 0, 2), new Vector(0, 0, -1));
+        assertNull(tube.findIntersections(ray2), "Ray outside against edge - should return null");
+
+        // TC03: Ray intersects outside against vertex
+        Ray ray3 = new Ray(new Point(-1, -1, 2), new Vector(0, 0, -1));
+        assertNull(tube.findIntersections(ray3), "Ray outside against vertex - should return null");
+
+        // =============== Boundary Value Tests ==================
+
+        // TC11: Ray intersects on edge
+        Ray ray4 = new Ray(new Point(1, 0, 2), new Vector(0, 0, -1));
+        assertNull(tube.findIntersections(ray4), "Ray on edge - should return null");
+
+        // TC12: Ray intersects on vertex
+        Ray ray5 = new Ray(new Point(0, 0, 2), new Vector(0, 0, -1));
+        assertNull(tube.findIntersections(ray5), "Ray on vertex - should return null");
+
+        // TC13: Ray intersects on edge extension
+        Ray ray6 = new Ray(new Point(3, 0, 2), new Vector(0, 0, -1));
+        assertNull(tube.findIntersections(ray6), "Ray on edge extension - should return null");
     }
 }

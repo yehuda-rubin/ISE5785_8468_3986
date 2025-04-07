@@ -28,7 +28,7 @@ public class Cylinder extends Tube{
 
     @Override
     public Vector getNormal(Point point) {
-        Point p0 = axis.getHead();
+        Point p0 = axis.getHead(0);
         Vector v = axis.getDirection();
         Vector p0_p = point.subtract(p0);
         double t = v.dotProduct(p0_p);

@@ -5,6 +5,8 @@ import primitives.Vector;
 import primitives.Ray;
 import java.util.List;
 
+import static primitives.Util.isZero;
+
 /**
  * The Plane class extends the Geometry class
  * @author Yehuda Rubin and Arye Hacohen
@@ -46,6 +48,21 @@ public class Plane extends Geometry{
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-        return null;
+        Vector direction = ray.getDirection();
+        Point p0 = ray.getHead(0);
+        if(isZero(direction.dotProduct(normal)) || q0.equals(p0)) {
+            return null; // the ray is parallel to the plane
+        }
+        double t = normal.dotProduct(q0.subtract(p0)) / normal.dotProduct(direction);
+        if (t <= 0) {
+            return null; // the ray is pointing away from the plane
+        }
+
+        Point intersectionPoint = p0.add(direction.scale(t));
+        if (isZero(intersectionPoint.distance(q0))) {
+            return null; // the ray is on the plane
+        }
+
+        return List.of(intersectionPoint); // the ray intersects the plane
     }
 }

@@ -50,4 +50,3 @@ class TriangleTest {
         assertNull(triangle.findIntersections(ray6), "Ray on edge extension - should return null");
     }
 }
-}
