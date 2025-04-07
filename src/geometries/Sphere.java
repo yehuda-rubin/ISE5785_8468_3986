@@ -41,28 +41,32 @@ public class Sphere extends RadialGeometry{
     @Override
     public List<Point> findIntersections(Ray ray) {
         Point p0 = ray.getHead(0);
-        Vector v = ray.getDirection();
-        // Direction from ray origin to the sphere center
-        Vector L = center.subtract(p0);
-        double t_ca = v.dotProduct(L);
-        double d2 = L.dotProduct(L) - t_ca * t_ca;
-        double r2 = radius * radius;
-        // no intersections if distance from center to ray > radius
-        if (d2 > r2)
-            return null;
-        double t_hc = Math.sqrt(r2 - d2);
-        double t1 = t_ca - t_hc;
-        double t2 = t_ca + t_hc;
+        Vector dir = ray.getDirection();
 
-        List<Point> intersections = new ArrayList<>();
-        // Only consider intersections in front of the ray (t > 0)
-        if (Util.isZero(t1) || t1 > 0)
-            intersections.add(p0.add(v.scale(t1)));
-        if (!Util.isZero(t2) && t2 > 0) {
-            // If t1 and t2 are nearly equal (tangent) return one point only
-            if (intersections.isEmpty() || !Util.isZero(t2 - t1))
-                intersections.add(p0.add(v.scale(t2)));
-        }
-        return intersections.isEmpty() ? null : intersections;
+        // if the ray starts at the center of the sphere
+        if (center.equals(p0))
+            return List.of(p0.add(dir.scale(radius)));
+
+        Vector u = (center.subtract(p0));
+        double tm = dir.dotProduct(u);
+        double d = Util.alignZero(Math.sqrt(u.lengthSquared() - tm * tm));
+        if (d >= radius)
+            return null;
+
+        double th = Math.sqrt(radius * radius - d * d);
+        double t1 = Util.alignZero(tm - th);
+        double t2 = Util.alignZero(tm + th);
+
+        // if the ray starts before the sphere
+        if (t1 > 0 && t2 > 0)
+            return List.of(p0.add(dir.scale(t1)), p0.add(dir.scale(t2)));
+
+        // if the ray starts inside the sphere
+        if (t1 > 0)
+            return List.of(p0.add(dir.scale(t1)));
+        if (t2 > 0)
+            return List.of(p0.add(dir.scale(t2)));
+
+        return null;
     }
 }
