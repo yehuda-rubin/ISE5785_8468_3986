@@ -40,7 +40,7 @@ public class Sphere extends RadialGeometry{
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-        Point p0 = ray.getHead(0);
+        Point p0 = ray.getPoint(0);
         Vector dir = ray.getDirection();
 
         // if the ray starts at the center of the sphere

@@ -86,12 +86,16 @@ class SphereTest {
         Ray ray3 = new Ray(new Point(3, 3, 0), new Vector(1, 0, 0));
         assertNull(sphere.findIntersections(ray3), "Ray outside sphere - should return null");
 
+        // TC04: Ray intersects the sphere in 1 point (starts outside)
+        Ray ray4 = new Ray(new Point(1, 0, 0), new Vector(0, 1, 0));
+        assertEquals( 1, sphere.findIntersections(ray4).size(), "Ray starts outside - should return 1 point");
+
         // =============== Boundary Value Tests ==================
 
         // Group: Ray is tangent to the sphere
         // TC11: Ray starts before and is tangent
-        Ray ray4 = new Ray(new Point(0, 1, 0), new Vector(1, 0, 0));
-        assertNull(sphere.findIntersections(ray4), "Ray tangent - should return null");
+        Ray ray44 = new Ray(new Point(0, 1, 0), new Vector(1, 0, 0));
+        assertNull(sphere.findIntersections(ray44), "Ray tangent - should return null");
 
         // Group: Ray starts at the surface
 
