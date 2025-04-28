@@ -88,5 +88,22 @@ class TubeTest {
         // TC13: Ray intersects on edge extension
         Ray ray6 = new Ray(new Point(3, 0, 2), new Vector(0, 0, -1));
         assertNull(tube.findIntersections(ray6), "Ray on edge extension - should return null");
+
+        // TC14: Ray intersects on edge extension
+        Ray ray7 = new Ray(new Point(0, 0, 2), new Vector(1, 0, -1));
+        assertEquals(List.of(new Point(1, 0, 1)), tube.findIntersections(ray7), "Ray on edge extension - should return 1 point");
+
+        // TC15: Ray intersects on edge extension
+        Ray ray8 = new Ray(new Point(0, 0, 2), new Vector(-1, 0, -1));
+        assertEquals(List.of(new Point(-1, 0, 1)), tube.findIntersections(ray8), "Ray on edge extension - should return 1 point");
+
+        // TC16: Ray intersects on edge extension
+        Ray ray9 = new Ray(new Point(0, 0, 2), new Vector(0, 1, -1));
+        assertEquals(List.of(new Point(0, 1, 1)), tube.findIntersections(ray9), "Ray on edge extension - should return 1 point");
+
+        // TC17: Ray intersects on edge extension
+        Ray ray10 = new Ray(new Point(0, 0, 2), new Vector(0, -1, -1));
+        assertEquals(List.of(new Point(0, -1, 1)), tube.findIntersections(ray10), "Ray on edge extension - should return 1 point");
+
     }
 }
