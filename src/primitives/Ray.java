@@ -27,7 +27,7 @@ public class Ray {
      * getter for the head of the ray
      * @return the head of the ray
      */
-    public Point getHead(double distance) {
+    public Point getPoint(double distance) {
         if (isZero(distance))
             return head;
         return head.add(direction.scale(distance));

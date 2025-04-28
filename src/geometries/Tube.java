@@ -36,7 +36,7 @@ public class Tube extends RadialGeometry{
 
     @Override
     public Vector getNormal(Point point) {
-        Point p0 = axis.getHead(0);
+        Point p0 = axis.getPoint(0);
         Vector v = axis.getDirection();
         Vector p0_p = point.subtract(p0);
         double t = v.dotProduct(p0_p);
@@ -51,8 +51,8 @@ public class Tube extends RadialGeometry{
     @Override
     public List<Point> findIntersections(Ray ray) {
         Vector v = axis.getDirection();
-        Point p0 = axis.getHead(0);
-        Point p1 = ray.getHead(0);
+        Point p0 = axis.getPoint(0);
+        Point p1 = ray.getPoint(0);
         Vector d = ray.getDirection();
         double t = v.dotProduct(p1.subtract(p0));
         double d2 = d.dotProduct(d);
@@ -67,6 +67,6 @@ public class Tube extends RadialGeometry{
             return null; // no intersection
         }
         double t1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-        return List.of(ray.getHead(t1));
+        return List.of(ray.getPoint(t1));
     }
 }

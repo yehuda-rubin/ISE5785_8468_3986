@@ -1,6 +1,9 @@
 package geometries;
 
 import static java.lang.Double.*;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import static primitives.Util.*;
 import primitives.*;
@@ -82,6 +85,33 @@ public class   Polygon extends Geometry {
 
    @Override
    public List<Point> findIntersections(Ray ray) {
-      return null;
+      List<Point> points = this.plane.findIntersections(ray);
+        // if the ray does not intersect the plane, return null
+      if (points == null)
+         return null;
+
+      Point p0 = ray.getPoint(0);
+      Vector v = ray.getDirection();
+      List<Vector> vectors = new LinkedList<>();
+
+        // create a list of vectors from the first point to all other points
+      for (Point p : this.vertices) {
+         vectors.add(p.subtract(p0));
+      }
+      int vSize = vectors.size();
+
+        // check if the ray is in the same plane as the polygon
+      double normal = alignZero(vectors.get(vSize - 1).crossProduct(vectors.get(0)).dotProduct(v));
+      if (isZero(normal))
+         return null;
+      boolean sign = normal > 0;
+      for (int i = 0; i < vSize - 1; i++) {
+         normal = alignZero(vectors.get(i).crossProduct(vectors.get(i + 1)).dotProduct(v));
+         if ((normal > 0) ^ sign || isZero(normal))
+            return null;
+      }
+
+        // if we got here, the ray intersects the polygon
+      return points;
    }
 }
