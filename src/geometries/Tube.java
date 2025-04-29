@@ -50,41 +50,6 @@ public class Tube extends RadialGeometry{
      */
     @Override
     public List<Point> findIntersections(Ray ray) {
-        Vector v = axis.getDirection();
-        Point p0 = axis.getPoint(0);
-        Point p1 = ray.getPoint(0);
-        Vector d = ray.getDirection();
-
-        // Calculate coefficients for the quadratic equation
-        double a = d.dotProduct(d) - Math.pow(v.dotProduct(d), 2);
-        if (isZero(a)) {
-            return null; // The ray is parallel to the tube
-        }
-
-        Vector deltaP = p1.subtract(p0);
-        double b = 2 * (d.dotProduct(deltaP) - v.dotProduct(d) * v.dotProduct(deltaP));
-        double c = deltaP.dotProduct(deltaP) - Math.pow(v.dotProduct(deltaP), 2) - radius * radius;
-
-        double discriminant = b * b - 4 * a * c;
-        if (discriminant < 0) {
-            return null; // No intersection
-        }
-
-        double t1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-        double t2 = (-b - Math.sqrt(discriminant)) / (2 * a);
-
-        if (discriminant == 0) {
-            return List.of(ray.getPoint(t1)); // One intersection point
-        }
-
-        if (t1 > 0 && t2 > 0) {
-            return List.of(ray.getPoint(t1), ray.getPoint(t2)); // Two intersection points
-        } else if (t1 > 0) {
-            return List.of(ray.getPoint(t1)); // One intersection point
-        } else if (t2 > 0) {
-            return List.of(ray.getPoint(t2)); // One intersection point
-        }
-
         return null; // No intersection
     }
 }
