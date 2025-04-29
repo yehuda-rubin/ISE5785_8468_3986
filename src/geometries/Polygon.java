@@ -83,6 +83,10 @@ public class   Polygon extends Geometry {
    @Override
    public Vector getNormal(Point point) { return plane.getNormal(point); }
 
+    /**
+     * Return the list of vertices of the polygon
+     * @return the list of vertices of the polygon
+     */
    @Override
    public List<Point> findIntersections(Ray ray) {
       List<Point> points = this.plane.findIntersections(ray);

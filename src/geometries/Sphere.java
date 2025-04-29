@@ -38,6 +38,10 @@ public class Sphere extends RadialGeometry{
         return point.subtract(center).normalize();
     }
 
+    /**
+     * @param ray the ray to check for intersections with the sphere
+     * @return a list of intersection points or null if there are no intersections
+     */
     @Override
     public List<Point> findIntersections(Ray ray) {
         Point p0 = ray.getPoint(0);

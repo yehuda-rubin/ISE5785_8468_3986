@@ -46,6 +46,10 @@ public class Plane extends Geometry{
         return normal;
     }
 
+    /**
+     * @param ray the ray to check for intersections with the plane
+     * @return a list of intersection points or null if there are no intersections
+     */
     @Override
     public List<Point> findIntersections(Ray ray) {
         Vector direction = ray.getDirection();
