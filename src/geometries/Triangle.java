@@ -48,7 +48,8 @@ public class Triangle extends Polygon{
                     || isZero(vertexA.subtract(vertexC).crossProduct(intersectionPoint.subtract(vertexC)).dotProduct(triangleNormal))) {
                 return null;
             }
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             return null;
         }
 
