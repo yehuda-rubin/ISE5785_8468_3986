@@ -4,6 +4,11 @@ import java.util.List;
 import primitives.Point;
 import primitives.Ray;
 
+/**
+ * The Geometries class is a collection of intersectable geometries.
+ * It provides methods to add geometries and find intersections with a ray.
+ * @author Yehuda Rubin and Arye Hacohen
+ */
 public class Geometries {
     private List<Intersectable> geometries = new ArrayList<>();
 
