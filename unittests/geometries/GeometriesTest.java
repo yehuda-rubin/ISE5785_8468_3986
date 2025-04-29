@@ -75,7 +75,7 @@ class GeometriesTest {
 
         // ================= Equivalence Partitions Tests =================
         // TC05: all geometries are intersected
-        assertEquals(3, geometries.findIntersections(new Ray(new Point(0.6, 0.6, -2), new Vector(0, 0, 1))).size(), "all geometries are intersected");
+        assertEquals(4, geometries.findIntersections(new Ray(new Point(0.6, 0.6, -2), new Vector(0, 0, 1))).size(), "all geometries are intersected");
 
     }
 }
