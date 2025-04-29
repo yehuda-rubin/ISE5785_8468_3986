@@ -60,50 +60,38 @@ class TubeTest {
      * test for the findIntersections function {@link geometries.Tube#findIntersections(Ray)}
      */
     @Test
-    void findIntersections() {
-        // ============ Equivalence Partitions Tests ==============
-        // TC01: Ray intersects inside the tube
+    void testFindIntersections() {
         Tube tube = new Tube(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1);
-        Ray ray1 = new Ray(new Point(0, 0, 2), new Vector(1, 0, -1));
-        assertEquals(List.of(new Point(1, 0, 1)), tube.findIntersections(ray1), "Ray intersects inside the tube - should return 1 point");
 
-        // TC02: Ray intersects outside against edge
-        Ray ray2 = new Ray(new Point(2, 0, 2), new Vector(0, 0, -1));
-        assertNull(tube.findIntersections(ray2), "Ray outside against edge - should return null");
+        // ============ Equivalence Partitions Tests ==============
 
-        // TC03: Ray intersects outside against vertex
-        Ray ray3 = new Ray(new Point(-1, -1, 2), new Vector(0, 0, -1));
-        assertNull(tube.findIntersections(ray3), "Ray outside against vertex - should return null");
+        // TC01: Ray intersects the tube at two points
+        Ray ray1 = new Ray(new Point(-2, 0, 1), new Vector(2, 0, 0));
+        assertEquals(List.of(new Point(1, 0, 1), new Point(-1, 0, 1)),
+                tube.findIntersections(ray1), "Ray intersects the tube at two points");
 
-        // =============== Boundary Value Tests ==================
+        // TC02: Ray starts inside the tube and intersects it at one point
+        Ray ray2 = new Ray(new Point(0.5, 0, 1), new Vector(1, 0, 0));
+        assertEquals(List.of(new Point(1, 0, 1)),
+                tube.findIntersections(ray2), "Ray starts inside the tube and intersects it at one point");
 
-        // TC11: Ray intersects on edge
-        Ray ray4 = new Ray(new Point(1, 0, 2), new Vector(0, 0, -1));
-        assertNull(tube.findIntersections(ray4), "Ray on edge - should return null");
+        // TC03: Ray does not intersect the tube
+        Ray ray3 = new Ray(new Point(2, 2, 1), new Vector(1, 1, 0));
+        assertNull(tube.findIntersections(ray3), "Ray does not intersect the tube");
 
-        // TC12: Ray intersects on vertex
-        Ray ray5 = new Ray(new Point(0, 0, 2), new Vector(0, 0, -1));
-        assertNull(tube.findIntersections(ray5), "Ray on vertex - should return null");
+        // =============== Boundary Values Tests ==================
 
-        // TC13: Ray intersects on edge extension
-        Ray ray6 = new Ray(new Point(3, 0, 2), new Vector(0, 0, -1));
-        assertNull(tube.findIntersections(ray6), "Ray on edge extension - should return null");
+        // TC04: Ray is tangent to the tube
+        Ray ray4 = new Ray(new Point(1, -1, 1), new Vector(0, 1, 0));
+        assertEquals(List.of(new Point(1, 0, 1)),
+                tube.findIntersections(ray4), "Ray is tangent to the tube");
 
-        // TC14: Ray intersects on edge extension
-        Ray ray7 = new Ray(new Point(0, 0, 2), new Vector(1, 0, -1));
-        assertEquals(List.of(new Point(1, 0, 1)), tube.findIntersections(ray7), "Ray on edge extension - should return 1 point");
+        // TC05: Ray is parallel to the tube and does not intersect
+        Ray ray5 = new Ray(new Point(2, 0, 1), new Vector(0, 0, 1));
+        assertNull(tube.findIntersections(ray5), "Ray is parallel to the tube and does not intersect");
 
-        // TC15: Ray intersects on edge extension
-        Ray ray8 = new Ray(new Point(0, 0, 2), new Vector(-1, 0, -1));
-        assertEquals(List.of(new Point(-1, 0, 1)), tube.findIntersections(ray8), "Ray on edge extension - should return 1 point");
-
-        // TC16: Ray intersects on edge extension
-        Ray ray9 = new Ray(new Point(0, 0, 2), new Vector(0, 1, -1));
-        assertEquals(List.of(new Point(0, 1, 1)), tube.findIntersections(ray9), "Ray on edge extension - should return 1 point");
-
-        // TC17: Ray intersects on edge extension
-        Ray ray10 = new Ray(new Point(0, 0, 2), new Vector(0, -1, -1));
-        assertEquals(List.of(new Point(0, -1, 1)), tube.findIntersections(ray10), "Ray on edge extension - should return 1 point");
-
+        // TC06: Ray starts on the surface of the tube and goes outward
+        Ray ray6 = new Ray(new Point(1, 0, 1), new Vector(1, 0, 0));
+        assertNull(tube.findIntersections(ray6), "Ray starts on the surface of the tube and goes outward");
     }
 }

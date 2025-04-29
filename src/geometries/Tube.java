@@ -54,19 +54,37 @@ public class Tube extends RadialGeometry{
         Point p0 = axis.getPoint(0);
         Point p1 = ray.getPoint(0);
         Vector d = ray.getDirection();
-        double t = v.dotProduct(p1.subtract(p0));
-        double d2 = d.dotProduct(d);
-        double a = d2 - Math.pow(v.dotProduct(d), 2);
+
+        // Calculate coefficients for the quadratic equation
+        double a = d.dotProduct(d) - Math.pow(v.dotProduct(d), 2);
         if (isZero(a)) {
-            return null; // the ray is parallel to the tube
+            return null; // The ray is parallel to the tube
         }
-        double b = 2 * (d.dotProduct(p1.subtract(p0)) - t * v.dotProduct(d));
-        double c = p1.subtract(p0).lengthSquared() - Math.pow(t, 2) - radius * radius;
+
+        Vector deltaP = p1.subtract(p0);
+        double b = 2 * (d.dotProduct(deltaP) - v.dotProduct(d) * v.dotProduct(deltaP));
+        double c = deltaP.dotProduct(deltaP) - Math.pow(v.dotProduct(deltaP), 2) - radius * radius;
+
         double discriminant = b * b - 4 * a * c;
         if (discriminant < 0) {
-            return null; // no intersection
+            return null; // No intersection
         }
+
         double t1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-        return List.of(ray.getPoint(t1));
+        double t2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+
+        if (discriminant == 0) {
+            return List.of(ray.getPoint(t1)); // One intersection point
+        }
+
+        if (t1 > 0 && t2 > 0) {
+            return List.of(ray.getPoint(t1), ray.getPoint(t2)); // Two intersection points
+        } else if (t1 > 0) {
+            return List.of(ray.getPoint(t1)); // One intersection point
+        } else if (t2 > 0) {
+            return List.of(ray.getPoint(t2)); // One intersection point
+        }
+
+        return null; // No intersection
     }
 }
