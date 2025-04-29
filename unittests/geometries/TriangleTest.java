@@ -25,28 +25,29 @@ class TriangleTest {
         // TC01: Ray intersects inside the triangle
         Ray ray1 = new Ray(new Point(1, 1, 1), new Vector(0, 0, -1));
         List<Point> result1 = triangle.findIntersections(ray1);
-        assertNull(result1, "Ray intersects inside triangle - should return 1 point");
+        assertEquals(1, result1.size(), "ERROR: findIntersections() did not return the right number of points");
+        assertEquals(List.of(new Point(1, 1, 0)), result1, "Incorrect intersection points");
 
-        // TC02: Ray intersects outside against edge
-        Ray ray2 = new Ray(new Point(2, 1, 1), new Vector(0, 0, -1));
-        assertNull(triangle.findIntersections(ray2), "Ray outside against edge - should return null");
 
-        // TC03: Ray intersects outside against vertex
-        Ray ray3 = new Ray(new Point(-1, -1, 1), new Vector(0, 0, -1));
-        assertNull(triangle.findIntersections(ray3), "Ray outside against vertex - should return null");
+        // TC02: Ray outside against edge
+        assertNull(triangle.findIntersections(new Ray(new Point(0.5, 0.5, 1), new Vector(-2, -0.5, -1))),
+                "ERROR: findIntersections() did not return null");
 
-        // =============== Boundary Value Tests ==================
+        // TC03: Ray outside against vertex
+        assertNull(triangle.findIntersections(new Ray(new Point(0.5, 0.5, 1), new Vector(1, -0.5, -1))),
+                "ERROR: findIntersections() did not return null");
 
-        // TC11: Ray intersects on edge
-        Ray ray4 = new Ray(new Point(1, 0, 1), new Vector(0, 0, -1));
-        assertNull(triangle.findIntersections(ray4), "Ray on edge - should return null");
+        // =============== Boundary Values Tests ==================
+        // TC04: Ray on edge
+        assertNull(triangle.findIntersections(new Ray(new Point(0.5, 0.5, 1), new Vector(-0.5, -0.1, -0.4))),
+                "ERROR: findIntersections() did not return null");
 
-        // TC12: Ray intersects on vertex
-        Ray ray5 = new Ray(new Point(0, 0, 1), new Vector(0, 0, -1));
-        assertNull(triangle.findIntersections(ray5), "Ray on vertex - should return null");
+        // TC05: Ray on vertex
+        assertNull(triangle.findIntersections(new Ray(new Point(0.5, 0.5, 1), new Vector(-0.5, 0.5, -1))),
+                "ERROR: findIntersections() did not return null");
 
-        // TC13: Ray intersects on edge extension
-        Ray ray6 = new Ray(new Point(3, 0, 1), new Vector(0, 0, -1));
-        assertNull(triangle.findIntersections(ray6), "Ray on edge extension - should return null");
+        // TC06: Ray on edge's continuation
+        assertNull(triangle.findIntersections(new Ray(new Point(0.5, 0.5, 1), new Vector(-0.5, -1, 0.5))),
+                "ERROR: findIntersections() did not return null");
     }
 }

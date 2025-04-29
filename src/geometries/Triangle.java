@@ -4,6 +4,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 import java.util.List;
 
@@ -29,34 +30,42 @@ public class Triangle extends Polygon{
      */
     @Override
     public List<Point> findIntersections(Ray ray) {
-        // Step 1: Use the plane of the triangle to find the intersection point
-        List<Point> planeIntersections = plane.findIntersections(ray);
-        if (planeIntersections == null) {
-            return null; // No intersection with the plane
+        List<Point> intersectionPoints = plane.findIntersections(ray);
+        if (intersectionPoints == null) {
+            return null;
+        }
+        Point intersectionPoint = intersectionPoints.get(0);
+
+        Point vertexA = vertices.get(0);
+        Point vertexB = vertices.get(1);
+        Point vertexC = vertices.get(2);
+
+        Vector triangleNormal = plane.getNormal(vertexA);
+
+        try {
+            if (isZero(vertexA.subtract(vertexB).crossProduct(intersectionPoint.subtract(vertexB)).dotProduct(triangleNormal))
+                    || isZero(vertexC.subtract(vertexB).crossProduct(intersectionPoint.subtract(vertexB)).dotProduct(triangleNormal))
+                    || isZero(vertexA.subtract(vertexC).crossProduct(intersectionPoint.subtract(vertexC)).dotProduct(triangleNormal))) {
+                return null;
+            }
+        } catch (IllegalArgumentException e) {
+            return null;
         }
 
-        Point p0 = ray.getPoint(0); // Ray origin
-        Vector v = ray.getDirection(); // Ray direction
+        double totalArea = vertexA.subtract(vertexB).crossProduct(vertexA.subtract(vertexC)).dotProduct(triangleNormal);
 
-        // Step 2: Create vectors from the ray origin to the vertices of the triangle
-        Vector v1 = vertices.get(0).subtract(p0);
-        Vector v2 = vertices.get(1).subtract(p0);
-        Vector v3 = vertices.get(2).subtract(p0);
+        double areaAlpha = vertexC.subtract(vertexB).crossProduct(intersectionPoint.subtract(vertexB)).dotProduct(triangleNormal);
+        double areaBeta = vertexA.subtract(vertexC).crossProduct(intersectionPoint.subtract(vertexC)).dotProduct(triangleNormal);
+        double areaGamma = vertexB.subtract(vertexA).crossProduct(intersectionPoint.subtract(vertexA)).dotProduct(triangleNormal);
 
-        // Step 3: Calculate the normal of the planes formed by the edges of the triangle and the ray
-        Vector n1 = v1.crossProduct(v2).normalize();
-        Vector n2 = v2.crossProduct(v3).normalize();
-        Vector n3 = v3.crossProduct(v1).normalize();
+        double alpha = areaAlpha / totalArea;
+        double beta = areaBeta / totalArea;
+        double gamma = areaGamma / totalArea;
 
-        // Step 4: Check if the intersection point is inside the triangle
-        boolean positive1 = n1.dotProduct(v) > 0;
-        boolean positive2 = n2.dotProduct(v) > 0;
-        boolean positive3 = n3.dotProduct(v) > 0;
-
-        if ((positive1 == positive2) && (positive2 == positive3)) {
-            return planeIntersections; // The intersection point is inside the triangle
+        if (alignZero(alpha) > 0 && alignZero(beta) > 0 && alignZero(gamma) > 0) {
+            return List.of(intersectionPoint);
         }
 
-        return null; // The intersection point is outside the triangle
+        return null;
     }
 }
