@@ -18,12 +18,13 @@ class ImageWriterTest {
             for (int i = 0; i < 801; i++) {
                 for (int j = 0; j < 501; j++) {
                     if (i % 50 == 0 || j % 50 == 0) {
-                        imageWriter.writePixel(i, j, yellow);
-                    } else {
                         imageWriter.writePixel(i, j, red);
+                    } else {
+                        imageWriter.writePixel(i, j, yellow);
                     }
                 }
             }
+            imageWriter.writeToImage("testImage");
         }, "Failed to create image");
     }
 }
