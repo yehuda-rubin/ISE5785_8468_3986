@@ -1,5 +1,6 @@
 package renderer;
 import primitives.*;
+import scene.Scene;
 
 import java.util.MissingResourceException;
 
@@ -19,7 +20,7 @@ public class Camera implements Cloneable {
     private double viewPlaneHeight = 0.0;
 
     private ImageWriter imageWriter;
-    private RayTracerBase rayTracerBase;
+    private RayTracerBase rayTracer;
 
     private int nX = 1;
     private int nY = 1;
@@ -142,7 +143,13 @@ public class Camera implements Cloneable {
          * @return null (not implemented)
          */
         public Builder setResolution(int nX, int nY) {
-            return null;
+            if (nX <= 0 || nY <= 0) {
+                throw new IllegalArgumentException("Resolution must be positive");
+            }
+
+            camera.nX = nX;
+            camera.nY = nY;
+            return this;
         }
 
         /**
@@ -161,10 +168,24 @@ public class Camera implements Cloneable {
             if (Util.alignZero(camera.viewPlaneHeight) <= 0) throw new IllegalArgumentException("Height must be positive");
             if (Util.alignZero(camera.viewPlaneDistance) <= 0) throw new IllegalArgumentException("Distance must be positive");
             if (!Util.isZero(camera.vTo.dotProduct(camera.vUp))) throw new IllegalArgumentException("vTo and vUp must be orthogonal");
+            if (Util.alignZero(camera.nX) <= 0) throw new IllegalArgumentException("nX must be positive");
+            if (Util.alignZero(camera.nY) <= 0) throw new IllegalArgumentException("nY must be positive");
 
             camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
+            camera.imageWriter = new ImageWriter(camera.nX, camera.nY);
+            if(camera.rayTracer == null) {
+                camera.rayTracer = new SimpleRayTracer(null);
+            }
 
             return camera.clone(); // Return a full clone of the camera
+        }
+
+        public Builder setRayTracer(Scene scene, RayTracerType rayTracer) {
+            if(rayTracer == RayTracerType.SIMPLE)
+                camera.rayTracer = new SimpleRayTracer(scene);
+            else
+                camera.rayTracer = null;
+            return this;
         }
 
     }
@@ -200,5 +221,48 @@ public class Camera implements Cloneable {
         if (Yi != 0) pIJ = pIJ.add(vUp.scale(Yi));
 
         return new Ray(p0, pIJ.subtract(p0).normalize());
+    }
+
+    /**
+     * Sets the image writer for the camera.
+     * @return this Camera instance
+     */
+    public Camera renderImage(){
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    /**
+     * Writes the image to a file.
+     * @return this Camera instance
+     */
+    public Camera printGrid(int interval, Color color) {
+        if (interval <= 0) {
+            throw new IllegalArgumentException("Interval must be positive");
+        }
+
+        for (int i = 0; i < nX; i++) {
+            if (i % interval == 0) {
+                for (int j = 0; j < nY; j++) {
+                    imageWriter.writePixel(i, j, color);
+                }
+            }
+        }
+
+        for (int j = 0; j < nY; j++) {
+            if (j % interval == 0) {
+                for (int i = 0; i < nX; i++) {
+                    imageWriter.writePixel(i, j, color);
+                }
+            }
+        }
+
+        return this;
+    }
+
+    /**
+     * Write the image to a file
+     */
+    public void writeToImage(String imageName) {
+        imageWriter.writeToImage(imageName);
     }
 }
