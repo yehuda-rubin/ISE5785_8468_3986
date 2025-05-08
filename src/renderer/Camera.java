@@ -18,6 +18,12 @@ public class Camera implements Cloneable {
     private double viewPlaneWidth = 0.0;
     private double viewPlaneHeight = 0.0;
 
+    private ImageWriter imageWriter;
+    private RayTracerBase rayTracerBase;
+
+    private int nX = 1;
+    private int nY = 1;
+
     /**
      * Private empty constructor – used only by the Builder.
      */
@@ -160,6 +166,7 @@ public class Camera implements Cloneable {
 
             return camera.clone(); // Return a full clone of the camera
         }
+
     }
 
     @Override
