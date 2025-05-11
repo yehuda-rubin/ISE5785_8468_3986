@@ -32,15 +32,13 @@ public class Camera implements Cloneable {
 
     /**
      * Casts a ray for a specific pixel and traces it to determine the color, then writes the color to the image.
-     * @param nX The width of the image.
-     * @param nY The height of the image.
      * @param j The x-coordinate of the pixel.
      * @param i The y-coordinate of the pixel.
      */
-    private void castRay(int nX, int nY, int j, int i){
-        Ray ray = this.constructRay(nX, nY, j, i);
-        Color color = this.rayTracer.traceRay(ray);
-        this.imageWriter.writePixel(j, i, color);
+    private void castRay(int j, int i){
+        Ray ray = constructRay(nX, nY, j, i);
+        Color color = rayTracer.traceRay(ray);
+        imageWriter.writePixel(j, i, color);
     }
 
     /**
@@ -72,20 +70,14 @@ public class Camera implements Cloneable {
      * Writes the rendered image to a file or display.
      */
     public Camera writeToImage(String fileName){
-        if (imageWriter == null) {
-            throw new IllegalStateException("ImageWriter is not initialized");
-        }
         imageWriter.writeToImage(fileName);
         return this;
     }
 
     public Camera renderImage(){
-        if (imageWriter == null) {
-            throw new IllegalStateException("ImageWriter is not initialized");
-        }
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {
-                castRay(nX, nY, j, i);
+                castRay(j,i);
             }
         }
         return this;
@@ -261,17 +253,16 @@ public class Camera implements Cloneable {
      * @return a Ray from the camera to the pixel
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
-        double Xj = (j - (nX - 1) / 2d) * (viewPlaneWidth / nX);
-        double Yi = -(i - (nY - 1) / 2d) * (viewPlaneHeight / nY);
+        double Xj = (j - (nX-1) / 2d) * (viewPlaneWidth / nX);
+        double Yi = -(i - (nY-1) / 2d) * (viewPlaneHeight / nY);
 
-        // Compute the center point of the view plane
+        // calculate the point in the center of the view plane
         Point pCenter = p0.add(vTo.scale(viewPlaneDistance));
         Point pIJ = pCenter;
 
-        // Offset the point based on the pixel's location
+        // we are calculating the ray through the pixel in three stages so we won't have a problem of zero vector.
         if (Xj != 0) pIJ = pIJ.add(vRight.scale(Xj));
         if (Yi != 0) pIJ = pIJ.add(vUp.scale(Yi));
-
         return new Ray(p0, pIJ.subtract(p0).normalize());
     }
 }

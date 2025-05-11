@@ -30,7 +30,7 @@ public class SimpleRayTracer extends RayTracerBase{
     @Override
     public Color traceRay(Ray ray) {
         List<Point> intersections = this.scene.geometries.findIntersections(ray);
-        if (intersections == null){
+        if (intersections == null || intersections.isEmpty()){
             return this.scene.background;
         }
         Point closestP = ray.findClosestPoint(intersections);

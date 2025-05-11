@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
 import java.util.List;
@@ -34,42 +35,58 @@ public class Triangle extends Polygon {
      */
     @Override
     public List<Point> findIntersections(Ray ray) {
-        List<Point> intersectionPoints = plane.findIntersections(ray);
-        if (intersectionPoints == null) {
-            return null;
-        }
-        Point intersectionPoint = intersectionPoints.get(0);
+        // compute vectors for two edges sharing vertex p1
+        Vector edge1 = vertices.get(1).subtract(vertices.get(0));
+        Vector edge2 = vertices.get(2).subtract(vertices.get(0));
+        Vector normal = edge1.crossProduct(edge2);
 
-        Point vertexA = vertices.get(0);
-        Point vertexB = vertices.get(1);
-        Point vertexC = vertices.get(2);
-
-        Vector triangleNormal = plane.getNormal(vertexA);
-
-        try {
-            if (isZero(vertexA.subtract(vertexB).crossProduct(intersectionPoint.subtract(vertexB)).dotProduct(triangleNormal))
-                    || isZero(vertexC.subtract(vertexB).crossProduct(intersectionPoint.subtract(vertexB)).dotProduct(triangleNormal))
-                    || isZero(vertexA.subtract(vertexC).crossProduct(intersectionPoint.subtract(vertexC)).dotProduct(triangleNormal))) {
-                return null;
-            }
-        } catch (IllegalArgumentException e) {
+        // if dotProduct is near zero, ray lies in plane of triangle
+        double dotProduct = normal.dotProduct(ray.getDirection());
+        if (Util.isZero(dotProduct)) {
             return null;
         }
 
-        double totalArea = vertexA.subtract(vertexB).crossProduct(vertexA.subtract(vertexC)).dotProduct(triangleNormal);
+        // Calculate the distance from ray origin to the plane
+        double t = normal.dotProduct(vertices.get(0).subtract(ray.getPoint(0))) / dotProduct;
 
-        double areaAlpha = vertexC.subtract(vertexB).crossProduct(intersectionPoint.subtract(vertexB)).dotProduct(triangleNormal);
-        double areaBeta = vertexA.subtract(vertexC).crossProduct(intersectionPoint.subtract(vertexC)).dotProduct(triangleNormal);
-        double areaGamma = vertexB.subtract(vertexA).crossProduct(intersectionPoint.subtract(vertexA)).dotProduct(triangleNormal);
-
-        double alpha = areaAlpha / totalArea;
-        double beta = areaBeta / totalArea;
-        double gamma = areaGamma / totalArea;
-
-        if (alignZero(alpha) > 0 && alignZero(beta) > 0 && alignZero(gamma) > 0) {
-            return List.of(intersectionPoint);
+        if (t < 0) {
+            return null; // The intersection point is behind the ray's origin
         }
 
-        return null;
+        // calculate the intersection point
+        Point intersectionPoint = ray.getPoint(t);
+
+        // Calculate vector from vertex1 to intersection point
+        Vector v2 = intersectionPoint.subtract(vertices.get(0));
+
+        /*
+         * Calculate barycentric coordinates:
+         * To determine whether a point lies within a triangle, we utilize barycentric coordinates.
+         * This involves computing the barycentric coordinates of the point relative to the triangle.
+         * Through derivations and proofs, we arrived at the following matrix equation:
+         *
+         * |d00  d01| |v| = |d02|
+         * |d01  d11| |u| = |d12|
+         *
+         * By applying Cramer's rule, we can solve these equations to obtain the values of v, u, and w.
+         */
+        double d00 = edge1.dotProduct(edge1);
+        double d01 = edge1.dotProduct(edge2);
+        double d02 = edge1.dotProduct(v2);
+        double d11 = edge2.dotProduct(edge2);
+        double d12 = edge2.dotProduct(v2);
+
+        double invDenom = 1 / (d00 * d11 - d01 * d01);
+        double u = (d11 * d02 - d01 * d12) * invDenom;
+        double v = (d00 * d12 - d01 * d02) * invDenom;
+        double w = 1.0 - u - v;
+
+        // Check if the point is inside the triangle
+        if (Util.alignZero(u) > 0 && Util.alignZero(v) > 0 && Util.alignZero(w) > 0 &&
+                Util.alignZero(u) < 1 && Util.alignZero(v) < 1 && Util.alignZero(w) < 1)
+            return List.of(intersectionPoint); // Return the intersection point
+
+        return null; // The intersection point is outside the triangle
+
     }
 }

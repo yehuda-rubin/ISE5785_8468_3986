@@ -33,13 +33,13 @@ public class RenderTests {
          .setAmbientLight(new AmbientLight(new Color(255, 191, 191)));
       scene.geometries //
          .add(// center
-                 new Sphere(50d, new Point(0, 0, -100)),
-                 // up left
-                 new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100)),
-                 // down left
-                 new Triangle(new Point(-100, 0, -100), new Point(0, -100, -100), new Point(-100, -100, -100)),
-                 // down right
-                 new Triangle(new Point(100, 0, -100), new Point(0, -100, -100), new Point(100, -100, -100)));
+              new Sphere(50d, new Point(0, 0, -100)),
+              // up left
+              new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100)),
+              // down left
+              new Triangle(new Point(-100, 0, -100), new Point(0, -100, -100), new Point(-100, -100, -100)),
+              // down right
+              new Triangle(new Point(100, 0, -100), new Point(0, -100, -100), new Point(100, -100, -100)));
 
       camera //
          .setRayTracer(scene, RayTracerType.SIMPLE) //
