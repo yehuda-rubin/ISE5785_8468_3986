@@ -1,24 +1,27 @@
 package geometries;
 
 import primitives.Point;
-import primitives.Vector;
 import primitives.Ray;
+import primitives.Vector;
+
 import java.util.List;
 
 import static primitives.Util.isZero;
 
 /**
  * The Plane class extends the Geometry class
+ *
  * @author Yehuda Rubin and Arye Hacohen
  */
 
-public class Plane extends Geometry{
+public class Plane extends Geometry {
     private final Point q0;
     private final Vector normal;
 
     /**
      * constructor
-     * @param q0 will be the point of the new plane
+     *
+     * @param q0     will be the point of the new plane
      * @param normal will be the normal of the new plane
      */
 
@@ -29,6 +32,7 @@ public class Plane extends Geometry{
 
     /**
      * constructor
+     *
      * @param p1 will be the first point of the new plane
      * @param p2 will be the second point of the new plane
      * @param p3 will be the third point of the new plane
@@ -54,7 +58,7 @@ public class Plane extends Geometry{
     public List<Point> findIntersections(Ray ray) {
         Vector direction = ray.getDirection();
         Point p0 = ray.getPoint(0);
-        if(isZero(direction.dotProduct(normal)) || q0.equals(p0)) {
+        if (isZero(direction.dotProduct(normal)) || q0.equals(p0)) {
             return null; // the ray is parallel to the plane
         }
         double t = normal.dotProduct(q0.subtract(p0)) / normal.dotProduct(direction);

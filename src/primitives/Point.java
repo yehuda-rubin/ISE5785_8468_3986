@@ -9,16 +9,17 @@ package primitives;
 
 public class Point {
     /**
-     * xyz coordinates of a point
-     */
-    protected final Double3 xyz;
-    /**
      * ZERO point
      */
     public static final Point ZERO = new Point(0, 0, 0);
+    /**
+     * xyz coordinates of a point
+     */
+    protected final Double3 xyz;
 
     /**
      * constructor
+     *
      * @param x will be d1 value
      * @param y will be d2 value
      * @param z will be d3 value
@@ -30,6 +31,7 @@ public class Point {
 
     /**
      * constructor
+     *
      * @param xyz will be the coordinates of the new point
      */
 
@@ -39,6 +41,7 @@ public class Point {
 
     /**
      * make subtraction between two points
+     *
      * @param p is the point that we subtract from the current point
      * @return the result of the subtraction
      */
@@ -49,6 +52,7 @@ public class Point {
 
     /**
      * make addition between two points
+     *
      * @param v is the vector that we add to the current point
      * @return the result of the addition
      */
@@ -59,6 +63,7 @@ public class Point {
 
     /**
      * make distanceSquared between two points
+     *
      * @param p is the point that we distanceSquared from the current point
      * @return the result of the distanceSquared
      */
@@ -69,6 +74,7 @@ public class Point {
 
     /**
      * make distance between two points
+     *
      * @param p is the point that we distance from the current point
      * @return the result of the distance
      */

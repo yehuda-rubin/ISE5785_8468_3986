@@ -3,16 +3,15 @@ package lighting;
 import primitives.Color;
 
 public class AmbientLight {
-    public final static AmbientLight NONE = new AmbientLight(Color.BLACK, 0.0);
+    public final static AmbientLight NONE = new AmbientLight(Color.BLACK);
     private final Color intensity;
 
     /**
      * Constructor for AmbientLight
      * @param intensity the color intensity of the light
-     * @param kC the constant attenuation factor
      */
-    public AmbientLight(Color intensity, double kC) {
-        this.intensity = intensity.scale(kC);
+    public AmbientLight(Color intensity) {
+        this.intensity = intensity;
     }
 
     /**

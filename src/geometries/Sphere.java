@@ -5,19 +5,20 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The Sphere class extends the RadialGeometry class
+ *
  * @author Yehuda Rubin and Arye Hacohen
  */
-public class Sphere extends RadialGeometry{
+public class Sphere extends RadialGeometry {
     private final Point center;
 
     /**
      * constructor
-     * @param radius will be the radius of the new sphere
+     *
+     * @param radius           will be the radius of the new sphere
      * @param center_of_sphere will be the center of the new sphere
      */
 
@@ -31,6 +32,7 @@ public class Sphere extends RadialGeometry{
 
     /**
      * getter for the center of the sphere
+     *
      * @return the center of the sphere
      */
     @Override

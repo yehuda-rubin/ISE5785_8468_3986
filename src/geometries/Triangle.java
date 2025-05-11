@@ -4,17 +4,20 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
-import java.util.List;
 
 /**
  * Triangle class represents a triangle in 3D Cartesian coordinate
+ *
  * @author Yehuda rubin and arye hacohen
  */
-public class Triangle extends Polygon{
+public class Triangle extends Polygon {
     /**
      * constructor
+     *
      * @param p1 will be the first point of the new triangle
      * @param p2 will be the second point of the new triangle
      * @param p3 will be the third point of the new triangle
@@ -25,6 +28,7 @@ public class Triangle extends Polygon{
 
     /**
      * findIntersections method
+     *
      * @param ray the ray to check for intersections with the triangle
      * @return a list of intersection points or null if there are no intersections
      */
@@ -48,8 +52,7 @@ public class Triangle extends Polygon{
                     || isZero(vertexA.subtract(vertexC).crossProduct(intersectionPoint.subtract(vertexC)).dotProduct(triangleNormal))) {
                 return null;
             }
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return null;
         }
 

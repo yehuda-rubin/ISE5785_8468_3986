@@ -1,28 +1,30 @@
 package geometries;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import primitives.Point;
 import primitives.Ray;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
- * The Geometries class is a collection of intersectable geometries.
+ * The Geometries class is a Composite class that represents a collection of geometries.
  * It provides methods to add geometries and find intersections with a ray.
  * This class acts as a composite for multiple geometries, allowing operations
  * to be performed on all geometries in the collection.
  *
  * @author Yehuda Rubin and Arye Hacohen
  */
-public class Geometries {
+public class Geometries implements Intersectable {
     // List to store all geometries in the collection
-    private List<Intersectable> geometries = new ArrayList<>();
+    private final List<Intersectable> geometries = new LinkedList<>();
 
     /**
      * Default constructor for the Geometries class.
      * Initializes an empty list of geometries.
      */
-    public Geometries() {}
+    public Geometries() {
+    }
 
     /**
      * Constructor for the Geometries class with a list of geometries.
@@ -32,20 +34,18 @@ public class Geometries {
      */
     public Geometries(Intersectable... geometries) {
         // Add each geometry from the provided list to the internal collection
-        for (Intersectable geometry : geometries) {
-            this.geometries.add(geometry);
-        }
+        add(geometries);
     }
 
     /**
      * Adds a new geometry to the list of geometries.
      * This method allows dynamically adding geometries to the collection.
      *
-     * @param geometry The geometry to be added.
+     * @param geometries The geometry to be added.
      */
-    public void add(Intersectable geometry) {
-        // Add the provided geometry to the internal list
-        this.geometries.add(geometry);
+    public void add(Intersectable... geometries) {
+        // Add each geometry from the provided list to the internal collection
+        Collections.addAll(this.geometries, geometries);
     }
 
     /**
@@ -55,6 +55,7 @@ public class Geometries {
      * @param ray The ray to find intersections with.
      * @return A list of intersection points, or null if no intersections are found.
      */
+    @Override
     public List<Point> findIntersections(Ray ray) {
         // Initialize a list to store all intersection points
         List<Point> intersections = new LinkedList<>();

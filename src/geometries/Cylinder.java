@@ -1,20 +1,23 @@
 package geometries;
 
 import primitives.Point;
-import primitives.Vector;
 import primitives.Ray;
+import primitives.Vector;
+
 import java.util.List;
 
 /**
  * The Cylinder class extends the Tube class and represents a cylinder in 3D space.
+ *
  * @author Yehuda Rubin and Arye Hacohen
  */
-public class Cylinder extends Tube{
-    private double height;
+public class Cylinder extends Tube {
+    private final double height;
 
     /**
      * constructor
-     * @param axis will be the axis of the new cylinder
+     *
+     * @param axis   will be the axis of the new cylinder
      * @param radius will be the radius of the new cylinder
      * @param height will be the height of the new cylinder
      */

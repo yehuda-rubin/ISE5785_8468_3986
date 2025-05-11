@@ -8,12 +8,13 @@ package primitives;
 
 public class Vector extends Point {
 
-    public static final Vector AXIS_Z = new Vector(0,0,1) ;
-    public static final Vector AXIS_Y = new Vector(0,1,0) ;
-    public static final Vector AXIS_X = new Vector(1,0,0) ;
+    public static final Vector AXIS_Z = new Vector(0, 0, 1);
+    public static final Vector AXIS_Y = new Vector(0, 1, 0);
+    public static final Vector AXIS_X = new Vector(1, 0, 0);
 
     /**
      * constructor
+     *
      * @param x will be d1 value
      * @param y will be d2 value
      * @param z will be d3 value
@@ -28,6 +29,7 @@ public class Vector extends Point {
 
     /**
      * constructor
+     *
      * @param xyz will be the vector
      */
 
@@ -40,6 +42,7 @@ public class Vector extends Point {
 
     /**
      * make add between two vectors
+     *
      * @param vector is the vector that we add from the current vector
      * @return the result of the add
      */
@@ -50,6 +53,7 @@ public class Vector extends Point {
 
     /**
      * make multiplying a vector by a scalar
+     *
      * @param scalar is the number that will be multiplied by the vector.
      * @return the result of the multiplying
      */
@@ -60,6 +64,7 @@ public class Vector extends Point {
 
     /**
      * make multiplying between two vectors
+     *
      * @param vector is the vector that multiplying with the current vector
      * @return number of the product of the product
      */
@@ -70,6 +75,7 @@ public class Vector extends Point {
 
     /**
      * make cross product between two vectors
+     *
      * @param vector is the vector that we cross product with the current vector
      * @return new vector that is the result of the multiplication
      */
@@ -82,6 +88,7 @@ public class Vector extends Point {
 
     /**
      * Calculates the length of the vector squared.
+     *
      * @return the length of the vector squared.
      */
 
@@ -91,6 +98,7 @@ public class Vector extends Point {
 
     /**
      * Calculates the length of the vector
+     *
      * @return the length of the vector
      */
 
@@ -100,6 +108,7 @@ public class Vector extends Point {
 
     /**
      * Calculates the length of the vector
+     *
      * @return the length of the vector
      */
 

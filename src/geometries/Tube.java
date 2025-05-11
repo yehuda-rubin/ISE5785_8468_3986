@@ -3,18 +3,19 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-import static primitives.Util.isZero;
+
 import java.util.List;
 
 /**
  * Tube class represents a tube in 3D Cartesian coordinate
  * extends RadialGeometry
- *  axis - the axis of the tube
- *  radius - the radius of the tube
+ * axis - the axis of the tube
+ * radius - the radius of the tube
+ *
  * @author Yehuda rubin and arye hacohen
  */
 
-public class Tube extends RadialGeometry{
+public class Tube extends RadialGeometry {
     /**
      * axis - the axis of the tube
      */
@@ -22,7 +23,8 @@ public class Tube extends RadialGeometry{
 
     /**
      * constructor
-     * @param axis - the axis of the tube
+     *
+     * @param axis   - the axis of the tube
      * @param radius - the radius of the tube
      */
 

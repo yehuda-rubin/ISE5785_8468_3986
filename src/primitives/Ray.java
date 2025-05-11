@@ -7,6 +7,7 @@ import static primitives.Util.isZero;
 /**
  * This class make ray in 3D space
  * head point and direction vector
+ *
  * @author Yehuda Rubin and Arye Hacohen
  */
 
@@ -16,7 +17,8 @@ public class Ray {
 
     /**
      * constructor
-     * @param head will be the head of the new ray
+     *
+     * @param head      will be the head of the new ray
      * @param direction will be the direction of the new ray
      */
 
@@ -27,6 +29,7 @@ public class Ray {
 
     /**
      * getter for the head of the ray
+     *
      * @return the head of the ray
      */
     public Point getPoint(double distance) {
@@ -37,6 +40,7 @@ public class Ray {
 
     /**
      * getter for the direction of the ray
+     *
      * @return the direction of the ray
      */
     public Vector getDirection() {
