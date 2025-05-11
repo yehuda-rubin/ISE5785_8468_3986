@@ -80,9 +80,12 @@ public class Camera implements Cloneable {
     }
 
     public Camera renderImage(){
+        if (imageWriter == null) {
+            throw new IllegalStateException("ImageWriter is not initialized");
+        }
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {
-                this.castRay(nX, nY, j, i);
+                castRay(nX, nY, j, i);
             }
         }
         return this;
@@ -201,7 +204,12 @@ public class Camera implements Cloneable {
          * @return null (not implemented)
          */
         public Builder setResolution(int nX, int nY) {
-            return null;
+            if (nX <= 0 || nY <= 0) {
+                throw new IllegalArgumentException("Number of pixels must be positive");
+            }
+            camera.nX = nX;
+            camera.nY = nY;
+            return this;
         }
 
         /**
@@ -220,6 +228,13 @@ public class Camera implements Cloneable {
             if (Util.alignZero(camera.viewPlaneHeight) <= 0) throw new IllegalArgumentException("Height must be positive");
             if (Util.alignZero(camera.viewPlaneDistance) <= 0) throw new IllegalArgumentException("Distance must be positive");
             if (!Util.isZero(camera.vTo.dotProduct(camera.vUp))) throw new IllegalArgumentException("vTo and vUp must be orthogonal");
+            if (Util.alignZero(camera.nX) <= 0) throw new IllegalArgumentException("nX must be positive");
+            if (Util.alignZero(camera.nY) <= 0) throw new IllegalArgumentException("nY must be positive");
+            camera.imageWriter = new ImageWriter(camera.nX, camera.nY);
+
+            if(camera.rayTracer == null) {
+                camera.rayTracer = new SimpleRayTracer(null);
+            }
 
             camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
 
