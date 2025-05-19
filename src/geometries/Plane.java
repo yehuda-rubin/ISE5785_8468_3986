@@ -58,9 +58,11 @@ public class Plane extends Geometry {
     public List<Point> findIntersections(Ray ray) {
         Vector direction = ray.getDirection();
         Point p0 = ray.getPoint(0);
+        // Check if the ray is parallel to the plane
         if (isZero(direction.dotProduct(normal)) || q0.equals(p0)) {
             return null; // the ray is parallel to the plane
         }
+        // Calculate the intersection point
         double t = normal.dotProduct(q0.subtract(p0)) / normal.dotProduct(direction);
         if (t <= 0) {
             return null; // the ray is pointing away from the plane

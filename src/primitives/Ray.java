@@ -60,13 +60,21 @@ public class Ray {
         return "" + head + direction;
     }
 
+    /**
+     * Find the closest point to the ray's head from a list of points
+     *
+     * @param points list of points to check
+     * @return the closest point to the ray's head
+     */
     public Point findClosestPoint(List<Point> points) {
+        // Check if the list is null or empty
         if (points == null || points.isEmpty()) {
             return null;
         }
         Point closestPoint = points.get(0);
         double minDistance = head.distanceSquared(closestPoint);
 
+        // Iterate through the list of points to find the closest one
         for (int i = 1; i < points.size(); i++) {
             Point currentPoint = points.get(i);
             double currentDistance = head.distanceSquared(currentPoint);

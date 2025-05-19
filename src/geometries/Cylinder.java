@@ -37,12 +37,15 @@ public class Cylinder extends Tube {
         Vector p0_p = point.subtract(p0);
         double t = v.dotProduct(p0_p);
         Point o = p0.add(v.scale(t));
+        // Check if the point is on the top or bottom base of the cylinder
         if (point.subtract(o).length() == radius) {
             return point.subtract(o).normalize();
         }
+        // Check if the point is on the side of the cylinder
         if (point.subtract(p0).length() == radius) {
             return p0.subtract(point).normalize();
         }
+        // Check if the point is on the top or bottom base of the cylinder
         if (point.subtract(p0.add(v.scale(height))).length() == radius) {
             return point.subtract(p0.add(v.scale(height))).normalize();
         }

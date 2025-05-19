@@ -78,7 +78,6 @@ public class Point {
      * @param p is the point that we distance from the current point
      * @return the result of the distance
      */
-
     public double distance(Point p) {
         return Math.sqrt(distanceSquared(p));
     }
