@@ -5,6 +5,11 @@ import primitives.Color;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the ImageWriter class.
+ * This class tests the functionality of the ImageWriter class, which is responsible for writing images to files.
+ * The tests include creating an image with a specific pattern and verifying that the image is created successfully.
+ */
 class ImageWriterTest {
     /**
      * A table of 16 by 10 squares, each square measuring 50 by 50 pixels, with the inside of the square colored yellow and the outside red.

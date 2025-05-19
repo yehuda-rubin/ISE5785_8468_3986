@@ -11,18 +11,51 @@ import java.util.MissingResourceException;
  * The camera also holds the view plane's distance, width, and height.
  */
 public class Camera implements Cloneable {
+    /**
+     * The position of the camera in 3D space.
+     */
     private Point p0;
+    /**
+     * The direction vector of the camera, indicating where it is pointing.
+     */
     private Vector vTo;
+    /**
+     * The up vector of the camera, indicating the upward direction.
+     */
     private Vector vUp;
+    /**
+     * The right vector of the camera, indicating the rightward direction.
+     */
     private Vector vRight;
+    /**
+     * The distance from the camera to the view plane.
+     */
     private double viewPlaneDistance = 0.0;
+    /**
+     * The width of the view plane.
+     */
     private double viewPlaneWidth = 0.0;
+    /**
+     * The height of the view plane.
+     */
     private double viewPlaneHeight = 0.0;
 
+    /**
+     * The ray tracer used to trace rays in the scene.
+     */
     private RayTracerBase rayTracer;
+    /**
+     * The image writer used to write the rendered image.
+     */
     private ImageWriter imageWriter;
 
+    /**
+     * The number of pixels in the x direction.
+     */
     private int nX = 1;
+    /**
+     * The number of pixels in the y direction.
+     */
     private int nY = 1;
 
     /**
