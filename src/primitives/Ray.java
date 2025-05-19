@@ -48,6 +48,13 @@ public class Ray {
     }
 
     @Override
+    public int hashCode() {
+        int result = head.hashCode();
+        result = 31 * result + getDirection().hashCode();
+        return result;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         return obj instanceof Ray other
