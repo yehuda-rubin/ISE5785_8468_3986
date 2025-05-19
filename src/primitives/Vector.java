@@ -32,7 +32,7 @@ public class Vector extends Point {
 
     public Vector(Double3 xyz) {
         super(xyz);
-        if (xyz.d1() == 0 && xyz.d2() == 0 && xyz.d3() == 0) {
+        if (xyz.equals(Double3.ZERO)) {
             throw new IllegalArgumentException("Vector cannot be (0,0,0)");
         }
     }
