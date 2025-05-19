@@ -55,12 +55,12 @@ public class RenderTests {
     * Produce a scene with basic 3D model - including individual lights of the
     * bodies and render it into a png image with a grid
     */
-   /*@Test
+   @Test
    public void renderMultiColorTest() {
       Scene scene = new Scene("Multi color").setAmbientLight(new AmbientLight(new Color(51, 51, 51)));
       scene.geometries //
          .add(// center
-              new Sphere(new Point(0, 0, -100), 50),
+              new Sphere(50,new Point(0, 0, -100)),
               // up left
               new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100)) //
                  .setEmission(new Color(GREEN)),
@@ -78,7 +78,7 @@ public class RenderTests {
          .renderImage() //
          .printGrid(100, new Color(WHITE)) //
          .writeToImage("color render test");
-   }*/
+   }
 
    /** Test for XML based scene - for bonus */
    @Test
