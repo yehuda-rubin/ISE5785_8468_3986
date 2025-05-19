@@ -21,10 +21,7 @@ public class Vector extends Point {
      */
 
     public Vector(double x, double y, double z) {
-        super(x, y, z);
-        if (x == 0 && y == 0 && z == 0) {
-            throw new IllegalArgumentException("Vector cannot be (0,0,0)");
-        }
+        this(new Double3(x, y, z));
     }
 
     /**
