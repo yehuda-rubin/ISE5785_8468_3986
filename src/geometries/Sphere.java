@@ -7,6 +7,9 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 /**
  * The Sphere class extends the RadialGeometry class
  *
@@ -45,34 +48,42 @@ public class Sphere extends RadialGeometry {
      * @return a list of intersection points or null if there are no intersections
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        Point p0 = ray.getPoint(0);
-        Vector dir = ray.getDirection();
+    public List<Intersection> calculateIntersectionsHelper(Ray ray) {
+        // Point that represents the ray's head
+        final Point rayPoint = ray.getPoint(0);
 
-        // if the ray starts at the center of the sphere
-        if (center.equals(p0))
-            return List.of(p0.add(dir.scale(radius)));
+        // in case the ray's head is the sphere's center, we calculate the one intersection directly
+        if(rayPoint.equals(center))
+            return List.of(new Intersection(this, ray.getPoint(radius)));
 
-        Vector u = (center.subtract(p0));
-        double tm = dir.dotProduct(u);
-        double d = Util.alignZero(Math.sqrt(u.lengthSquared() - tm * tm));
-        if (d >= radius)
+        final Vector u = center.subtract(rayPoint);
+        final double tm = ray.getDirection().dotProduct(u);
+        final double d = Math.sqrt(u.lengthSquared() - tm * tm);
+        // if (d ≥ r) there are no intersections
+        if( alignZero(d - radius) > 0)
             return null;
 
-        double th = Math.sqrt(radius * radius - d * d);
-        double t1 = Util.alignZero(tm - th);
-        double t2 = Util.alignZero(tm + th);
+        final double th = Math.sqrt(radius * radius - d * d);
+        // in case the ray is tangent to the sphere, there are no intersections
+        if(isZero(th))
+            return null;
+        final double t1 = alignZero(tm - th);
+        final double t2 = alignZero(tm + th);
 
-        // if the ray starts before the sphere
-        if (t1 > 0 && t2 > 0)
-            return List.of(p0.add(dir.scale(t1)), p0.add(dir.scale(t2)));
-
-        // if the ray starts inside the sphere
-        if (t1 > 0)
-            return List.of(p0.add(dir.scale(t1)));
-        if (t2 > 0)
-            return List.of(p0.add(dir.scale(t2)));
-
-        return null;
+        // 2 intersections
+        if(t1 > 0 && t2 > 0) {
+            Intersection intersection1 = new Intersection(this, ray.getPoint(t1));
+            Intersection intersection2 = new Intersection(this, ray.getPoint(t2));
+            return List.of(intersection1, intersection2);
+        }
+        // 1 intersection
+        else if(t1 > 0)
+            return List.of(new Intersection(this, ray.getPoint(t1)));
+            // 1 intersection
+        else if(t2 > 0)
+            return List.of(new Intersection(this, ray.getPoint(t2)));
+            // 0 intersections
+        else
+            return null;
     }
 }

@@ -34,59 +34,43 @@ public class Triangle extends Polygon {
      * @return a list of intersection points or null if there are no intersections
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        // compute vectors for two edges sharing vertex p1
-        Vector edge1 = vertices.get(1).subtract(vertices.get(0));
-        Vector edge2 = vertices.get(2).subtract(vertices.get(0));
-        Vector normal = edge1.crossProduct(edge2);
-
-        // if dotProduct is near zero, ray lies in plane of triangle
-        double dotProduct = normal.dotProduct(ray.getDirection());
-        if (Util.isZero(dotProduct)) {
+    protected List<Intersection> calculateIntersectionsHelper(Ray ray) {
+        // test the intersections with triangle’s plane
+        final var intersections = plane.findIntersections(ray);
+        if (intersections == null)
             return null;
+
+        // Point that represents the ray's head
+        final Point rayPoint = ray.getPoint(0);
+        // Vector that represents the ray's axis
+        final Vector rayVector = ray.getDirection();
+
+        // vector1, vector2, vector3 can't be the ZERO Vector because it happens only if rayPoint = P1/P2/P3,
+        // which means the ray begins at the plane and there are no intersections with the plane at all,
+        // so we would have exit this method already because of the first condition
+        final Vector vector1 = vertices.get(0).subtract(rayPoint);
+        final Vector vector2 = vertices.get(1).subtract(rayPoint);
+        final Vector vector3 = vertices.get(2).subtract(rayPoint);
+
+        // normal1, normal2, normal3 can't be the ZERO Vector because it happens only if:
+        // vector1 and vector2 or vector2 and vector3 or vector3 and vector1
+        // are on the same line, which means rayPoint is on one of the triangle's edges,
+        // which means the ray begins at the plane and there are no intersections with the plane at all,
+        // so we would have exit this method already because of the first condition
+        final Vector normal1 = vector1.crossProduct(vector2).normalize();
+        final Vector normal2 = vector2.crossProduct(vector3).normalize();
+        final Vector normal3 = vector3.crossProduct(vector1).normalize();
+
+        final double s1 = alignZero(rayVector.dotProduct(normal1));
+        final double s2 = alignZero(rayVector.dotProduct(normal2));
+        final double s3 = alignZero(rayVector.dotProduct(normal3));
+
+        // the point is inside the triangle only if s1, s2 and s3 have the same sign and none of them is 0
+        if ((s1>0 && s2>0 && s3>0) || (s1<0 && s2<0 && s3<0)) {
+            Point intersectionPoint = intersections.getFirst();
+            return List.of(new Intersection(this, intersectionPoint));
         }
 
-        // Calculate the distance from ray origin to the plane
-        double t = normal.dotProduct(vertices.get(0).subtract(ray.getPoint(0))) / dotProduct;
-
-        if (t < 0) {
-            return null; // The intersection point is behind the ray's origin
-        }
-
-        // calculate the intersection point
-        Point intersectionPoint = ray.getPoint(t);
-
-        // Calculate vector from vertex1 to intersection point
-        Vector v2 = intersectionPoint.subtract(vertices.get(0));
-
-        /*
-         * Calculate barycentric coordinates:
-         * To determine whether a point lies within a triangle, we utilize barycentric coordinates.
-         * This involves computing the barycentric coordinates of the point relative to the triangle.
-         * Through derivations and proofs, we arrived at the following matrix equation:
-         *
-         * |d00  d01| |v| = |d02|
-         * |d01  d11| |u| = |d12|
-         *
-         * By applying Cramer's rule, we can solve these equations to obtain the values of v, u, and w.
-         */
-        double d00 = edge1.dotProduct(edge1);
-        double d01 = edge1.dotProduct(edge2);
-        double d02 = edge1.dotProduct(v2);
-        double d11 = edge2.dotProduct(edge2);
-        double d12 = edge2.dotProduct(v2);
-
-        double invDenom = 1 / (d00 * d11 - d01 * d01);
-        double u = (d11 * d02 - d01 * d12) * invDenom;
-        double v = (d00 * d12 - d01 * d02) * invDenom;
-        double w = 1.0 - u - v;
-
-        // Check if the point is inside the triangle
-        if (Util.alignZero(u) > 0 && Util.alignZero(v) > 0 && Util.alignZero(w) > 0 &&
-                Util.alignZero(u) < 1 && Util.alignZero(v) < 1 && Util.alignZero(w) < 1)
-            return List.of(intersectionPoint); // Return the intersection point
-
-        return null; // The intersection point is outside the triangle
-
+        return null;
     }
 }

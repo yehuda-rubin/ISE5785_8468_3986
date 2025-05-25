@@ -55,20 +55,28 @@ public class Plane extends Geometry {
      * @return a list of intersection points or null if there are no intersections
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        Vector direction = ray.getDirection();
+    public List<Intersection> calculateIntersectionsHelper(Ray ray) {
+        Vector v = ray.getDirection();
         Point p0 = ray.getPoint(0);
+        double nv = normal.dotProduct(v);
+
         // Check if the ray is parallel to the plane
-        if (isZero(direction.dotProduct(normal)) || q0.equals(p0)) {
-            return null; // the ray is parallel to the plane
-        }
-        // Calculate the intersection point
-        double t = normal.dotProduct(q0.subtract(p0)) / normal.dotProduct(direction);
-        if (t <= 0) {
-            return null; // the ray is pointing away from the plane
+        if (isZero(nv)) {
+            return null; // No intersection
         }
 
-        Point intersectionPoint = p0.add(direction.scale(t));
-        return List.of(intersectionPoint); // the ray intersects the plane
+        // Calculate the distance from the ray's head to the plane
+        double t = (normal.dotProduct(q0.subtract(p0))) / nv;
+
+        // Check if the intersection point is behind the ray's head
+        if (t <= 0) {
+            return null; // No intersection
+        }
+
+        // Calculate the intersection point
+        Point intersectionPoint = p0.add(v.scale(t));
+
+        // Return a list containing the intersection point
+        return List.of(new Intersection(this, intersectionPoint));
     }
 }

@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.Color;
+import primitives.Material;
 import primitives.Point;
 import primitives.Vector;
 
@@ -9,8 +10,30 @@ import primitives.Vector;
  *
  * @author Yehuda Rubin and Arye Hacohen
  */
-public abstract class Geometry implements Intersectable {
+public abstract class Geometry extends Intersectable {
 
+    /**
+     * The material of the geometry object
+     */
+    private Material material = new Material();
+    /**
+     * getMaterial function returns the material of the geometry object
+     *
+     * @return the material of the geometry object
+     */
+    public Material getMaterial() {
+        return material;
+    }
+    /**
+     * setMaterial function sets the material of the geometry object
+     *
+     * @param material - the material of the geometry object
+     * @return the geometry object
+     */
+    public Geometry setMaterial(Material material) {
+        this.material = material;
+        return this;
+    }
     /**
      * The emission color of the geometry object
      */

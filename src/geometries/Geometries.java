@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Yehuda Rubin and Arye Hacohen
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
     // List to store all geometries in the collection
     private final List<Intersectable> geometries = new LinkedList<>();
 
@@ -56,23 +56,23 @@ public class Geometries implements Intersectable {
      * @return A list of intersection points, or null if no intersections are found.
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        // Initialize a list to store all intersection points
-        List<Point> intersections = new LinkedList<>();
+    public List<Intersection> calculateIntersectionsHelper(Ray ray) {
+        List<Intersection> intersections = null;
 
         // Iterate through each geometry in the collection
         for (Intersectable geometry : geometries) {
-            // Find intersections of the ray with the current geometry
-            List<Point> tempIntersections = geometry.findIntersections(ray);
-
-            // If intersections are found, add them to the main list
-            if (tempIntersections != null) {
-                // Add all found intersections to the main list
-                intersections.addAll(tempIntersections);
+            // Get intersections for the current geometry
+            List<Intersection> geometryIntersections = geometry.calculateIntersectionsHelper(ray);
+            // If intersections are found, add them to the list
+            if (geometryIntersections != null) {
+                if (intersections == null) {
+                    intersections = new LinkedList<>();
+                }
+                intersections.addAll(geometryIntersections);
             }
         }
 
-        // Return the list of intersections, or null if no intersections were found
-        return intersections.isEmpty() ? null : intersections;
+        // Return the list of intersections, or null if none were found
+        return intersections;
     }
 }
