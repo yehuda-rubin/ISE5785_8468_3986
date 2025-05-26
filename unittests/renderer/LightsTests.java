@@ -357,4 +357,32 @@ class LightsTests {
               .renderImage()
               .writeToImage("sphereWithTrianglesAndTwoLights");
    }
+
+   /** Produce a picture of two stars colliding */
+   @Test
+   void collidingStars() {
+      // Add two spheres representing the stars
+      scene1.geometries.add(
+              new Sphere(50, new Point(-50, 0, -100)) // First star
+                      .setEmission(new Color(255, 200, 0)) // Bright yellow
+                      .setMaterial(new Material().setKD(0.5).setKS(0.8).setShininess(300)),
+              new Sphere(50, new Point(50, 0, -100)) // Second star
+                      .setEmission(new Color(255, 0, 0)) // Bright red
+                      .setMaterial(new Material().setKD(0.5).setKS(0.8).setShininess(300))
+      );
+
+      // Add a point light to simulate the glow of the collision
+      scene1.lights.add(new PointLight(new Color(800, 400, 200), new Point(0, 0, -50))
+              .setKl(0.0001).setKq(0.00005));
+
+      // Add a spotlight to enhance the collision effect
+      scene1.lights.add(new SpotLight(new Color(1000, 500, 300), new Point(0, 0, -50), new Vector(0, 0, -1))
+              .setKl(0.0001).setKq(0.00005).setNarrowBeam(30));
+
+      // Render the image
+      camera1.setResolution(800, 800)
+              .build()
+              .renderImage()
+              .writeToImage("collidingStars");
+   }
 }
