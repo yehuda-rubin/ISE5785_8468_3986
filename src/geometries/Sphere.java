@@ -51,7 +51,7 @@ public class Sphere extends RadialGeometry {
      * @return a list of intersection points or null if there are no intersections
      */
     @Override
-    public List<Intersection> calculateIntersectionsHelper(Ray ray) {
+    public List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance) {
         // Point that represents the ray's head
         final Point rayPoint = ray.getPoint(0);
 
@@ -74,16 +74,16 @@ public class Sphere extends RadialGeometry {
         final double t2 = alignZero(tm + th);
 
         // 2 intersections
-        if(t1 > 0 && t2 > 0) {
+        if(t1 > 0 && t2 > 0 && alignZero(t1 - maxDistance) <= 0 && alignZero(t2 - maxDistance) <= 0) {
             Intersection intersection1 = new Intersection(this, ray.getPoint(t1));
             Intersection intersection2 = new Intersection(this, ray.getPoint(t2));
             return List.of(intersection1, intersection2);
         }
         // 1 intersection
-        else if(t1 > 0)
+        else if(t1 > 0 && alignZero(t1 - maxDistance) <= 0)
             return List.of(new Intersection(this, ray.getPoint(t1)));
             // 1 intersection
-        else if(t2 > 0)
+        else if(t2 > 0 && alignZero(t2 - maxDistance) <= 0)
             return List.of(new Intersection(this, ray.getPoint(t2)));
             // 0 intersections
         else

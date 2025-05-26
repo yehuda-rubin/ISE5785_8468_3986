@@ -56,11 +56,12 @@ public class Cylinder extends Tube {
     }
 
     /**
-     * @param ray the ray to check for intersections with the cylinder
+     * @param ray the ray to check for intersections with the cylinder\
+     * @param maxDistance the maximum distance to check for intersections
      * @return null since the method is not implemented
      */
     @Override
-    public List<Intersection> calculateIntersectionsHelper(Ray ray) {
+    public List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance) {
         return null;
     }
 }

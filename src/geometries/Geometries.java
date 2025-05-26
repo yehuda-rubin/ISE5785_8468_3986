@@ -56,23 +56,19 @@ public class Geometries extends Intersectable {
      * @return A list of intersection points, or null if no intersections are found.
      */
     @Override
-    public List<Intersection> calculateIntersectionsHelper(Ray ray) {
+    public List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance) {
+        // List that contains all the intersections
         List<Intersection> intersections = null;
 
-        // Iterate through each geometry in the collection
+        // Loop that goes threw all the geometries and found the intersections
         for (Intersectable geometry : geometries) {
-            // Get intersections for the current geometry
-            List<Intersection> geometryIntersections = geometry.calculateIntersectionsHelper(ray);
-            // If intersections are found, add them to the list
-            if (geometryIntersections != null) {
-                if (intersections == null) {
-                    intersections = new LinkedList<>();
-                }
-                intersections.addAll(geometryIntersections);
-            }
+            var geometryIntersections = geometry.calculateIntersections(ray, maxDistance);
+            if (geometryIntersections != null)
+                if (intersections == null)
+                    intersections = new LinkedList<>(geometryIntersections);
+                else
+                    intersections.addAll(geometryIntersections);
         }
-
-        // Return the list of intersections, or null if none were found
         return intersections;
     }
 }

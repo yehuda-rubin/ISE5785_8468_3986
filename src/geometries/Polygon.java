@@ -102,9 +102,10 @@ public class Polygon extends Geometry {
      * @return the list of vertices of the polygon
      */
     @Override
-    protected List<Intersection> calculateIntersectionsHelper(Ray ray) {
+    protected List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance) {
         // test the intersections with polygon's plane
-        final var intersections = plane.findIntersections(ray);
+        // we prefer to use the helper method so that we already check the distance
+        final var intersections = plane.calculateIntersections(ray, maxDistance);
         if (intersections == null)
             return null;
 
@@ -133,7 +134,9 @@ public class Polygon extends Geometry {
         Vector vector1;
         Vector vector2;
         Vector normal;
+        // Calculate the dot product of the ray vector with the normal vector of the polygon
         for (int i=0; i < size_vertices; ++i) {
+            // If we are at the last vertex, we need to connect it with the first vertex
             if (i == size_vertices - 1) {
                 vector1 = vectorsV.getFirst();
                 vector2 = vectorsV.getLast();
@@ -143,13 +146,16 @@ public class Polygon extends Geometry {
                 vector2 = vectorsV.get(i);
             }
 
+            // Calculate the normal vector of the polygon using the cross product of two edges
             normal = vector1.crossProduct(vector2);
             s[i] = alignZero(rayVector.dotProduct(normal));
 
+            // If the dot product is zero, it means the ray is parallel to the polygon's plane
             if (i != 0 && s[i] * s[i-1] <= 0)
                 return null;
         }
-        Point intersectionPoint = intersections.getFirst();
-        return List.of(new Intersection(this, intersectionPoint));
+        // Check if the ray intersects the polygon
+        Intersection intersection = intersections.getFirst();
+        return List.of(new Intersection(this, intersection.point));
     }
 }

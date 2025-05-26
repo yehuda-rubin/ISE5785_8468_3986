@@ -34,9 +34,10 @@ public class Triangle extends Polygon {
      * @return a list of intersection points or null if there are no intersections
      */
     @Override
-    protected List<Intersection> calculateIntersectionsHelper(Ray ray) {
+    protected List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance) {
         // test the intersections with triangle’s plane
-        final var intersections = plane.findIntersections(ray);
+        // we prefer to use the helper method so that we already check the distance
+        final var intersections = plane.calculateIntersections(ray, maxDistance);
         if (intersections == null)
             return null;
 
@@ -67,8 +68,8 @@ public class Triangle extends Polygon {
 
         // the point is inside the triangle only if s1, s2 and s3 have the same sign and none of them is 0
         if ((s1>0 && s2>0 && s3>0) || (s1<0 && s2<0 && s3<0)) {
-            Point intersectionPoint = intersections.getFirst();
-            return List.of(new Intersection(this, intersectionPoint));
+            Intersection intersection = intersections.getFirst();
+            return List.of(new Intersection(this, intersection.point));
         }
 
         return null;

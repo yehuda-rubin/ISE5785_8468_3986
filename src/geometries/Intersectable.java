@@ -96,16 +96,24 @@ public abstract class Intersectable {
      * @param ray the ray that make the intersection
      * @return a list of the intersection and the geometry that intersected
      */
-    protected abstract List<Intersection> calculateIntersectionsHelper(Ray ray);
+    protected abstract List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance);
 
     /**
-     * This method is calling to calculateIntersectionsHelper.
-     * This method is can't be overridden (according to NVI pattern)
-     * and now - no geometry class can change the general behavior.
-     * @param ray the ray that make the intersection
+     * Calculates the intersection between a ray and a geometry, up to the max distance.
+     * @param ray the ray that makes the intersection
+     * @param maxDistance the maximum distance of the intersection from the head of the ray
+     * @return a list of the intersection and the geometry that intersected
+     */
+    public final List<Intersection> calculateIntersections(Ray ray, double maxDistance) {
+        return calculateIntersectionsHelper(ray, maxDistance);
+    }
+
+    /**
+     * Calculates the intersection between a ray and a geometry.
+     * @param ray the ray that makes the intersection
      * @return a list of the intersection and the geometry that intersected
      */
     public final List<Intersection> calculateIntersections(Ray ray) {
-        return calculateIntersectionsHelper(ray);
+        return calculateIntersections(ray, Double.POSITIVE_INFINITY);
     }
 }

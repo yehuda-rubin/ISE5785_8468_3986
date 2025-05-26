@@ -48,10 +48,11 @@ public class Tube extends RadialGeometry {
 
     /**
      * @param ray the ray to check for intersections with the tube
+     * @param maxDistance the maximum distance to check for intersections
      * @return a list of intersection points or null if there are no intersections
      */
     @Override
-    public List<Intersection> calculateIntersectionsHelper(Ray ray) {
+    public List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance) {
         return null; // No intersection
     }
 }

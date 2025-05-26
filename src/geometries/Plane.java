@@ -6,6 +6,7 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -61,28 +62,28 @@ public class Plane extends Geometry {
      * @return a list of intersection points or null if there are no intersections
      */
     @Override
-    public List<Intersection> calculateIntersectionsHelper(Ray ray) {
-        Vector v = ray.getDirection();
-        Point p0 = ray.getPoint(0);
-        double nv = normal.dotProduct(v);
+    public List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance) {
+        // Point that represents the ray's head
+        final Point rayPoint = ray.getPoint(0);
+        // Vector that represents the ray's axis
+        final Vector rayVector = ray.getDirection();
 
-        // Check if the ray is parallel to the plane
-        if (isZero(nv)) {
-            return null; // No intersection
-        }
+        // in case the ray's head is the reference point in the plane, there are no intersections
+        if(rayPoint.equals(q0))
+            return null;
 
-        // Calculate the distance from the ray's head to the plane
-        double t = (normal.dotProduct(q0.subtract(p0))) / nv;
+        // numerator for the formula
+        final double numerator = normal.dotProduct(q0.subtract(rayPoint));
+        // denominator for the formula
+        final double denominator = normal.dotProduct(rayVector);
+        // in case ray is parallel to the plane
+        if (isZero(denominator))
+            return null;
 
-        // Check if the intersection point is behind the ray's head
-        if (t <= 0) {
-            return null; // No intersection
-        }
+        final double t = numerator / denominator;
 
-        // Calculate the intersection point
-        Point intersectionPoint = p0.add(v.scale(t));
-
-        // Return a list containing the intersection point
-        return List.of(new Intersection(this, intersectionPoint));
+        // if (0 ≥ t) or (maxDistance < t) there are no intersections
+        return (alignZero(t) > 0 && alignZero(t - maxDistance) <= 0) ?
+                List.of(new Intersection(this, ray.getPoint(t))) : null;
     }
 }
