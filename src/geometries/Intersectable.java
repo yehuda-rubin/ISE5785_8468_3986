@@ -1,5 +1,6 @@
 package geometries;
 
+import lighting.LightSource;
 import primitives.*;
 
 import java.util.List;

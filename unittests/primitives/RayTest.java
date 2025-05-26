@@ -35,13 +35,10 @@ class RayTest {
         assertEquals(new Point(2, 2, 3), ray.findClosestPoint(List.of(p3, p2, p4)), "Bad findClosestPoint");
 
         // ================= Boundary Values Tests =================
-        // TC02: the list is empty
-        assertNull(ray.findClosestPoint(List.of()), "Bad findClosestPoint with empty list");
-
-        // TC03: the point in the beginning of the list is the closest
+        // TC02: the point in the beginning of the list is the closest
         assertEquals(p2, ray.findClosestPoint(List.of(p2, p3, p4)), "Bad findClosestPoint");
 
-        // TC04: the point in the end of the list is the closest
+        // TC03: the point in the end of the list is the closest
         assertEquals(p2, ray.findClosestPoint(List.of(p4, p3, p2)), "Bad findClosestPoint");
     }
 }

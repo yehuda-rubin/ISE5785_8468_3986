@@ -12,6 +12,9 @@ import java.util.List;
  * @author Yehuda Rubin and Arye Hacohen
  */
 public class Cylinder extends Tube {
+    /**
+     * The height of the cylinder.
+     */
     private final double height;
 
     /**

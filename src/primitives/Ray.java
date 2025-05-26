@@ -13,7 +13,14 @@ import static primitives.Util.isZero;
  */
 
 public class Ray {
+    /*
+    * head point of the ray
+    */
     private final Point head;
+    /**
+     * direction vector of the ray
+     * it is normalized to ensure it has a length of 1
+     */
     private final Vector direction;
 
     /**
@@ -69,32 +76,6 @@ public class Ray {
     }
 
     /**
-     * Find the closest point to the ray's head from a list of points
-     *
-     * @param points list of points to check
-     * @return the closest point to the ray's head
-     */
-    public Point findClosestPoint(List<Point> points) {
-        // Check if the list is null or empty
-        if (points == null || points.isEmpty()) {
-            return null;
-        }
-        Point closestPoint = points.get(0);
-        double minDistance = head.distanceSquared(closestPoint);
-
-        // Iterate through the list of points to find the closest one
-        for (int i = 1; i < points.size(); i++) {
-            Point currentPoint = points.get(i);
-            double currentDistance = head.distanceSquared(currentPoint);
-            if (currentDistance < minDistance) {
-                minDistance = currentDistance;
-                closestPoint = currentPoint;
-            }
-        }
-        return closestPoint;
-    }
-
-    /**
      * Find the closest intersection point from a list of intersections
      *
      * @param intersections list of intersections to check
@@ -120,6 +101,12 @@ public class Ray {
         return closestIntersection;
     }
 
+    /**
+     * Find the closest point from a list of points
+     *
+     * @param points list of points to check
+     * @return the closest point to the ray's head
+     */
     public Point findClosestPoint(List<Point> points) {
         return points == null ? null
                 : findClosestIntersection(points.stream().map(p -> new Intersection(null, p)).toList()).point;

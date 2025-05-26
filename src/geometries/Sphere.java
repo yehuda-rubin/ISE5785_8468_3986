@@ -16,6 +16,9 @@ import static primitives.Util.isZero;
  * @author Yehuda Rubin and Arye Hacohen
  */
 public class Sphere extends RadialGeometry {
+    /**
+     * The center of the sphere
+     */
     private final Point center;
 
     /**
