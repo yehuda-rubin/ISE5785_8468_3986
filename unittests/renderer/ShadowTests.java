@@ -27,6 +27,11 @@ class ShadowTest {
            .setVpSize(200, 200)
            .setRayTracer(scene, RayTracerType.SIMPLE);
 
+   private final Material defaultMaterial = new Material()
+           .setKD(0.5)
+           .setKS(0.5)
+           .setShininess(30);
+
    /** The sphere in the tests */
    private final Intersectable  sphere     = new Sphere(60d,new Point(0, 0, -200))
            .setEmission(new Color(BLUE))
@@ -118,6 +123,279 @@ class ShadowTest {
               .build() //
               .renderImage() //
               .writeToImage("shadowTrianglesSphere");
+   }
+
+   @Test
+   void fourBodiesAllLightsClearer() {
+      // Add geometries to the scene
+      scene.geometries.add(
+              new Sphere(50, new Point(0, 0, -200))
+                      .setEmission(new Color(100, 100, 255))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30)),
+              new Triangle(new Point(-100, -100, -150), new Point(100, -100, -150), new Point(0, 100, -150))
+                      .setEmission(new Color(255, 100, 100))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30)),
+              new Plane(new Point(0, 0, -250), new Vector(0, 0, 1))
+                      .setEmission(new Color(100, 255, 100))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30)),
+              new Cylinder(new Ray(new Point(50, 50, -200), new Vector(0, 0, 1)), 30, 100)
+                      .setEmission(new Color(255, 255, 100))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30))
+      );
+
+      // Add lights to the scene
+      scene.setAmbientLight(new AmbientLight(new Color(100, 100, 100))); // Increase ambient light intensity
+      scene.lights.add(new PointLight(new Color(800, 800, 800), new Point(50, 50, 100))
+              .setKl(0.0001).setKq(0.00001));
+      scene.lights.add(new SpotLight(new Color(1000, 800, 800), new Point(-50, -50, 100), new Vector(1, 1, -3))
+              .setKl(0.0001).setKq(0.00001));
+      scene.lights.add(new DirectionalLight(new Color(600, 600, 600), new Vector(-1, -1, -1)));
+
+      // Render the image with higher resolution
+      camera.setResolution(1200, 1200) // Increase resolution
+              .build()
+              .renderImage()
+              .writeToImage("fourBodiesAllLightsClearer");
+   }
+
+   @Test
+   void fourBodiesAllLightsShadowTest() {
+      scene.geometries.add(
+              new Sphere(50, new Point(0, 0, -200))
+                      .setEmission(new Color(0,0,255))
+                      .setMaterial(defaultMaterial),
+              new Triangle(new Point(-100, -100, -150), new Point(100, -100, -150), new Point(0, 100, -150))
+                      .setEmission(new Color(255,0,0))
+                      .setMaterial(defaultMaterial),
+              new Plane(new Point(0, 0, -250), new Vector(0, 0, 1))
+                      .setEmission(new Color(0,255,0))
+                      .setMaterial(defaultMaterial),
+              new Cylinder(new Ray(new Point(50, 50, -200), new Vector(0, 0, 1)), 30, 100)
+                      .setEmission(new Color(255, 255, 0))
+                      .setMaterial(defaultMaterial)
+      );
+
+      // Ambient Light
+      scene.setAmbientLight(new AmbientLight(new Color(80, 80, 80)));
+
+      // Point Light
+      scene.lights.add(
+              new PointLight(new Color(500, 500, 500), new Point(50, 50, 100))
+                      .setKl(0.0001).setKq(0.00001)
+      );
+
+      // Spot Light
+      scene.lights.add(
+              new SpotLight(new Color(700, 400, 400), new Point(-50, -50, 150), new Vector(1, 1, -2))
+                      .setKl(0.0001).setKq(0.00001)
+      );
+
+      // Directional Light
+      scene.lights.add(
+              new DirectionalLight(new Color(300, 300, 300), new Vector(-1, -1, -1))
+      );
+
+      camera
+              .setResolution(800, 800) // Medium-high resolution
+              .build()
+              .renderImage()
+              .writeToImage("fourBodiesAllLightsShadowTest");
+   }
+
+   @Test
+   void customSceneWithEffects() {
+      // Add geometries to the scene
+      scene.geometries.add(
+              new Plane(new Point(0, 0, -300), new Vector(0, 0, 1)) // Ground plane
+                      .setEmission(new Color(50, 50, 50))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30)),
+              new Triangle(new Point(-150, -150, -150), new Point(150, -150, -150), new Point(0, 150, -150)) // Triangle
+                      .setEmission(new Color(255, 0, 0))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30)),
+              new Cylinder(new Ray(new Point(50, 50, -200), new Vector(0, 0, 1)), 30, 100) // Cylinder
+                      .setEmission(new Color(0, 255, 0))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30)),
+              new Polygon(new Point(-100, -100, -100), new Point(-100, 100, -100), new Point(100, 100, -100), new Point(100, -100, -100)) // Polygon
+                      .setEmission(new Color(0, 0, 255))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30))
+      );
+
+      // Add lights to the scene
+      scene.setAmbientLight(new AmbientLight(new Color(50, 50, 50))); // Ambient light
+      scene.lights.add(new PointLight(new Color(500, 500, 500), new Point(50, 50, 100)) // Point light
+              .setKl(0.0001).setKq(0.00001));
+      scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point(-50, -50, 150), new Vector(1, 1, -2)) // Spot light
+              .setKl(0.0001).setKq(0.00001));
+      scene.lights.add(new DirectionalLight(new Color(300, 300, 300), new Vector(-1, -1, -1))); // Directional light
+
+      // Render the image
+      camera.setResolution(800, 800) // Medium-high resolution
+              .build()
+              .renderImage()
+              .writeToImage("customSceneWithEffects");
+   }
+
+   @Test
+   void dramaticThreeEffectsTest() {
+      scene.geometries.add(
+              new Sphere(40, new Point(0, 0, -60))
+                      .setEmission(new Color(30, 30, 80))
+                      .setMaterial(new Material()
+                              .setKD(0.3).setKS(0.6).setShininess(100).setKT(0.7)),
+
+              new Triangle(
+                      new Point(-50, -30, -100),
+                      new Point(50, -30, -100),
+                      new Point(0, 40, -100))
+                      .setEmission(new Color(120, 30, 30))
+                      .setMaterial(new Material()
+                              .setKD(0.5).setKS(0.5).setShininess(150).setKR(0.6)),
+
+              new Triangle(
+                      new Point(-10, -20, -10),
+                      new Point(50, -30, -100),
+                      new Point(0, 40, -100))
+                      .setEmission(new Color(120, 30, 30))
+                      .setMaterial(new Material()
+                              .setKD(0.5).setKS(0.5).setShininess(150).setKR(0.6)),
+
+              new Plane(new Point(0, 0, -120), new Vector(0, 0, 1))
+                      .setEmission(new Color(20, 60, 20))
+                      .setMaterial(new Material()
+                              .setKD(0.4).setKS(0.3).setShininess(50))
+      );
+
+      scene.setAmbientLight(new AmbientLight(new Color(20, 20, 20)));
+
+      scene.lights.add(new PointLight(new Color(300, 150, 50), new Point(-60, 60, 80))
+              .setKl(0.0003).setKq(0.00003));
+
+      scene.lights.add(new SpotLight(new Color(500, 300, 200), new Point(100, 100, 100), new Vector(-1, -1, -2))
+              .setKl(0.0002).setKq(0.00002));
+
+      scene.lights.add(new DirectionalLight(new Color(50, 80, 100), new Vector(-1, -1, -1)));
+
+      camera.setResolution(1000, 1000)
+              .build()
+              .renderImage()
+              .writeToImage("dramaticThreeEffectsTest");
+   }
+
+   @Test
+   void detailedAbstractHuman() {
+      // רקע כהה מאוד
+      scene.setAmbientLight(new AmbientLight(new Color(15, 15, 15)));
+
+      // plane - ground
+      scene.geometries.add(
+              new Plane(new Point(0, 0, -150), new Vector(0, 0, 1))
+                      .setEmission(new Color(0, 40, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.7).setShininess(100).setKR(0.5))
+      );
+
+      // head - sphere
+      scene.geometries.add(
+              new Sphere(30, new Point(0, 0, -60))
+                      .setEmission(new Color(220, 0, 0))
+                      .setMaterial(new Material().setKD(0.9).setKS(0.4).setShininess(100))
+      );
+
+      // body - two triangles
+      scene.geometries.add(
+              new Triangle(new Point(-10, -5, -60), new Point(10, -5, -60), new Point(0, 0, -45))
+                      .setEmission(new Color(180, 0, 0))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.5).setShininess(50))
+      );
+
+      // body six triangles
+      scene.geometries.add(
+              new Triangle(new Point(-40, -20, -90), new Point(40, -20, -90), new Point(-30, -70, -110))
+                      .setEmission(new Color(200, 0, 0))
+                      .setMaterial(new Material().setKD(0.7).setKS(0.6).setShininess(90).setKR(0.3)),
+              new Triangle(new Point(40, -20, -90), new Point(30, -70, -110), new Point(-30, -70, -110))
+                      .setEmission(new Color(200, 0, 0))
+                      .setMaterial(new Material().setKD(0.7).setKS(0.6).setShininess(90).setKR(0.3)),
+
+              new Triangle(new Point(-40, -20, -90), new Point(-50, -40, -90), new Point(-30, -70, -110))
+                      .setEmission(new Color(170, 0, 0))
+                      .setMaterial(new Material().setKD(0.6).setKS(0.4)),
+              new Triangle(new Point(40, -20, -90), new Point(50, -40, -90), new Point(30, -70, -110))
+                      .setEmission(new Color(170, 0, 0))
+                      .setMaterial(new Material().setKD(0.6).setKS(0.4)),
+
+              new Triangle(new Point(-50, -40, -90), new Point(-30, -70, -110), new Point(-60, -70, -130))
+                      .setEmission(new Color(140, 0, 0))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.3)),
+              new Triangle(new Point(50, -40, -90), new Point(30, -70, -110), new Point(60, -70, -130))
+                      .setEmission(new Color(140, 0, 0))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.3))
+      );
+
+      // arms two triangles each
+      scene.geometries.add(
+              new Triangle(new Point(-50, -40, -90), new Point(-75, -50, -120), new Point(-60, -70, -130))
+                      .setEmission(new Color(130, 0, 0))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.3)),
+              new Triangle(new Point(-75, -50, -120), new Point(-40, -80, -140), new Point(-60, -70, -130))
+                      .setEmission(new Color(120, 0, 0))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.3)),
+
+              new Triangle(new Point(50, -40, -90), new Point(75, -50, -120), new Point(60, -70, -130))
+                      .setEmission(new Color(130, 0, 0))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.3)),
+              new Triangle(new Point(75, -50, -120), new Point(40, -80, -140), new Point(60, -70, -130))
+                      .setEmission(new Color(120, 0, 0))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.3))
+      );
+
+      // legs four triangles
+      scene.geometries.add(
+              new Triangle(new Point(-30, -70, -110), new Point(-60, -110, -140), new Point(-20, -110, -140))
+                      .setEmission(new Color(100, 0, 0))
+                      .setMaterial(new Material().setKD(0.6).setKS(0.4)),
+              new Triangle(new Point(30, -70, -110), new Point(60, -110, -140), new Point(20, -110, -140))
+                      .setEmission(new Color(100, 0, 0))
+                      .setMaterial(new Material().setKD(0.6).setKS(0.4)),
+
+              new Triangle(new Point(-20, -110, -140), new Point(-60, -140, -170), new Point(-10, -140, -170))
+                      .setEmission(new Color(90, 0, 0))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.3)),
+              new Triangle(new Point(20, -110, -140), new Point(60, -140, -170), new Point(10, -140, -170))
+                      .setEmission(new Color(90, 0, 0))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.3))
+      );
+
+      //eyes two spheres
+      scene.geometries.add(
+              new Sphere(4, new Point(-9, 8, -50))
+                      .setEmission(new Color(0, 0, 0))
+                      .setMaterial(new Material().setKD(0.6)),
+              new Sphere(4, new Point(9, 8, -50))
+                      .setEmission(new Color(0, 0, 0))
+                      .setMaterial(new Material().setKD(0.6))
+      );
+
+        // mouth - triangle
+      scene.geometries.add(
+              new Triangle(new Point(-6, 0, -50), new Point(6, 0, -50), new Point(0, -8, -50))
+                      .setEmission(new Color(140, 0, 0))
+                      .setMaterial(new Material().setKD(0.7).setKS(0.3))
+      );
+
+      // lights
+      scene.lights.add(
+              new PointLight(new Color(350, 80, 80), new Point(0, 200, 120))
+                      .setKl(0.0001).setKq(0.00001));
+      scene.lights.add(
+              new SpotLight(new Color(450, 100, 100), new Point(-150, 150, 120), new Vector(1, -1, -3))
+                      .setKl(0.0001).setKq(0.00001));
+      scene.lights.add(
+              new DirectionalLight(new Color(200, 50, 50), new Vector(1, 1, -1)));
+
+      camera.setResolution(1200, 1200)
+              .build()
+              .renderImage()
+              .writeToImage("detailedAbstractHuman");
    }
 
 }

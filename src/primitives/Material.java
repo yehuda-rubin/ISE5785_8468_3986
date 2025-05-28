@@ -26,6 +26,16 @@ public class Material {
     public int nSh = 0;
 
     /**
+     * The default material is initialized with kA = (1,1,1), kS = (0,0,0), kD = (0,0,0), nSh = 0
+     */
+    public Double3 kT = Double3.ZERO; // Transparency coefficient, initialized with (0,0,0)
+
+    /**
+     * The reflection coefficient, initialized with (0,0,0)
+     */
+    public Double3 kR = Double3.ZERO; // Reflection coefficient, initialized with (0,0,0)
+
+    /**
      * Default constructor
      */
     public Material() {}
@@ -97,6 +107,46 @@ public class Material {
      */
     public Material setShininess(int nSh) {
         this.nSh = nSh;
+        return this;
+    }
+
+    /**
+     * Setter for the transparency coefficient
+     * @param kT the transparency coefficient
+     * @return the Material
+     */
+    public Material setKT(Double3 kT) {
+        this.kT = kT;
+        return this;
+    }
+
+    /**
+     * Setter for the transparency coefficient
+     * @param kT the transparency coefficient
+     * @return the Material
+     */
+    public Material setKT(double kT) {
+        this.kT = new Double3(kT);
+        return this;
+    }
+
+    /**
+     * Setter for the reflection coefficient
+     * @param kR the reflection coefficient
+     * @return the Material
+     */
+    public Material setKR(double kR) {
+        this.kR = new Double3(kR);
+        return this;
+    }
+
+    /**
+     * Setter for the reflection coefficient
+     * @param kR the reflection coefficient
+     * @return the Material
+     */
+    public Material setKR(Double3 kR) {
+        this.kR = kR;
         return this;
     }
 }

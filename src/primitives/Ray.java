@@ -13,6 +13,13 @@ import static primitives.Util.isZero;
  */
 
 public class Ray {
+
+    /**
+     * A small value used to determine if a distance is close to zero.
+     * This is used to avoid floating-point precision issues when comparing distances.
+     */
+    private static final double DELTA = 0.1;
+
     /*
     * head point of the ray
     */
@@ -44,6 +51,26 @@ public class Ray {
         if (isZero(distance))
             return head;
         return head.add(direction.scale(distance));
+    }
+
+    /**
+     * constructor
+     * This constructor is used to create a ray that starts at a given head point,
+     * points in a specified direction, and is offset by a small distance
+     * to avoid numerical issues with intersections.
+     * @param head      the starting point of the ray
+     * @param direction the direction of the ray, which will be normalized
+     * @param normal    the normal vector at the head point, used to adjust the head position
+     */
+    public Ray(Point head, Vector direction, Vector normal) {
+        // Normalize the direction vector to ensure it has a length of 1
+        this.direction = direction.normalize();
+        double vNormal = direction.dotProduct(normal);
+        // If the dot product is zero, it means the ray is perpendicular to the normal
+        if (Util.isZero(vNormal))
+            this.head = head;
+        else
+            this.head = head.add(normal.scale(vNormal > 0 ? DELTA : -DELTA));
     }
 
     /**
