@@ -288,4 +288,190 @@ class ReflectionRefractionTests {
               .renderImage()
               .writeToImage("complexShapesScene");
    }
+
+   @Test
+   void complexArtisticScene1() {
+      // Floor - large reflective plane
+      scene.geometries.add(
+              new Plane(new Point(0, -500, 0), new Vector(0, 1, 0))
+                      .setEmission(new Color(10, 10, 30))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(80).setKR(0.6))
+      );
+
+      // Back wall - slightly reflective plane
+      scene.geometries.add(
+              new Plane(new Point(0, 0, -1500), new Vector(0, 0, 1))
+                      .setEmission(new Color(40, 20, 20))
+                      .setMaterial(new Material().setKD(0.6).setKS(0.4).setShininess(30).setKR(0.2))
+      );
+
+      // Side mirror wall - highly reflective plane
+      scene.geometries.add(
+              new Plane(new Point(-800, 0, 0), new Vector(1, 0, 0))
+                      .setEmission(new Color(20, 20, 40))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(120).setKR(0.8))
+      );
+
+      // Central large glass sphere
+      scene.geometries.add(
+              new Sphere(120d, new Point(0, -200, -400))
+                      .setEmission(new Color(5, 5, 25))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(100).setKT(0.8).setKR(0.1))
+      );
+
+      // Smaller colored spheres around the central one
+      scene.geometries.add(
+              // Red sphere
+              new Sphere(60d, new Point(-200, -300, -300))
+                      .setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKT(0.3)),
+
+              // Green sphere
+              new Sphere(50d, new Point(180, -320, -250))
+                      .setEmission(new Color(20, 100, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(60).setKR(0.4)),
+
+              // Blue translucent sphere
+              new Sphere(40d, new Point(-100, -100, -200))
+                      .setEmission(new Color(20, 20, 150))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(90).setKT(0.6)),
+
+              // Golden metallic sphere
+              new Sphere(35d, new Point(120, -150, -350))
+                      .setEmission(new Color(150, 120, 30))
+                      .setMaterial(new Material().setKD(0.2).setKS(0.8).setShininess(120).setKR(0.7)),
+
+              // Purple glass sphere
+              new Sphere(45d, new Point(-80, -250, -500))
+                      .setEmission(new Color(80, 20, 120))
+                      .setMaterial(new Material().setKD(0.2).setKS(0.5).setShininess(70).setKT(0.7))
+      );
+
+      // Floating triangular prisms
+      scene.geometries.add(
+              // Crystal 1
+              new Triangle(new Point(-300, 0, -200), new Point(-250, -50, -180), new Point(-280, 50, -220))
+                      .setEmission(new Color(200, 200, 255))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(150).setKT(0.8).setKR(0.2)),
+
+              // Crystal 2
+              new Triangle(new Point(250, 100, -300), new Point(300, 50, -280), new Point(275, 150, -320))
+                      .setEmission(new Color(255, 200, 200))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(150).setKT(0.8).setKR(0.2)),
+
+              // Crystal 3
+              new Triangle(new Point(50, 200, -150), new Point(100, 150, -130), new Point(75, 250, -170))
+                      .setEmission(new Color(200, 255, 200))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(150).setKT(0.8).setKR(0.2))
+      );
+
+      // ADDED POLYGONS FOR ARTISTIC ENHANCEMENT - ALL CONVEX WITH ORDERED VERTICES
+
+      // Hexagonal platform/altar under central sphere (ordered clockwise from top view)
+      scene.geometries.add(
+              new Polygon(
+                      new Point(-80, -380, -320),
+                      new Point(-120, -380, -400),
+                      new Point(-80, -380, -480),
+                      new Point(80, -380, -480),
+                      new Point(120, -380, -400),
+                      new Point(80, -380, -320)
+              ).setEmission(new Color(15, 10, 25))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(90).setKR(0.3))
+      );
+
+      // Square decorative element on the floor
+      scene.geometries.add(
+              new Polygon(
+                      new Point(280, -490, -180),
+                      new Point(320, -490, -180),
+                      new Point(320, -490, -220),
+                      new Point(280, -490, -220)
+              ).setEmission(new Color(35, 25, 15))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(60).setKR(0.4))
+      );
+
+      // Floating pentagonal mirror (ordered counter-clockwise)
+      scene.geometries.add(
+              new Polygon(
+                      new Point(-100, 180, -600),
+                      new Point(-60, 150, -580),
+                      new Point(-80, 100, -590),
+                      new Point(-120, 110, -610),
+                      new Point(-140, 150, -620)
+              ).setEmission(new Color(20, 20, 30))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(140).setKR(0.8))
+      );
+
+      // Diamond-shaped translucent panel (convex rhombus)
+      scene.geometries.add(
+              new Polygon(
+                      new Point(200, 50, -100),
+                      new Point(250, 0, -120),
+                      new Point(200, -50, -140),
+                      new Point(150, 0, -120)
+              ).setEmission(new Color(45, 25, 45))
+                      .setMaterial(new Material().setKD(0.2).setKS(0.8).setShininess(110).setKT(0.6).setKR(0.2))
+      );
+
+      // Rectangular ceiling panel
+      scene.geometries.add(
+              new Polygon(
+                      new Point(-50, 350, -280),
+                      new Point(50, 350, -280),
+                      new Point(50, 350, -380),
+                      new Point(-50, 350, -380)
+              ).setEmission(new Color(50, 40, 15))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(100).setKR(0.5))
+      );
+
+      // Triangular panel on the side
+      scene.geometries.add(
+              new Polygon(
+                      new Point(400, -50, -350),
+                      new Point(450, -100, -300),
+                      new Point(400, -150, -400)
+              ).setEmission(new Color(25, 40, 35))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKT(0.4))
+      );
+
+      // Set ambient light for overall illumination
+      scene.setAmbientLight(new AmbientLight(new Color(15, 15, 20)));
+
+      // Multiple light sources for dramatic effect
+      scene.lights.add(
+              // Main spotlight from above-left
+              new SpotLight(new Color(800, 600, 400), new Point(-500, 500, 200), new Vector(1, -1, -1))
+                      .setKl(0.0001).setKq(0.000001));
+
+      scene.lights.add(
+              // Directional light for general illumination
+              new DirectionalLight(new Color(300, 400, 500), new Vector(0.5, -1, -0.5)));
+
+      scene.lights.add(
+              // Point light for highlighting central sphere
+              new PointLight(new Color(600, 600, 800), new Point(0, 200, -200))
+                      .setKl(0.0005).setKq(0.000002));
+
+      scene.lights.add(
+              // Colored spotlight from right
+              new SpotLight(new Color(400, 200, 600), new Point(400, 300, 100), new Vector(-1, -0.5, -1))
+                      .setKl(0.0002).setKq(0.000003));
+
+      scene.lights.add(
+              // Soft point light from behind
+              new PointLight(new Color(200, 300, 400), new Point(0, 0, 500))
+                      .setKl(0.001).setKq(0.000005)
+      );
+
+      // Build and configure camera
+      cameraBuilder
+              .setLocation(new Point(300, 200, 800))
+              .setDirection(new Point(-50, -100, -300), Vector.AXIS_Y)
+              .setVpDistance(1000).setVpSize(400, 400)
+              .setResolution(800, 800)
+              .build()
+              .renderImage()
+              .writeToImage("complexArtisticScene1");
+   }
 }

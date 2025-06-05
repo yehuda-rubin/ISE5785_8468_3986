@@ -283,7 +283,6 @@ class ShadowTest {
 
    @Test
    void detailedAbstractHuman() {
-      // רקע כהה מאוד
       scene.setAmbientLight(new AmbientLight(new Color(15, 15, 15)));
 
       // plane - ground
