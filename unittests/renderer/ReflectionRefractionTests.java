@@ -474,4 +474,386 @@ class ReflectionRefractionTests {
               .renderImage()
               .writeToImage("complexArtisticScene1");
    }
+
+   @Test
+   void footballFieldScene() {
+      // מגרש - הדשא הירוק
+      scene.geometries.add(
+              new Plane(new Point(0, -10, 0), new Vector(0, 1, 0))
+                      .setEmission(new Color(34, 139, 34))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(5))
+      );
+
+      // קירות האצטדיון
+      scene.geometries.add(
+              // קיר אחורי
+              new Plane(new Point(0, 0, -300), new Vector(0, 0, 1))
+                      .setEmission(new Color(60, 60, 60))
+                      .setMaterial(new Material().setKD(0.9).setKS(0.1).setShininess(5)),
+
+              // קיר צד שמאל
+              new Plane(new Point(-300, 0, 0), new Vector(1, 0, 0))
+                      .setEmission(new Color(65, 65, 65))
+                      .setMaterial(new Material().setKD(0.9).setKS(0.1).setShininess(5)),
+
+              // קיר צד ימין
+              new Plane(new Point(300, 0, 0), new Vector(-1, 0, 0))
+                      .setEmission(new Color(65, 65, 65))
+                      .setMaterial(new Material().setKD(0.9).setKS(0.1).setShininess(5))
+      );
+
+      // שער שמאל - עם יותר כדורים ומיקום טוב יותר
+      scene.geometries.add(
+              // עמוד שמאל של השער - יותר כדורים לחיבור טוב יותר
+              new Sphere(4d, new Point(-200, -5, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(-200, 5, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(-200, 15, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(-200, 25, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(-200, 35, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(-200, 45, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+
+              // עמוד ימין של השער - יותר כדורים לחיבור טוב יותר
+              new Sphere(4d, new Point(-200, -5, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(-200, 5, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(-200, 15, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(-200, 25, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(-200, 35, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(-200, 45, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+
+              // קורה אופקית עליונה - יותר כדורים לחיבור רצוף
+              new Sphere(3.5d, new Point(-200, 45, -40))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(-200, 45, -30))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(-200, 45, -20))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(-200, 45, -10))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(-200, 45, 0))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(-200, 45, 10))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(-200, 45, 20))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(-200, 45, 30))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(-200, 45, 40))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15))
+      );
+
+      // שער ימין - עם יותר כדורים ומיקום טוב יותר
+      scene.geometries.add(
+              // עמוד שמאל של השער - יותר כדורים לחיבור טוב יותר
+              new Sphere(4d, new Point(200, -5, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(200, 5, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(200, 15, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(200, 25, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(200, 35, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(200, 45, -50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+
+              // עמוד ימין של השער - יותר כדורים לחיבור טוב יותר
+              new Sphere(4d, new Point(200, -5, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(200, 5, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(200, 15, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(200, 25, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(200, 35, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(4d, new Point(200, 45, 50))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+
+              // קורה אופקית עליונה - יותר כדורים לחיבור רצוף
+              new Sphere(3.5d, new Point(200, 45, -40))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(200, 45, -30))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(200, 45, -20))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(200, 45, -10))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(200, 45, 0))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(200, 45, 10))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(200, 45, 20))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(200, 45, 30))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15)),
+              new Sphere(3.5d, new Point(200, 45, 40))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(15))
+      );
+
+      // כדור כדורגל - במרכז המגרש - גדול וגבוה
+      scene.geometries.add(
+              new Sphere(15d, new Point(0, 5, 0))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.6).setKS(0.4).setShininess(30))
+      );
+
+      // קווי המגרש - רחבים יותר
+      scene.geometries.add(
+              // קו האמצע
+              new Polygon(
+                      new Point(-5, -9.5, -200),
+                      new Point(5, -9.5, -200),
+                      new Point(5, -9.5, 200),
+                      new Point(-5, -9.5, 200)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10))
+      );
+
+      // קווי שער
+      scene.geometries.add(
+              // קו השער השמאלי
+              new Polygon(
+                      new Point(-205, -9.5, -55),
+                      new Point(-195, -9.5, -55),
+                      new Point(-195, -9.5, 55),
+                      new Point(-205, -9.5, 55)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10)),
+
+              // קו השער הימני
+              new Polygon(
+                      new Point(195, -9.5, -55),
+                      new Point(205, -9.5, -55),
+                      new Point(205, -9.5, 55),
+                      new Point(195, -9.5, 55)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10))
+      );
+
+      // קווי גבול המגרש
+      scene.geometries.add(
+              // קו עליון
+              new Polygon(
+                      new Point(-250, -9.5, 195),
+                      new Point(250, -9.5, 195),
+                      new Point(250, -9.5, 205),
+                      new Point(-250, -9.5, 205)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10)),
+
+              // קו תחתון
+              new Polygon(
+                      new Point(-250, -9.5, -205),
+                      new Point(250, -9.5, -205),
+                      new Point(250, -9.5, -195),
+                      new Point(-250, -9.5, -195)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10)),
+
+              // קו שמאל
+              new Polygon(
+                      new Point(-250, -9.5, -200),
+                      new Point(-240, -9.5, -200),
+                      new Point(-240, -9.5, 200),
+                      new Point(-250, -9.5, 200)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10)),
+
+              // קו ימין
+              new Polygon(
+                      new Point(240, -9.5, -200),
+                      new Point(250, -9.5, -200),
+                      new Point(250, -9.5, 200),
+                      new Point(240, -9.5, 200)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10))
+      );
+
+      // תיבות עונשין
+      scene.geometries.add(
+              // תיבת עונשין שמאל
+              new Polygon(
+                      new Point(-200, -9.3, -90),
+                      new Point(-120, -9.3, -90),
+                      new Point(-120, -9.3, -85),
+                      new Point(-200, -9.3, -85)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10)),
+
+              new Polygon(
+                      new Point(-200, -9.3, 85),
+                      new Point(-120, -9.3, 85),
+                      new Point(-120, -9.3, 90),
+                      new Point(-200, -9.3, 90)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10)),
+
+              new Polygon(
+                      new Point(-125, -9.3, -85),
+                      new Point(-120, -9.3, -85),
+                      new Point(-120, -9.3, 85),
+                      new Point(-125, -9.3, 85)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10))
+      );
+
+      scene.geometries.add(
+              // תיבת עונשין ימין
+              new Polygon(
+                      new Point(200, -9.3, -90),
+                      new Point(120, -9.3, -90),
+                      new Point(120, -9.3, -85),
+                      new Point(200, -9.3, -85)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10)),
+
+              new Polygon(
+                      new Point(200, -9.3, 85),
+                      new Point(120, -9.3, 85),
+                      new Point(120, -9.3, 90),
+                      new Point(200, -9.3, 90)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10)),
+
+              new Polygon(
+                      new Point(120, -9.3, -85),
+                      new Point(125, -9.3, -85),
+                      new Point(125, -9.3, 85),
+                      new Point(120, -9.3, 85)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10))
+      );
+
+      // עיגול האמצע
+      scene.geometries.add(
+              new Polygon(
+                      new Point(-60, -9.3, -5),
+                      new Point(60, -9.3, -5),
+                      new Point(60, -9.3, 5),
+                      new Point(-60, -9.3, 5)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10)),
+
+              new Polygon(
+                      new Point(-5, -9.3, -60),
+                      new Point(5, -9.3, -60),
+                      new Point(5, -9.3, 60),
+                      new Point(-5, -9.3, 60)
+              ).setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10))
+      );
+
+      // נקודות פנדל
+      scene.geometries.add(
+              // נקודת פנדל שמאל
+              new Sphere(3d, new Point(-160, -8, 0))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10)),
+
+              // נקודת פנדל ימין
+              new Sphere(3d, new Point(160, -8, 0))
+                      .setEmission(new Color(255, 255, 255))
+                      .setMaterial(new Material().setKD(0.8).setKS(0.2).setShininess(10))
+      );
+
+      // תאורת האצטדיון - תאורה מאוזנת עם תאורה נוספת על השערים
+      scene.setAmbientLight(new AmbientLight(new Color(20, 20, 20)));
+
+      // אורות האצטדיון
+      scene.lights.add(
+              // תאורה ראשית מלמעלה
+              new SpotLight(new Color(100, 100, 90), new Point(0, 250, 0), new Vector(0, -1, 0))
+                      .setKl(0.0001).setKq(0.000001));
+
+      scene.lights.add(
+              // תאורה מהצד השמאלי
+              new SpotLight(new Color(60, 60, 50), new Point(-150, 120, 80), new Vector(1, -1, -0.5))
+                      .setKl(0.0002).setKq(0.000002));
+
+      scene.lights.add(
+              // תאורה מהצד הימני
+              new SpotLight(new Color(60, 60, 50), new Point(150, 120, 80), new Vector(-1, -1, -0.5))
+                      .setKl(0.0002).setKq(0.000002));
+
+      // תאורה מיוחדת לשערים
+      scene.lights.add(
+              // תאורה על השער השמאלי
+              new SpotLight(new Color(80, 80, 70), new Point(-200, 100, 0), new Vector(0, -1, 0))
+                      .setKl(0.0003).setKq(0.000003));
+
+      scene.lights.add(
+              // תאורה על השער הימני
+              new SpotLight(new Color(80, 80, 70), new Point(200, 100, 0), new Vector(0, -1, 0))
+                      .setKl(0.0003).setKq(0.000003));
+
+      scene.lights.add(
+              // תאורה כללית עדינה
+              new DirectionalLight(new Color(25, 25, 22), new Vector(0.3, -1, -0.5)));
+
+      // הגדרת המצלמה - מיקום אופטימלי לראות את כל השערים
+      cameraBuilder
+              .setLocation(new Point(0, 120, 180))
+              .setDirection(new Point(0, -10, 0), Vector.AXIS_Y)
+              .setVpDistance(120).setVpSize(450, 300)
+              .setResolution(1200, 800)
+              .build()
+              .renderImage()
+              .writeToImage("footballFieldScene");
+   }
 }
