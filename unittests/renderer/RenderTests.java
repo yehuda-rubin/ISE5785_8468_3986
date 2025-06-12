@@ -14,9 +14,9 @@ import scene.Scene;
  * Test rendering a basic image
  * @author Dan
  */
-class RenderTest {
+class RenderTests {
    /** Default constructor to satisfy JavaDoc generator */
-   RenderTest() { /* to satisfy JavaDoc generator */ }
+   RenderTests() { /* to satisfy JavaDoc generator */ }
 
    /** Camera builder of the tests */
    private final Camera.Builder camera = Camera.getBuilder() //
@@ -91,16 +91,16 @@ class RenderTest {
       scene.geometries //
               .add(// center
                       new Sphere(50, new Point(0, 0, -100))
-                              .setMaterial(new Material().setMaterial(new Double3(0.4))),
+                              .setMaterial(new Material().setkA(new Double3(0.4))),
                       // up left
                       new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100)) //
-                              .setMaterial(new Material().setMaterial(new Double3(0,0.8,0))),
+                              .setMaterial(new Material().setkA(new Double3(0,0.8,0))),
                       // down left
                       new Triangle(new Point(-100, 0, -100), new Point(0, -100, -100), new Point(-100, -100, -100)) //
-                              .setMaterial(new Material().setMaterial(new Double3(0.8,0,0))),
+                              .setMaterial(new Material().setkA(new Double3(0.8,0,0))),
                       // down right
                       new Triangle(new Point(100, 0, -100), new Point(0, -100, -100), new Point(100, -100, -100)) //
-                              .setMaterial(new Material().setMaterial(new Double3(0,0,0.8))));
+                              .setMaterial(new Material().setkA(new Double3(0,0,0.8))));
 
       camera //
               .setRayTracer(scene, RayTracerType.SIMPLE) //

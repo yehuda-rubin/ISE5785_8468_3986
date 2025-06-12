@@ -13,9 +13,9 @@ import scene.Scene;
  * Testing basic shadows
  * @author Dan Zilberstein
  */
-class ShadowTest {
+class ShadowTests {
    /** Default constructor to satisfy JavaDoc generator */
-   ShadowTest() { /* to satisfy JavaDoc generator */ }
+   ShadowTests() { /* to satisfy JavaDoc generator */ }
 
    /** Scene of the tests */
    private final Scene          scene      = new Scene("Test scene");
@@ -138,7 +138,7 @@ class ShadowTest {
               new Plane(new Point(0, 0, -250), new Vector(0, 0, 1))
                       .setEmission(new Color(100, 255, 100))
                       .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30)),
-              new Cylinder(new Ray(new Point(50, 50, -200), new Vector(0, 0, 1)), 30, 100)
+              new Cylinder(30, new Ray(new Point(50, 50, -200), new Vector(0, 0, 1)), 100)
                       .setEmission(new Color(255, 255, 100))
                       .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30))
       );
@@ -170,7 +170,7 @@ class ShadowTest {
               new Plane(new Point(0, 0, -250), new Vector(0, 0, 1))
                       .setEmission(new Color(0,255,0))
                       .setMaterial(defaultMaterial),
-              new Cylinder(new Ray(new Point(50, 50, -200), new Vector(0, 0, 1)), 30, 100)
+              new Cylinder(30, new Ray(new Point(50, 50, -200), new Vector(0, 0, 1)), 100)
                       .setEmission(new Color(255, 255, 0))
                       .setMaterial(defaultMaterial)
       );
@@ -212,7 +212,7 @@ class ShadowTest {
               new Triangle(new Point(-150, -150, -150), new Point(150, -150, -150), new Point(0, 150, -150)) // Triangle
                       .setEmission(new Color(255, 0, 0))
                       .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30)),
-              new Cylinder(new Ray(new Point(50, 50, -200), new Vector(0, 0, 1)), 30, 100) // Cylinder
+              new Cylinder(30, new Ray(new Point(50, 50, -200), new Vector(0, 0, 1)), 100) // Cylinder
                       .setEmission(new Color(0, 255, 0))
                       .setMaterial(new Material().setKD(0.5).setKS(0.5).setShininess(30)),
               new Polygon(new Point(-100, -100, -100), new Point(-100, 100, -100), new Point(100, 100, -100), new Point(100, -100, -100)) // Polygon

@@ -45,7 +45,7 @@ public class Material {
      * @param kA the Ambient light attenuation coefficient
      * @return the Material
      */
-    public Material setMaterial(Double3 kA) {
+    public Material setkA(Double3 kA) {
         this.kA = kA;
         return this;
     }
@@ -55,7 +55,7 @@ public class Material {
      * @param kA the Ambient light attenuation coefficient
      * @return the Material
      */
-    public Material setMaterial(double kA) {
+    public Material setkA(double kA) {
         this.kA = new Double3(kA);
         return this;
     }

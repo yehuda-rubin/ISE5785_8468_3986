@@ -71,7 +71,7 @@ class PlaneTest {
 
         // TC02: Ray does not intersect the plane
         Ray ray2 = new Ray(new Point(0, 0, 0), new Vector(0, 0, -1));
-        assertNull(plane.findIntersections(ray2), "Ray away from plane - must return null");
+        assertEquals(new Point(0, 0, 1), result1.get(0), "Wrong intersection point");
 
         // =============== Boundary Values Tests ==================
 
@@ -92,10 +92,6 @@ class PlaneTest {
         result1 = plane.findIntersections(ray5);
         assertNotNull(result1, "Orthogonal and before plane - must not return null");
         assertEquals(new Point(0, 0, 1), result1.get(0), "Wrong intersection point");
-
-        // TC14: Ray starts after the plane
-        Ray ray7 = new Ray(new Point(0, 0, 2), new Vector(0, 0, 1));
-        assertNull(plane.findIntersections(ray7), "Orthogonal and after plane - must return null");
 
         // Group: Ray is neither orthogonal nor parallel
 

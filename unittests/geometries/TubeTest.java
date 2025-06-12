@@ -5,8 +5,6 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -17,18 +15,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class TubeTest {
 
     /**
-     * test for the constructor {@link geometries.Tube#Tube(Ray, double)}
+     * test for the constructor {@link Tube#Tube(double, Ray)}
      */
 
     @Test
     void testConstructor() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Correct tube
-        assertDoesNotThrow(() -> new Tube(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1), "Failed constructing a correct tube");
+        assertDoesNotThrow(() -> new Tube(1, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1))), "Failed constructing a correct tube");
 
         // ============ Boundary Values Tests ==================
         // TC02: Incorrect tube
-        assertThrows(IllegalArgumentException.class, () -> new Tube(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), -1), "Failed constructing a correct tube");
+        assertThrows(IllegalArgumentException.class, () -> new Tube(-1, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1))), "Failed constructing a correct tube");
     }
     /**
      * test for the getNormal function {@link geometries.Tube#getNormal(Point)}
@@ -38,7 +36,7 @@ class TubeTest {
     void getNormal() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Normal to a tube
-        Tube t = new Tube(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1);
+        Tube t = new Tube(1, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)));
         assertEquals(new Vector(1, 0, 0), t.getNormal(new Point(1, 0, 1)), "Normal to a tube does not work correctly");
 
         // ============ Boundary Values Tests ==================

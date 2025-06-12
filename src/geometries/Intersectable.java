@@ -1,12 +1,16 @@
 package geometries;
 
 import lighting.LightSource;
-import primitives.*;
+import primitives.Material;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
 import java.util.List;
 
 /**
  * The Intersectable abstract class represents shapes that can be intersected by ray
+ *
  * @author Yehuda Rubin and Arye Hacohen
  */
 public abstract class Intersectable {
@@ -54,8 +58,9 @@ public abstract class Intersectable {
 
         /**
          * Constructor for initialization Intersection fields
+         *
          * @param geometry a geometry for initialization
-         * @param point a point for initialization
+         * @param point    a point for initialization
          */
         public Intersection(Geometry geometry, Point point) {
             this.geometry = geometry;
@@ -67,8 +72,8 @@ public abstract class Intersectable {
         @Override
         public boolean equals(Object obj) {
             if (this == obj) return true;
-            return (obj instanceof Intersection other)
-                    && geometry == other.geometry && point.equals(other.point);
+            if (!(obj instanceof Intersection other)) return false;
+            return geometry == other.geometry && point.equals(other.point);
         }
 
         @Override
@@ -80,12 +85,15 @@ public abstract class Intersectable {
     /**
      * Function that called from a geometry shape and calculates the intersections with a given ray.
      * This method cannot be overridden
+     *
      * @param ray the given ray that we want to calculate the intersections with
      * @return List of the shape's intersections with ray (Converting the intersection list to a points list)
      */
     public final List<Point> findIntersections(Ray ray) {
         var list = calculateIntersections(ray);
-        return list == null ? null : list.stream().map(intersection -> intersection.point).toList();
+        return list == null ? null : list.stream()
+                .map(intersection -> intersection.point)
+                .toList();
     }
 
     /**
@@ -93,6 +101,7 @@ public abstract class Intersectable {
      * Why not do everything in the method calculateIntersections?
      * To use the NVI (non-virtual-interface) pattern.
      * The method should be private according to NVI, but java does not allow private abstract methods.
+     *
      * @param ray the ray that make the intersection
      * @return a list of the intersection and the geometry that intersected
      */
@@ -100,7 +109,8 @@ public abstract class Intersectable {
 
     /**
      * Calculates the intersection between a ray and a geometry, up to the max distance.
-     * @param ray the ray that makes the intersection
+     *
+     * @param ray         the ray that makes the intersection
      * @param maxDistance the maximum distance of the intersection from the head of the ray
      * @return a list of the intersection and the geometry that intersected
      */
@@ -110,10 +120,11 @@ public abstract class Intersectable {
 
     /**
      * Calculates the intersection between a ray and a geometry.
+     *
      * @param ray the ray that makes the intersection
      * @return a list of the intersection and the geometry that intersected
      */
     public final List<Intersection> calculateIntersections(Ray ray) {
-        return calculateIntersections(ray, Double.POSITIVE_INFINITY);
+        return calculateIntersectionsHelper(ray, Double.POSITIVE_INFINITY);
     }
 }

@@ -188,6 +188,50 @@ class ReflectionRefractionTests {
                       .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(150).setKT(0.8).setKR(0.2))
       );
 
+      // PYRAMID - Floating pyramid 40 units above the central sphere
+      // Pyramid base corners (positioned 40 units above central sphere)
+      Point pyramidBase1 = new Point(-60, -40, -380);   // Front-right
+      Point pyramidBase2 = new Point(60, -40, -380);    // Front-left
+      Point pyramidBase3 = new Point(60, -40, -420);    // Back-left
+      Point pyramidBase4 = new Point(-60, -40, -420);   // Back-right
+      Point pyramidApex = new Point(0, 20, -400);       // Top point
+
+      // Pyramid base (using two triangles to form a square base)
+      scene.geometries.add(
+              // Base triangle 1
+              new Triangle(pyramidBase1, pyramidBase2, pyramidBase3)
+                      .setEmission(new Color(0, 400, 0))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(100).setKR(0.8).setKT(0.3)),
+
+              // Base triangle 2
+              new Triangle(pyramidBase1, pyramidBase3, pyramidBase4)
+                      .setEmission(new Color(0, 400, 0))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(100).setKR(0.8).setKT(0.3))
+      );
+
+      // Pyramid faces (4 triangular faces)
+      scene.geometries.add(
+              // Front face
+              new Triangle(pyramidBase1, pyramidBase2, pyramidApex)
+                      .setEmission(new Color(0, 400, 0))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(100).setKR(0.8).setKT(0.4)),
+
+              // Right face
+              new Triangle(pyramidBase2, pyramidBase3, pyramidApex)
+                      .setEmission(new Color(0, 400, 0))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(100).setKR(0.8).setKT(0.4)),
+
+              // Back face
+              new Triangle(pyramidBase3, pyramidBase4, pyramidApex)
+                      .setEmission(new Color(0, 400, 0))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(100).setKR(0.8).setKT(0.4)),
+
+              // Left face
+              new Triangle(pyramidBase4, pyramidBase1, pyramidApex)
+                      .setEmission(new Color(0, 400,0 ))
+                      .setMaterial(new Material().setKD(0.1).setKS(0.9).setShininess(100).setKR(0.8).setKT(0.4))
+      );
+
       // Set ambient light for overall illumination
       scene.setAmbientLight(new AmbientLight(new Color(15, 15, 20)));
 
@@ -222,6 +266,7 @@ class ReflectionRefractionTests {
               .setDirection(new Point(-50, -100, -300), Vector.AXIS_Y)
               .setVpDistance(1000).setVpSize(400, 400)
               .setResolution(800, 800)
+              .setDepthOfField(1200, 15, 20)  // ערכים מתאימים יותר
               .build()
               .renderImage()
               .writeToImage("complexArtisticScene");

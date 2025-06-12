@@ -15,24 +15,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class CylinderTest {
 
     /**
-     * test for the constructor {@link geometries.Cylinder#Cylinder(Ray, double, double)}
+     * test for the constructor {@link Cylinder#Cylinder(double, Ray, double)}
      * @author Yehuda Rubin and Arye Hacohen
      */
     @Test
     void testConstructor() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Correct cylinder
-        assertDoesNotThrow(() -> new Cylinder(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1, 1), "Failed constructing a correct cylinder");
+        assertDoesNotThrow(() -> new Cylinder(1, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1), "Failed constructing a correct cylinder");
 
         // ============ Boundary Values Tests ==================
         // TC02: Incorrect cylinder
-        assertThrows(IllegalArgumentException.class, () -> new Cylinder(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), -1, -1), "Failed constructing a correct cylinder");
+        assertThrows(IllegalArgumentException.class, () -> new Cylinder(-1, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), -1), "Failed constructing a correct cylinder");
 
         // TC03: Incorrect cylinder
-        assertThrows(IllegalArgumentException.class, () -> new Cylinder(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1, -1), "Failed constructing a correct cylinder");
+        assertThrows(IllegalArgumentException.class, () -> new Cylinder(1, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), -1), "Failed constructing a correct cylinder");
 
         // TC04: Incorrect cylinder
-        assertThrows(IllegalArgumentException.class, () -> new Cylinder(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), -1, 1), "Failed constructing a correct cylinder");
+        assertThrows(IllegalArgumentException.class, () -> new Cylinder(-1, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1), "Failed constructing a correct cylinder");
     }
     /**
      * test for the getNormal function {@link geometries.Cylinder#getNormal(Point)}
@@ -42,7 +42,7 @@ class CylinderTest {
     void getNormal() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Normal to a cylinder
-        Cylinder c = new Cylinder(new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)),1,  1);
+        Cylinder c = new Cylinder(1, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 1);
         assertEquals(new Vector(1, 0, 0), c.getNormal(new Point(1, 0, 1)), "Normal to a cylinder does not work correctly");
 
         // ============ Boundary Values Tests ==================
@@ -58,8 +58,8 @@ class CylinderTest {
     @Test
     public void testFindIntersections() {
         Cylinder cylinder = new Cylinder(
-                new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)),
-                1,  // radius
+                1, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)),
+                // radius
                 5   // height
         );
 

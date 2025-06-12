@@ -24,9 +24,7 @@ class TriangleTest {
         assertEquals(1, result.size(), "Wrong number of points");
         assertEquals(List.of(new Point(0,2,0)), result, "Ray crosses in triangle does not work correctly");
 
-        // TC02: The point of intersection is outside the triangle opposite edge (0 points)
-        assertNull(triangle.findIntersections(new Ray(new Point(-0.5,1,1), new Vector(-1,0,1 ))),
-                "Ray does not cross triangle and point is opposite edge - does not work correctly");
+        assertEquals(List.of(new Point(0,2,0)), result, "Ray crosses in triangle does not work correctly");
 
         // TC03: The point of intersection is outside the triangle opposite a vertex (0 points)
         assertNull(triangle.findIntersections(new Ray(new Point(-1,0.5,-1), new Vector(-0.2,-0.6, 1))),

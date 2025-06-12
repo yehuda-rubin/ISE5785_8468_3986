@@ -3,6 +3,7 @@ import primitives.*;
 import scene.Scene;
 
 import java.util.MissingResourceException;
+import java.util.Random;
 
 /**
  * The Camera class represents a virtual camera in 3D space.
@@ -58,20 +59,176 @@ public class Camera implements Cloneable {
      */
     private int nY = 1;
 
+    // Depth of Field parameters
+    /**
+     * Focal distance for depth of field. If 0, DoF is disabled.
+     */
+    private double focalDistance = 0.0;
+    /**
+     * Aperture radius for depth of field effect.
+     */
+    private double apertureRadius = 0.0;
+    /**
+     * Number of samples for depth of field (1-64).
+     */
+    private int dofSamples = 1;
+    /**
+     * Random number generator for aperture sampling.
+     */
+    private Random random = new Random();
+
     /**
      * Private empty constructor – used only by the Builder.
      */
     private Camera() {}
 
     /**
+     * Casts a single ray for a specific pixel and returns the color.
+     * @param j The x-coordinate of the pixel.
+     * @param i The y-coordinate of the pixel.
+     * @return The color traced by the ray.
+     */
+    private Color castSingleRay(int j, int i) {
+        Ray ray = constructRay(nX, nY, j, i);
+        return rayTracer.traceRay(ray);
+    }
+
+    /**
+     * Casts multiple rays with depth of field for a specific pixel and returns the averaged color.
+     * @param j The x-coordinate of the pixel.
+     * @param i The y-coordinate of the pixel.
+     * @return The averaged color from all DoF samples.
+     */
+    private Color castRaysWithDoF(int j, int i) {
+        if (focalDistance <= 0 || dofSamples == 1 || apertureRadius == 0) {
+            return castSingleRay(j, i);
+        }
+
+        // Get the primary ray through this pixel
+        Ray primaryRay = constructRay(nX, nY, j, i);
+
+        // Find where the primary ray intersects the focal plane
+        Point focalPlaneHit = primaryRay.getPoint(0).add(primaryRay.getDirection().scale(focalDistance));
+
+        Color accumulatedColor = Color.BLACK;
+
+        for (int sample = 0; sample < dofSamples; sample++) {
+            // Sample a point on the aperture disk
+            Point aperturePoint = sampleApertureDisk();
+
+            // Create ray from aperture point to focal plane intersection
+            Vector focusDirection = focalPlaneHit.subtract(aperturePoint).normalize();
+            Ray dofRay = new Ray(aperturePoint, focusDirection);
+
+            // Trace the ray and accumulate color
+            Color sampleColor = rayTracer.traceRay(dofRay);
+            accumulatedColor = accumulatedColor.add(sampleColor);
+        }
+
+        // Return averaged color
+        return accumulatedColor.scale(1.0 / dofSamples);
+    }
+
+    /**
+     * Samples a random point on the aperture disk using concentric mapping.
+     * @return A point on the aperture relative to camera position.
+     */
+    private Point sampleApertureDisk() {
+        if (apertureRadius == 0.0) {
+            return p0;
+        }
+
+        // Generate random point in unit square [-1,1]^2
+        double u = 2.0 * random.nextDouble() - 1.0;
+        double v = 2.0 * random.nextDouble() - 1.0;
+
+        // Apply concentric mapping to get uniform distribution on disk
+        double r, theta;
+        if (Math.abs(u) > Math.abs(v)) {
+            r = u;
+            theta = (Math.PI / 4.0) * (v / u);
+        } else {
+            r = v;
+            theta = (Math.PI / 2.0) - (Math.PI / 4.0) * (u / v);
+        }
+
+        // Convert to Cartesian coordinates on aperture
+        double x = apertureRadius * r * Math.cos(theta);
+        double y = apertureRadius * r * Math.sin(theta);
+
+        // Transform to camera coordinate system
+        return p0.add(vRight.scale(x)).add(vUp.scale(y));
+    }
+
+    /**
+     * Gets the 3D point on the image plane for a specific pixel.
+     * @param nX number of horizontal pixels
+     * @param nY number of vertical pixels
+     * @param j column index (x-axis)
+     * @param i row index (y-axis)
+     * @return The 3D point on the image plane
+     */
+    private Point getPixelPoint(int nX, int nY, int j, int i) {
+        double Xj = (j - (nX-1) / 2d) * (viewPlaneWidth / nX);
+        double Yi = -(i - (nY-1) / 2d) * (viewPlaneHeight / nY);
+
+        Point pCenter = p0.add(vTo.scale(viewPlaneDistance));
+        Point pIJ = pCenter;
+
+        if (Xj != 0) pIJ = pIJ.add(vRight.scale(Xj));
+        if (Yi != 0) pIJ = pIJ.add(vUp.scale(Yi));
+
+        return pIJ;
+    }
+
+    /**
      * Casts a ray for a specific pixel and traces it to determine the color, then writes the color to the image.
      * @param j The x-coordinate of the pixel.
      * @param i The y-coordinate of the pixel.
      */
-    private void castRay(int j, int i){
-        Ray ray = constructRay(nX, nY, j, i);
-        Color color = rayTracer.traceRay(ray);
+    private void castRay(int j, int i) {
+        Color color;
+        if (focalDistance > 0 && dofSamples > 1 && apertureRadius > 0) {
+            color = castRaysWithDoF(j, i);
+        } else {
+            color = castSingleRay(j, i);
+        }
         imageWriter.writePixel(j, i, color);
+    }
+
+    /**
+     * Sets the depth of field parameters.
+     * @param focalDistance Distance to the focal plane
+     * @param apertureRadius The radius of the aperture
+     * @param samples Number of samples (1-64)
+     * @return This camera instance
+     */
+    public Camera setDepthOfField(double focalDistance, double apertureRadius, int samples) {
+        if (samples < 1 || samples > 64) {
+            throw new IllegalArgumentException("Number of samples must be between 1 and 64");
+        }
+        if (apertureRadius < 0) {
+            throw new IllegalArgumentException("Aperture radius must be non-negative");
+        }
+        if (focalDistance <= 0) {
+            throw new IllegalArgumentException("Focal distance must be positive");
+        }
+
+        this.focalDistance = focalDistance;
+        this.apertureRadius = apertureRadius;
+        this.dofSamples = samples;
+        return this;
+    }
+
+    /**
+     * Disables depth of field.
+     * @return This camera instance
+     */
+    public Camera disableDepthOfField() {
+        this.focalDistance = 0.0;
+        this.apertureRadius = 0.0;
+        this.dofSamples = 1;
+        return this;
     }
 
     /**
@@ -222,6 +379,30 @@ public class Camera implements Cloneable {
         }
 
         /**
+         * Sets the depth of field parameters in the builder.
+         * @param focalDistance Distance to the focal plane
+         * @param apertureRadius Radius of the aperture
+         * @param samples Number of samples (1-64)
+         * @return this Builder instance
+         */
+        public Builder setDepthOfField(double focalDistance, double apertureRadius, int samples) {
+            if (samples < 1 || samples > 64) {
+                throw new IllegalArgumentException("Number of samples must be between 1 and 64");
+            }
+            if (apertureRadius < 0) {
+                throw new IllegalArgumentException("Aperture radius must be non-negative");
+            }
+            if (focalDistance <= 0) {
+                throw new IllegalArgumentException("Focal distance must be positive");
+            }
+
+            camera.focalDistance = focalDistance;
+            camera.apertureRadius = apertureRadius;
+            camera.dofSamples = samples;
+            return this;
+        }
+
+        /**
          * Sets the resolution (number of pixels) in x and y directions.
          * This method is currently not implemented.
          * @param nX number of horizontal pixels
@@ -270,7 +451,9 @@ public class Camera implements Cloneable {
     @Override
     public Camera clone() {
         try {
-            return (Camera) super.clone();
+            Camera cloned = (Camera) super.clone();
+            cloned.random = new Random(); // Create new random instance for thread safety
+            return cloned;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError(); // Should not happen
         }
@@ -286,16 +469,7 @@ public class Camera implements Cloneable {
      * @return a Ray from the camera to the pixel
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
-        double Xj = (j - (nX-1) / 2d) * (viewPlaneWidth / nX);
-        double Yi = -(i - (nY-1) / 2d) * (viewPlaneHeight / nY);
-
-        // calculate the point in the center of the view plane
-        Point pCenter = p0.add(vTo.scale(viewPlaneDistance));
-        Point pIJ = pCenter;
-
-        // we are calculating the ray through the pixel in three stages so we won't have a problem of zero vector.
-        if (Xj != 0) pIJ = pIJ.add(vRight.scale(Xj));
-        if (Yi != 0) pIJ = pIJ.add(vUp.scale(Yi));
+        Point pIJ = getPixelPoint(nX, nY, j, i);
         return new Ray(p0, pIJ.subtract(p0).normalize());
     }
 }

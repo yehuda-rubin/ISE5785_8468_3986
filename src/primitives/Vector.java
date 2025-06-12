@@ -125,4 +125,19 @@ public class Vector extends Point {
         return "->" + super.toString();
     }
 
+    /**
+     * Returns the x, y, and z coordinates of the vector.
+     * @return
+     */
+    public double getX() {
+        return xyz.d1();
+    }
+
+    public double getY() {
+        return xyz.d2();
+    }
+
+    public double getZ() {
+        return xyz.d3();
+    }
 }
