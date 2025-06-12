@@ -266,7 +266,7 @@ class ReflectionRefractionTests {
               .setDirection(new Point(-50, -100, -300), Vector.AXIS_Y)
               .setVpDistance(1000).setVpSize(400, 400)
               .setResolution(800, 800)
-              .setDepthOfField(1200, 15, 20)  // ערכים מתאימים יותר
+              .setDepthOfField(1200, 20, 16)  // ערכים מתאימים יותר
               .build()
               .renderImage()
               .writeToImage("complexArtisticScene");
