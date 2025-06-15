@@ -204,8 +204,8 @@ public class Camera implements Cloneable {
      * @return This camera instance
      */
     public Camera setDepthOfField(double focalDistance, double apertureRadius, int samples) {
-        if (samples < 1 || samples > 64) {
-            throw new IllegalArgumentException("Number of samples must be between 1 and 64");
+        if (samples < 1) {
+            throw new IllegalArgumentException("Number of samples must be positive");
         }
         if (apertureRadius < 0) {
             throw new IllegalArgumentException("Aperture radius must be non-negative");
@@ -386,8 +386,8 @@ public class Camera implements Cloneable {
          * @return this Builder instance
          */
         public Builder setDepthOfField(double focalDistance, double apertureRadius, int samples) {
-            if (samples < 1 || samples > 64) {
-                throw new IllegalArgumentException("Number of samples must be between 1 and 64");
+            if (samples < 1) {
+                throw new IllegalArgumentException("Number of samples must be positive");
             }
             if (apertureRadius < 0) {
                 throw new IllegalArgumentException("Aperture radius must be non-negative");

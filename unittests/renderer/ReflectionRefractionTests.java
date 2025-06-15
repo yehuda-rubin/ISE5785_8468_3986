@@ -170,6 +170,87 @@ class ReflectionRefractionTests {
                       .setMaterial(new Material().setKD(0.2).setKS(0.5).setShininess(70).setKT(0.7))
       );
 
+      // RED CUBE - using red sphere color (100, 20, 20)
+      // Cube center near red sphere at (-150, -250, -320), size 50x50x50
+      Point c1 = new Point(-175, -225, -295); // front-bottom-left
+      Point c2 = new Point(-125, -225, -295); // front-bottom-right
+      Point c3 = new Point(-125, -275, -295); // front-top-right
+      Point c4 = new Point(-175, -275, -295); // front-top-left
+      Point c5 = new Point(-175, -225, -345); // back-bottom-left
+      Point c6 = new Point(-125, -225, -345); // back-bottom-right
+      Point c7 = new Point(-125, -275, -345); // back-top-right
+      Point c8 = new Point(-175, -275, -345); // back-top-left
+
+      scene.geometries.add(
+              // Front face
+              new Triangle(c1, c2, c3).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+              new Triangle(c1, c3, c4).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+
+              // Back face
+              new Triangle(c6, c5, c8).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+              new Triangle(c6, c8, c7).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+
+              // Left face
+              new Triangle(c5, c1, c4).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+              new Triangle(c5, c4, c8).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+
+              // Right face
+              new Triangle(c2, c6, c7).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+              new Triangle(c2, c7, c3).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+
+              // Top face
+              new Triangle(c4, c3, c7).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+              new Triangle(c4, c7, c8).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+
+              // Bottom face
+              new Triangle(c1, c5, c6).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3)),
+              new Triangle(c1, c6, c2).setEmission(new Color(100, 20, 20))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.6).setShininess(80).setKR(0.3))
+      );
+
+      // BLUE OCTAHEDRON - using blue sphere color (20, 20, 150)
+      // Octahedron center near the large central sphere at (80, -120, -350)
+      Point octCenter = new Point(80, -120, -350);
+      Point octTop = new Point(80, -80, -350);     // top
+      Point octBottom = new Point(80, -160, -350); // bottom
+      Point octFront = new Point(80, -120, -310);   // front
+      Point octBack = new Point(80, -120, -390);    // back
+      Point octLeft = new Point(40, -120, -350);    // left
+      Point octRight = new Point(120, -120, -350);   // right
+
+      scene.geometries.add(
+              // Top pyramid faces
+              new Triangle(octTop, octFront, octRight).setEmission(new Color(20, 20, 150))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(90).setKT(0.5)),
+              new Triangle(octTop, octRight, octBack).setEmission(new Color(20, 20, 150))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(90).setKT(0.5)),
+              new Triangle(octTop, octBack, octLeft).setEmission(new Color(20, 20, 150))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(90).setKT(0.5)),
+              new Triangle(octTop, octLeft, octFront).setEmission(new Color(20, 20, 150))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(90).setKT(0.5)),
+
+              // Bottom pyramid faces
+              new Triangle(octBottom, octRight, octFront).setEmission(new Color(20, 20, 150))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(90).setKT(0.5)),
+              new Triangle(octBottom, octBack, octRight).setEmission(new Color(20, 20, 150))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(90).setKT(0.5)),
+              new Triangle(octBottom, octLeft, octBack).setEmission(new Color(20, 20, 150))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(90).setKT(0.5)),
+              new Triangle(octBottom, octFront, octLeft).setEmission(new Color(20, 20, 150))
+                      .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(90).setKT(0.5))
+      );
+
       // Floating triangular prisms
       scene.geometries.add(
               // Crystal 1
