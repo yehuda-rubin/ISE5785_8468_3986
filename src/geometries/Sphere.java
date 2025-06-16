@@ -1,9 +1,6 @@
 package geometries;
 
-import primitives.Point;
-import primitives.Ray;
-import primitives.Util;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.List;
 
@@ -88,5 +85,27 @@ public class Sphere extends RadialGeometry {
             // 0 intersections
         else
             return null;
+    }
+
+    /**
+     * Calculates the bounding box of the sphere
+     *
+     * @return the bounding box of the sphere
+     */
+    @Override
+    protected AABB calculateBoundingBox() {
+        Point min = new Point(
+                center.getX() - radius,
+                center.getY() - radius,
+                center.getZ() - radius
+        );
+
+        Point max = new Point(
+                center.getX() + radius,
+                center.getY() + radius,
+                center.getZ() + radius
+        );
+
+        return new AABB(min, max);
     }
 }

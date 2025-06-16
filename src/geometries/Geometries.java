@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.AABB;
 import primitives.Point;
 import primitives.Ray;
 
@@ -70,5 +71,62 @@ public class Geometries extends Intersectable {
                     intersections.addAll(geometryIntersections);
         }
         return intersections;
+    }
+
+    /**
+     * Calculate the bounding box that contains all geometries in this collection.
+     * Combines all individual bounding boxes into one that encompasses all geometries.
+     *
+     * @return AABB that contains all geometries, or null if collection is empty or no valid boxes
+     */
+    @Override
+    protected AABB calculateBoundingBox() {
+        if (geometries.isEmpty()) {
+            return null;
+        }
+
+        AABB combinedBox = null;
+
+        // עבור על כל הגיאומטריות וחבר את ה-bounding boxes שלהן
+        for (Intersectable geometry : geometries) {
+            AABB currentBox = geometry.getBoundingBox();
+            if (currentBox != null) {
+                if (combinedBox == null) {
+                    combinedBox = currentBox;
+                } else {
+                    combinedBox = AABB.combine(combinedBox, currentBox);
+                }
+            }
+        }
+
+        return combinedBox;
+    }
+
+    /**
+     * Get the number of geometries in this collection.
+     * Useful for performance analysis and debugging.
+     *
+     * @return the number of geometries in the collection
+     */
+    public int size() {
+        return geometries.size();
+    }
+
+    /**
+     * Check if the collection is empty.
+     *
+     * @return true if no geometries are in the collection
+     */
+    public boolean isEmpty() {
+        return geometries.isEmpty();
+    }
+
+    /**
+     * Clear all geometries from the collection.
+     * Useful for resetting the scene.
+     */
+    public void clear() {
+        geometries.clear();
+        invalidateBoundingBox(); // Force recalculation of bounding box
     }
 }

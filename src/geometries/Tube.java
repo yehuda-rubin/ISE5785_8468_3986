@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -54,5 +55,10 @@ public class Tube extends RadialGeometry {
     @Override
     public List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance) {
         return null; // No intersection
+    }
+
+    @Override
+    protected AABB calculateBoundingBox() {
+        return null;
     }
 }

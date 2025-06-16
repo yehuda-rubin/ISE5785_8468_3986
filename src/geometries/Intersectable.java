@@ -1,10 +1,7 @@
 package geometries;
 
 import lighting.LightSource;
-import primitives.Material;
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.List;
 
@@ -14,6 +11,12 @@ import java.util.List;
  * @author Yehuda Rubin and Arye Hacohen
  */
 public abstract class Intersectable {
+    /**
+     * The bounding box of the geometry, used for optimization in intersection calculations.
+     * It is initialized to null and can be set by subclasses if needed.
+     */
+    protected AABB boundingBox = null;
+
     /**
      * The Intersection class is to associate intersection points with intersecting geometries.
      */
@@ -108,23 +111,52 @@ public abstract class Intersectable {
     protected abstract List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance);
 
     /**
-     * Calculates the intersection between a ray and a geometry, up to the max distance.
-     *
-     * @param ray         the ray that makes the intersection
-     * @param maxDistance the maximum distance of the intersection from the head of the ray
-     * @return a list of the intersection and the geometry that intersected
+     * CBR optimization wrapper for calculateIntersections
+     * Stage 1: Uses Conservative Boundary Region optimization
      */
     public final List<Intersection> calculateIntersections(Ray ray, double maxDistance) {
+        // CBR optimization - check bounding box first
+        if (boundingBox != null && !boundingBox.intersect(ray)) {
+            return null; // No intersection with bounding box = no intersection at all
+        }
+
+        // If we reach here, either no bounding box or ray intersects bounding box
         return calculateIntersectionsHelper(ray, maxDistance);
     }
 
     /**
-     * Calculates the intersection between a ray and a geometry.
-     *
-     * @param ray the ray that makes the intersection
-     * @return a list of the intersection and the geometry that intersected
+     * CBR optimization wrapper for calculateIntersections (infinite distance)
      */
     public final List<Intersection> calculateIntersections(Ray ray) {
+        // CBR optimization - check bounding box first
+        if (boundingBox != null && !boundingBox.intersect(ray)) {
+            return null; // No intersection with bounding box = no intersection at all
+        }
+
         return calculateIntersectionsHelper(ray, Double.POSITIVE_INFINITY);
+    }
+
+    /**
+     * Get or calculate the bounding box for this geometry
+     * Lazy initialization pattern
+     */
+    public final AABB getBoundingBox() {
+        if (boundingBox == null) {
+            boundingBox = calculateBoundingBox();
+        }
+        return boundingBox;
+    }
+
+    /**
+     * Calculate the bounding box for this specific geometry
+     * To be implemented by concrete geometries
+     */
+    protected abstract AABB calculateBoundingBox();
+
+    /**
+     * Force recalculation of bounding box (useful when geometry changes)
+     */
+    public final void invalidateBoundingBox() {
+        boundingBox = null;
     }
 }

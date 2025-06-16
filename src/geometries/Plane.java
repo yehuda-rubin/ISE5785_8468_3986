@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -85,5 +86,12 @@ public class Plane extends Geometry {
         // if (0 ≥ t) or (maxDistance < t) there are no intersections
         return (alignZero(t) > 0 && alignZero(t - maxDistance) <= 0) ?
                 List.of(new Intersection(this, ray.getPoint(t))) : null;
+    }
+
+
+    @Override
+    protected AABB calculateBoundingBox() {
+        // A plane is infinite in size, so it does not have a bounding box
+        return null;
     }
 }

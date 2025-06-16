@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -33,6 +34,11 @@ public class Cylinder extends Tube {
         this.height = height;
     }
 
+    /**
+     * Returns the height of the cylinder.
+     *
+     * @return the height of the cylinder
+     */
     @Override
     public Vector getNormal(Point point) {
         Point p0 = axis.getPoint(0);
@@ -62,6 +68,16 @@ public class Cylinder extends Tube {
      */
     @Override
     public List<Intersection> calculateIntersectionsHelper(Ray ray, double maxDistance) {
+        return null;
+    }
+
+    /**
+     * Returns the height of the cylinder.
+     *
+     * @return the height of the cylinder
+     */
+    @Override
+    protected AABB calculateBoundingBox() {
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -157,5 +158,35 @@ public class Polygon extends Geometry {
         // Check if the ray intersects the polygon
         Intersection intersection = intersections.getFirst();
         return List.of(new Intersection(this, intersection.point));
+    }
+
+    /**
+     * Get the vertices of the polygon
+     *
+     * @return the vertices of the polygon
+     */
+    @Override
+    protected AABB calculateBoundingBox() {
+        if (vertices.isEmpty()) {
+            return null;
+        }
+
+        double minX = vertices.get(0).getX();
+        double maxX = vertices.get(0).getX();
+        double minY = vertices.get(0).getY();
+        double maxY = vertices.get(0).getY();
+        double minZ = vertices.get(0).getZ();
+        double maxZ = vertices.get(0).getZ();
+
+        for (Point vertex : vertices) {
+            minX = Math.min(minX, vertex.getX());
+            maxX = Math.max(maxX, vertex.getX());
+            minY = Math.min(minY, vertex.getY());
+            maxY = Math.max(maxY, vertex.getY());
+            minZ = Math.min(minZ, vertex.getZ());
+            maxZ = Math.max(maxZ, vertex.getZ());
+        }
+
+        return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
     }
 }
