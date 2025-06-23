@@ -25,20 +25,6 @@ class Stage1PerformanceTestsNoCBR {
     /** Camera builder for the tests WITHOUT BVH optimization */
     private final Camera.Builder cameraBuilder = Camera.getBuilder();
 
-    /**
-     * Utility method to wait for system stabilization between performance measurements
-     * @param seconds number of seconds to wait
-     */
-    private void waitForSystemStabilization(int seconds) {
-        try {
-            System.out.println("⏳ Waiting " + seconds + " seconds for system stabilization...");
-            TimeUnit.SECONDS.sleep(seconds);
-            System.out.println("✅ System stabilization complete.");
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException("Test interrupted during stabilization wait", e);
-        }
-    }
 
     /**
      * Stage 1 Baseline Performance Test - WITHOUT Conservative Boundary Region (CBR)
@@ -49,9 +35,6 @@ class Stage1PerformanceTestsNoCBR {
     @Test
     void stage1BaselinePerformanceTestWithComplexScene() {
         System.out.println("🚀 Starting Stage 1 Baseline Performance Test (NO CBR)");
-
-        // Wait for system stabilization before starting the test
-        waitForSystemStabilization(20);
 
         scene = new Scene("Stage 1 Baseline Performance Test - NO CBR");
 
@@ -231,9 +214,6 @@ class Stage1PerformanceTestsNoCBR {
     @Test
     void stage1BaselineTestWithArtisticComplexScene() {
         System.out.println("🎨 Starting Stage 1 Baseline Artistic Test (NO CBR)");
-
-        // Wait for system stabilization before starting the test
-        waitForSystemStabilization(20);
 
         scene = new Scene("Stage 1 Baseline Artistic Test - NO CBR");
 
