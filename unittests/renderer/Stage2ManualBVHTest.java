@@ -143,18 +143,18 @@ class Stage2ManualBVHTest {
 
         // Primary directional light for general illumination
         scene.lights.add(
-                new DirectionalLight(new Color(400, 400, 500), new Vector(1, -1, -1))
+                new DirectionalLight(new Color(80, 80, 100), new Vector(1, -1, -1))
         );
 
         // Secondary point light for depth and highlights
         scene.lights.add(
-                new PointLight(new Color(300, 350, 400), new Point(-300, 400, 300))
+                new PointLight(new Color(60, 70, 80), new Point(-300, 400, 300))
                         .setKl(0.0001).setKq(0.000001)
         );
 
         // Accent spot light for dramatic effect
         scene.lights.add(
-                new SpotLight(new Color(500, 300, 400), new Point(400, 500, 400), new Vector(-1, -1, -1))
+                new SpotLight(new Color(100, 60, 80), new Point(400, 500, 400), new Vector(-1, -1, -1))
                         .setKl(0.0002).setKq(0.000002)
         );
     }

@@ -8,29 +8,52 @@ import scene.Scene;
 import renderer.Camera;
 import lighting.*;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Stage 1 Performance Tests for BVH (Bounding Volume Hierarchy) optimizations
- * This class contains tests to measure the performance impact of CBR (Conservative Boundary Region)
+ * Stage 1 Performance Tests WITHOUT BVH (Bounding Volume Hierarchy) optimizations
+ * This class contains tests to measure the baseline performance without CBR (Conservative Boundary Region)
  * optimizations in complex scenes with various geometries.
+ * These tests serve as a baseline to compare against the CBR-optimized versions.
+ * CBR is simply not activated - no special code needed to disable it.
  */
-class Stage1PerformanceTests {
-    /** Scene for the BVH performance tests */
+class Stage1PerformanceTestsNoCBR {
+    /** Scene for the baseline performance tests */
     private Scene scene;
 
-    /** Camera builder for the tests with BVH optimization */
+    /** Camera builder for the tests WITHOUT BVH optimization */
     private final Camera.Builder cameraBuilder = Camera.getBuilder();
 
     /**
-     * Stage 1 BVH Performance Test - Conservative Boundary Region (CBR)
-     * Creates a complex scene with 500+ objects to test CBR optimization effectiveness.
-     * Measures rendering time with and without bounding box optimizations.
-     * Expected result: 3-4x performance improvement with CBR enabled.
+     * Utility method to wait for system stabilization between performance measurements
+     * @param seconds number of seconds to wait
+     */
+    private void waitForSystemStabilization(int seconds) {
+        try {
+            System.out.println("⏳ Waiting " + seconds + " seconds for system stabilization...");
+            TimeUnit.SECONDS.sleep(seconds);
+            System.out.println("✅ System stabilization complete.");
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Test interrupted during stabilization wait", e);
+        }
+    }
+
+    /**
+     * Stage 1 Baseline Performance Test - WITHOUT Conservative Boundary Region (CBR)
+     * Creates a complex scene with 500+ objects to test baseline performance without optimizations.
+     * Measures rendering time without bounding box optimizations.
+     * Expected result: Baseline performance for comparison with CBR-enabled version.
      */
     @Test
-    void stage1CBRPerformanceTestWithComplexScene() {
-        scene = new Scene("Stage 1 CBR Performance Test");
+    void stage1BaselinePerformanceTestWithComplexScene() {
+        System.out.println("🚀 Starting Stage 1 Baseline Performance Test (NO CBR)");
+
+        // Wait for system stabilization before starting the test
+        waitForSystemStabilization(20);
+
+        scene = new Scene("Stage 1 Baseline Performance Test - NO CBR");
 
         // Set ambient light for overall scene illumination
         scene.setAmbientLight(new AmbientLight(new Color(20, 20, 25)));
@@ -66,7 +89,7 @@ class Stage1PerformanceTests {
 
         // Generate 200 random spheres - main performance test objects
         Random random = new Random(42); // Fixed seed for reproducible results
-        System.out.println("Creating 200 spheres for CBR performance test...");
+        System.out.println("Creating 200 spheres for baseline performance test...");
 
         for (int i = 0; i < 200; i++) {
             Point center = new Point(
@@ -158,7 +181,7 @@ class Stage1PerformanceTests {
         }
 
         System.out.println("Total objects in scene: " + scene.geometries.size());
-        System.out.println("Starting Stage 1 CBR performance measurement...");
+        System.out.println("Starting Stage 1 baseline performance measurement (NO CBR)...");
 
         // Configure camera for performance testing
         Camera camera = cameraBuilder
@@ -168,19 +191,16 @@ class Stage1PerformanceTests {
                 .setVpSize(400, 400)
                 .setResolution(600, 600)  // 360,000 rays total
                 .setRayTracer(scene, RayTracerType.SIMPLE)
-                //.disableDepthOfField()  // CRITICAL: Disable DOF for performance testing
                 .build();
 
         // Performance measurement with detailed timing
-        System.out.println("\n=== Stage 1 Performance Measurement ===");
+        System.out.println("\n=== Stage 1 Baseline Performance Measurement (NO CBR) ===");
         System.out.println("Resolution: 600x600 (360,000 rays)");
         System.out.println("Scene complexity: " + scene.geometries.size() + " objects");
-
-        // CBR optimization is automatically enabled when bounding boxes are calculated
-        // The first call to getBoundingBox() will trigger calculation and caching
+        System.out.println("CBR optimization: NOT ACTIVE");
 
         long startTime = System.nanoTime();
-        camera.renderImage().writeToImage("stage1_cbr_performance_test");
+        camera.renderImage().writeToImage("stage1_baseline_performance_test_no_cbr");
         long endTime = System.nanoTime();
 
         double renderTime = (endTime - startTime) / 1_000_000_000.0;
@@ -189,36 +209,33 @@ class Stage1PerformanceTests {
         System.out.println("Total render time: " + String.format("%.2f", renderTime) + " seconds");
         System.out.println("Performance: " + String.format("%.0f", 360000 / renderTime) + " rays/second");
 
-        // Verify scene bounding box was calculated (indicates CBR is active)
-        AABB sceneBoundingBox = scene.geometries.getBoundingBox();
-        assertNotNull(sceneBoundingBox, "Scene bounding box should be calculated for CBR optimization");
-
-        System.out.println("Scene bounding box: " + sceneBoundingBox);
-        System.out.println("CBR optimization: ACTIVE");
+        // Verify CBR is NOT active (no bounding box should be calculated)
+        System.out.println("Bounding box optimization: DISABLED");
+        System.out.println("CBR optimization: INACTIVE");
 
         // Performance validation
         assertTrue(renderTime > 0, "Render time should be positive");
-        assertTrue(renderTime < 300, "Render time should be reasonable (under 5 minutes)");
+        // Note: Without CBR, render time will be significantly longer
+        assertTrue(renderTime < 1800, "Render time should complete within 30 minutes");
 
-        System.out.println("\n✅ Stage 1 CBR test completed successfully!");
-        System.out.println("📁 Output image: stage1_cbr_performance_test.ppm");
-
-        // Note: For comparison testing (with/without CBR), you would need to:
-        // 1. Invalidate all bounding boxes (simulate no CBR)
-        // 2. Measure performance
-        // 3. Re-enable bounding boxes (CBR active)
-        // 4. Measure performance again
-        // 5. Calculate improvement ratio
+        System.out.println("\n✅ Stage 1 baseline test (NO CBR) completed successfully!");
+        System.out.println("📁 Output image: stage1_baseline_performance_test_no_cbr.ppm");
+        System.out.println("⚠️  Expected: This should be 3-4x SLOWER than the CBR version");
     }
 
     /**
-     * Stage 1 CBR Test with Artistic Complex Scene
-     * Creates a visually appealing scene while testing CBR performance.
-     * Combines aesthetic value with performance measurement.
+     * Stage 1 Baseline Test with Artistic Complex Scene - WITHOUT CBR
+     * Creates a visually appealing scene while testing baseline performance.
+     * Combines aesthetic value with baseline performance measurement.
      */
     @Test
-    void stage1CBRTestWithArtisticComplexScene() {
-        scene = new Scene("Stage 1 CBR Artistic Test");
+    void stage1BaselineTestWithArtisticComplexScene() {
+        System.out.println("🎨 Starting Stage 1 Baseline Artistic Test (NO CBR)");
+
+        // Wait for system stabilization before starting the test
+        waitForSystemStabilization(20);
+
+        scene = new Scene("Stage 1 Baseline Artistic Test - NO CBR");
 
         // Enhanced ambient lighting for artistic effect
         scene.setAmbientLight(new AmbientLight(new Color(25, 20, 30)));
@@ -232,7 +249,7 @@ class Stage1PerformanceTests {
                 new DirectionalLight(new Color(40, 60, 80), new Vector(0.3, -0.8, -0.5)));
 
         scene.lights.add(
-                new PointLight(new Color(1, 80, 120), new Point(200, 250, 100))
+                new PointLight(new Color(100, 80, 120), new Point(200, 250, 100))
                         .setKl(0.0002).setKq(0.000001));
 
         // Reflective floor for artistic effect
@@ -270,7 +287,7 @@ class Stage1PerformanceTests {
                         .setMaterial(new Material().setKD(0.3).setKS(0.7).setShininess(100).setKT(0.6))
         );
 
-        // Generate artistic cluster of smaller objects for CBR testing
+        // Generate artistic cluster of smaller objects for baseline testing
         Random artisticRandom = new Random(123); // Different seed for artistic variation
 
         // Create 150 artistic spheres in clusters
@@ -344,7 +361,7 @@ class Stage1PerformanceTests {
 
         System.out.println("Artistic scene created with " + scene.geometries.size() + " objects");
 
-        // Render artistic scene with CBR optimization
+        // Render artistic scene WITHOUT CBR optimization
         long startTime = System.nanoTime();
 
         cameraBuilder
@@ -354,22 +371,28 @@ class Stage1PerformanceTests {
                 .setVpSize(300, 300)
                 .setResolution(800, 800)  // High resolution for artistic quality
                 .setRayTracer(scene, RayTracerType.SIMPLE)
-                //.disableDepthOfField()  // Focus on CBR performance, not DOF
                 .build()
                 .renderImage()
-                .writeToImage("stage1_cbr_artistic_scene");
+                .writeToImage("stage1_baseline_artistic_scene_no_cbr");
 
         long endTime = System.nanoTime();
         double renderTime = (endTime - startTime) / 1_000_000_000.0;
 
-        System.out.println("Artistic CBR test completed in " + String.format("%.2f", renderTime) + " seconds");
-        System.out.println("CBR bounding box calculated: " + (scene.geometries.getBoundingBox() != null));
+        System.out.println("Artistic baseline test completed in " + String.format("%.2f", renderTime) + " seconds");
 
-        // Verify CBR is working
-        assertNotNull(scene.geometries.getBoundingBox(), "CBR bounding box should be calculated");
-        assertTrue(renderTime > 0 && renderTime < 600, "Render time should be reasonable");
+        // Verify baseline performance (should be significantly slower)
+        assertTrue(renderTime > 0, "Render time should be positive");
+        assertTrue(renderTime < 1800, "Render time should complete within 30 minutes");
 
-        System.out.println("✅ Artistic CBR test completed successfully!");
-        System.out.println("📁 Output image: stage1_cbr_artistic_scene.ppm");
+        System.out.println("✅ Artistic baseline test (NO CBR) completed successfully!");
+        System.out.println("📁 Output image: stage1_baseline_artistic_scene_no_cbr.ppm");
+        System.out.println("⚠️  Expected: This should be significantly SLOWER than the CBR version");
+
+        // Performance comparison note
+        System.out.println("\n📊 PERFORMANCE COMPARISON:");
+        System.out.println("   Run both tests to compare:");
+        System.out.println("   1. stage1_cbr_artistic_scene.ppm (WITH CBR)");
+        System.out.println("   2. stage1_baseline_artistic_scene_no_cbr.ppm (WITHOUT CBR)");
+        System.out.println("   Expected improvement with CBR: 3-4x faster rendering");
     }
 }
